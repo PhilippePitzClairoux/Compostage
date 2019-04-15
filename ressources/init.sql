@@ -73,8 +73,8 @@ CREATE TABLE raspberry_pi (
 CREATE TABLE alert_configuration (
     alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     alert_configuration_message VARCHAR(64) NOT NULL,
-    alert_configuration_min_value FLOAT NOT NULL,
-    alert_configuration_max_value FLOAT NOT NULL
+    alert_configuration_min_value FLOAT,
+    alert_configuration_max_value FLOAT
 );
 
 CREATE TABLE sensor_state (
@@ -151,28 +151,32 @@ CREATE TABLE update_completed (
 
 CREATE TABLE ta_users_permissions (
     permission_id INT NOT NULL,
-    username VARCHAR(64) NOT NULL,
+    user_type_id VARCHAR(64) NOT NULL,
     CONSTRAINT FOREIGN KEY(permission_id) REFERENCES permissions(permission_id),
-    CONSTRAINT FOREIGN KEY(username) REFERENCES users(username),
-    CONSTRAINT PRIMARY KEY(permission_id, username)
+    CONSTRAINT FOREIGN KEY(user_type_id) REFERENCES user_type(user_type_id),
+    CONSTRAINT PRIMARY KEY(permission_id, user_type_id)
 );
 
 INSERT INTO permissions(permission_name, description) VALUES ("read", "read data from the system");
 INSERT INTO permissions(permission_name, description) VALUES ("write", "write data in the system");
+INSERT INTO permissions(permission_name, description) VALUES ("manage", "can edit what he wants");
 
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("admin", "This user can do what he please");
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("visitor", "This user can only see data");
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("normal", "This user can do more than a visitor but less than an admin");
+INSERT INTO user_type(user_type_name, user_type_description) VALUES ("raspberry_pi", "this user can only write data");
+
+INSERT INTO ta_users_permissions(permission_id, user_type_id) VALUES (3, 1), (1, 2), (1, 3), (2, 3), (2, 4);
 
 INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", 1,
                                                                    "12ABCCS$92e47e0d0452c988e715c774193a307eaa13dedcb03110613ffe400c2c69daf2",
                                                                    "test@gmail.com");
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, -1);
+VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, -1);
+VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", -1, 0.40);
+VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", NULL, 0.40);
