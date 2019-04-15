@@ -77,11 +77,15 @@
             mysqli_free_result($result);
             mysqli_close($conn);
         }
+    }
 
+    //TODO : Check if the new username already exists or not
+    function validate_new_username($new_username) {
 
     }
 
-    function send_data() {
+    //TODO : update all the data in user when we call this function
+    function update_data() {
 
 
 

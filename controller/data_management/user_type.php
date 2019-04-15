@@ -79,7 +79,7 @@
             mysqli_close($conn);
         }
 
-        function send_data() {
+        function update_data() {
 
             $conn = getConnection();
             $statement = $conn->prepare("UPDATE user_type SET user_type_description = ? WHERE user_type_name = ?");
@@ -92,8 +92,10 @@
 
             for($i = 0; $i < count($this->user_permissions); $i++) {
 
-                ($this->user_permissions[$i])->send_data();
+                ($this->user_permissions[$i])->update_data();
             }
+
+            mysqli_close($conn);
         }
 
     }

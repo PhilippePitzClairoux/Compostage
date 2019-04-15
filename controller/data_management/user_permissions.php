@@ -73,4 +73,18 @@
             mysqli_close($conn);
         }
 
+        function update_data() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("UPDATE permissions SET permission_description = ? WHERE permission_name = ?");
+            $statement->bind_param("ss", $this->permission_description, $this->permission_name);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die("Cannot update user_type");
+            }
+
+            mysqli_close($conn);
+        }
+
     }
