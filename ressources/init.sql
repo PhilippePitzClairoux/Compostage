@@ -167,7 +167,7 @@ INSERT INTO user_type(user_type_name, user_type_description) VALUES ("raspberry_
 INSERT INTO ta_users_permissions(permission, user_type) VALUES ("manage", "admin"), ("read", "visitor"), ("read", "normal"), ("write", "normal"), ("write", "raspberry_pi");
 
 INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", "admin",
-                                                                   "12ABCCS$92e47e0d0452c988e715c774193a307eaa13dedcb03110613ffe400c2c69daf2",
+                                                                   "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia",
                                                                    "test@gmail.com"); -- password is : test (sha256, passwd + salt)
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)

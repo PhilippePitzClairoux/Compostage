@@ -1,6 +1,8 @@
 <?php
 
-    include_once("user_permissions.php");
+    include("user_permissions.php");
+
+
     class user_type {
 
         private $user_type_name;
@@ -30,11 +32,16 @@
                 $this->user_type_description = $user_type_description;
         }
 
+        public function getPermissions() {
+            return $this->user_permissions;
+        }
+
         function fetch_data() {
 
             $conn = getConnection();
 
             $statement = $conn->prepare("SELECT user_type_description FROM user_type WHERE user_type_name = ?");
+            $statement->bind_param("s", $this->user_type_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -70,6 +77,23 @@
 
             mysqli_free_result($result);
             mysqli_close($conn);
+        }
+
+        function send_data() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("UPDATE user_type SET user_type_description = ? WHERE user_type_name = ?");
+            $statement->bind_param("ss", $this->user_type_description, $this->user_type_name);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die("Cannot update user_type");
+            }
+
+            for($i = 0; $i < count($this->user_permissions); $i++) {
+
+                ($this->user_permissions[$i])->send_data();
+            }
         }
 
     }

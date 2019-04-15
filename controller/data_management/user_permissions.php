@@ -1,6 +1,6 @@
 <?php
 
-    include_once("../ConnectionManager.php");
+    include("ConnectionManager.php");
 
     class user_permissions
     {
@@ -38,8 +38,8 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("SELECT permission_name, permission_description FROM permissions WHERE permission_name = ?");
-            $statement->bind_param("i", $this->getPermissionId());
+            $statement = $conn->prepare("SELECT permission_description FROM permissions WHERE permission_name = ?");
+            $statement->bind_param("i", $this->permission_name);
 
             if (!$statement->execute()) {
                 $conn->close();
@@ -51,7 +51,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->setPermissionName($row["permission_name"]);
+                $this->setPermissionDescription($row["permission_description"]);
             }
 
             mysqli_free_result($result);
