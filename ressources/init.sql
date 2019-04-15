@@ -60,21 +60,21 @@ CREATE TABLE raspberry_pi_type (
 CREATE TABLE raspberry_pi (
     raspberry_pi_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     zone_id INT NOT NULL,
-    bed_id INT NOT NULL,
+    user_id VARCHAR(64) NOT NULL,
     raspberry_pi_type VARCHAR(64) NOT NULL,
-    raspberry_pi_aquisition_date DATETIME NOT NULL,
+    raspberry_pi_aquisition_date DATE NOT NULL,
     raspberry_pi_capacity INT NOT NULL,
     CONSTRAINT FOREIGN KEY(zone_id) REFERENCES zone(zone_id),
-    CONSTRAINT FOREIGN KEY(bed_id) REFERENCES bed(bed_id),
-    CONSTRAINT FOREIGN KEY(raspberry_pi_type) REFERENCES raspberry_pi_type(raspberry_pi_type)
+    CONSTRAINT FOREIGN KEY(raspberry_pi_type) REFERENCES raspberry_pi_type(raspberry_pi_type),
+    CONSTRAINT FOREIGN KEY(user_id) REFERENCES users(username)
 );
 
 
 CREATE TABLE alert_configuration (
     alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     alert_configuration_message VARCHAR(64) NOT NULL,
-    alert_configuration_min_value INT NOT NULL,
-    alert_configuration_max_value INT NOT NULL
+    alert_configuration_min_value FLOAT NOT NULL,
+    alert_configuration_max_value FLOAT NOT NULL
 );
 
 CREATE TABLE sensor_state (
@@ -101,12 +101,12 @@ CREATE TABLE sensor (
     sensor_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     sensor_type_id INT NOT NULL,
     sensor_state_id INT NOT NULL,
-    sensor_alert_configuration_id INT NOT NULL,
+    raspberry_pi_id INT NOT NULL,
     sensor_aquisition_date DATE NOT NULL,
     sensor_serial_number VARCHAR(64) NOT NULL,
     CONSTRAINT FOREIGN KEY(sensor_type_id) REFERENCES sensor_type(sensor_type_id),
     CONSTRAINT FOREIGN KEY(sensor_state_id) REFERENCES sensor_state(sensor_state_id),
-    CONSTRAINT FOREIGN KEY(sensor_alert_configuration_id) REFERENCES  alert_configuration(alert_configuration_id)
+    CONSTRAINT FOREIGN KEY(raspberry_pi_id) REFERENCES raspberry_pi(raspberry_pi_id)
 );
 
 CREATE TABLE measures(
@@ -121,6 +121,14 @@ CREATE TABLE alert_event (
   measure_id INT NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
   CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id)
+);
+
+CREATE TABLE ta_sensor_alerts(
+  alert_configuration_id INT NOT NULL,
+  sensor_id INT NOT NULL,
+  CONSTRAINT FOREIGN KEY(alert_configuration_id) REFERENCES alert_configuration(alert_configuration_id),
+  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+  CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
 );
 
 CREATE TABLE ta_measure_type (
@@ -148,3 +156,23 @@ CREATE TABLE ta_users_permissions (
     CONSTRAINT FOREIGN KEY(username) REFERENCES users(username),
     CONSTRAINT PRIMARY KEY(permission_id, username)
 );
+
+INSERT INTO permissions(permission_name, description) VALUES ("read", "read data from the system");
+INSERT INTO permissions(permission_name, description) VALUES ("write", "write data in the system");
+
+INSERT INTO user_type(user_type_name, user_type_description) VALUES ("admin", "This user can do what he please");
+INSERT INTO user_type(user_type_name, user_type_description) VALUES ("visitor", "This user can only see data");
+INSERT INTO user_type(user_type_name, user_type_description) VALUES ("normal", "This user can do more than a visitor but less than an admin");
+
+INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", 1,
+                                                                   "12ABCCS$92e47e0d0452c988e715c774193a307eaa13dedcb03110613ffe400c2c69daf2",
+                                                                   "test@gmail.com");
+
+INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, -1);
+
+INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, -1);
+
+INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", -1, 0.40);
