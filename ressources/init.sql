@@ -77,7 +77,7 @@ CREATE TABLE alert_configuration (
     alert_configuration_max_value INT NOT NULL
 );
 
-CREATE TABLE senosr_state (
+CREATE TABLE sensor_state (
     sensor_state_id INT NOT NULL PRIMARY KEY,
     sensor_state VARCHAR(64) NOT NULL
 );
@@ -105,7 +105,7 @@ CREATE TABLE sensor (
     sensor_aquisition_date DATE NOT NULL,
     sensor_serial_number VARCHAR(64) NOT NULL,
     CONSTRAINT FOREIGN KEY(sensor_type_id) REFERENCES sensor_type(sensor_type_id),
-    CONSTRAINT FOREIGN KEY(sensor_state_id) REFERENCES sensor_type(sensor_type_id),
+    CONSTRAINT FOREIGN KEY(sensor_state_id) REFERENCES sensor_state(sensor_state_id),
     CONSTRAINT FOREIGN KEY(sensor_alert_configuration_id) REFERENCES  alert_configuration(alert_configuration_id)
 );
 
