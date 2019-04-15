@@ -7,23 +7,21 @@ USE Compostage;
 
 
 CREATE TABLE permissions(
-    permission_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    permission_name VARCHAR(64) NOT NULL,
-    description VARCHAR(512) NOT NULL
+    permission_name VARCHAR(64) NOT NULL PRIMARY KEY ,
+    permission_description VARCHAR(512) NOT NULL
 );
 
 CREATE TABLE user_type (
-    user_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    user_type_name VARCHAR(64) NOT NULL,
+    user_type_name VARCHAR(64) NOT NULL PRIMARY KEY ,
     user_type_description VARCHAR(256)
 );
 
 CREATE TABLE users (
     username VARCHAR(64) NOT NULL PRIMARY KEY,
-    user_type_id INT NOT NULL,
+    user_type_id VARCHAR(64) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(64) NOT NULL,
-    CONSTRAINT FOREIGN KEY(user_type_id) REFERENCES user_type(user_type_id)
+    CONSTRAINT FOREIGN KEY(user_type_id) REFERENCES user_type(user_type_name)
 );
 
 CREATE TABLE bed(
@@ -150,27 +148,27 @@ CREATE TABLE update_completed (
 );
 
 CREATE TABLE ta_users_permissions (
-    permission_id INT NOT NULL,
-    user_type_id VARCHAR(64) NOT NULL,
-    CONSTRAINT FOREIGN KEY(permission_id) REFERENCES permissions(permission_id),
-    CONSTRAINT FOREIGN KEY(user_type_id) REFERENCES user_type(user_type_id),
-    CONSTRAINT PRIMARY KEY(permission_id, user_type_id)
+    permission VARCHAR(64) NOT NULL,
+    user_type VARCHAR(64) NOT NULL,
+    CONSTRAINT FOREIGN KEY(permission) REFERENCES permissions(permission_name),
+    CONSTRAINT FOREIGN KEY(user_type) REFERENCES user_type(user_type_name),
+    CONSTRAINT PRIMARY KEY(permission, user_type)
 );
 
-INSERT INTO permissions(permission_name, description) VALUES ("read", "read data from the system");
-INSERT INTO permissions(permission_name, description) VALUES ("write", "write data in the system");
-INSERT INTO permissions(permission_name, description) VALUES ("manage", "can edit what he wants");
+INSERT INTO permissions(permission_name, permission_description) VALUES ("read", "read data from the system");
+INSERT INTO permissions(permission_name, permission_description) VALUES ("write", "write data in the system");
+INSERT INTO permissions(permission_name, permission_description) VALUES ("manage", "can edit what he wants");
 
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("admin", "This user can do what he please");
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("visitor", "This user can only see data");
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("normal", "This user can do more than a visitor but less than an admin");
 INSERT INTO user_type(user_type_name, user_type_description) VALUES ("raspberry_pi", "this user can only write data");
 
-INSERT INTO ta_users_permissions(permission_id, user_type_id) VALUES (3, 1), (1, 2), (1, 3), (2, 3), (2, 4);
+INSERT INTO ta_users_permissions(permission, user_type) VALUES ("manage", "admin"), ("read", "visitor"), ("read", "normal"), ("write", "normal"), ("write", "raspberry_pi");
 
-INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", 1,
-                                                                   "12ABCCS$92e47e0d0452c988e715c774193a307eaa13dedcb03110613ffe400c2c69daf2",
-                                                                   "test@gmail.com");
+INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", "admin",
+                                                                   "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia",
+                                                                   "test@gmail.com"); -- password is : test (sha256, passwd + salt)
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
 VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
