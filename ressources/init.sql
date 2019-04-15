@@ -92,9 +92,9 @@ CREATE TABLE alert_type (
   alert_type_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE mesure_type (
-  mesure_type_id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
-  mesure_type_name VARCHAR(255) NOT NULL
+CREATE TABLE measure_type (
+  measure_type_id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  measure_type_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE sensor (
@@ -109,27 +109,27 @@ CREATE TABLE sensor (
     CONSTRAINT FOREIGN KEY(sensor_alert_configuration_id) REFERENCES  alert_configuration(alert_configuration_id)
 );
 
-CREATE TABLE mesures(
-    mesure_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE measures(
+    measure_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     sensor_id INT NOT NULL,
-    mesure_timestamp DATETIME NOT NULL,
+    measure_timestamp DATETIME NOT NULL,
     CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
 );
 CREATE TABLE alert_event (
   alert_event_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   alert_type_id INT NOT NULL,
-  mesure_id INT NOT NULL,
+  measure_id INT NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(mesure_id) REFERENCES mesures(mesure_id)
+  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id)
 );
 
-CREATE TABLE ta_mesure_type (
-  mesure_id INT NOT NULL,
-  mesure_type_id INT NOT NULL,
-  mesure_value FLOAT NOT NULL,
-  CONSTRAINT FOREIGN KEY(mesure_id) REFERENCES mesures(mesure_id),
-  CONSTRAINT FOREIGN KEY(mesure_type_id) REFERENCES mesure_type(mesure_type_id),
-  CONSTRAINT PRIMARY KEY(mesure_id, mesure_type_id)
+CREATE TABLE ta_measure_type (
+  measure_id INT NOT NULL,
+  measure_type_id INT NOT NULL,
+  measure_value FLOAT NOT NULL,
+  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
+  CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
+  CONSTRAINT PRIMARY KEY(measure_id, measure_type_id)
 
 );
 
