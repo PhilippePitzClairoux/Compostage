@@ -2,7 +2,8 @@
 
     include("user_type.php");
 
-    class user {
+    class user
+    {
 
         private $username;
         private $user_type;
@@ -38,7 +39,7 @@
 
         public function setUserPassword($user_password) {
             if (!is_null($user_password))
-            $this->user_password = $user_password;
+                $this->user_password = $user_password;
         }
 
         public function getUserEmail() {
@@ -65,7 +66,7 @@
 
             $result = $statement->get_result();
 
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
 
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
@@ -77,16 +78,49 @@
             mysqli_free_result($result);
             mysqli_close($conn);
         }
-    }
-
-    //TODO : Check if the new username already exists or not
-    function validate_new_username($new_username) {
-
-    }
-
-    //TODO : update all the data in user when we call this function
-    function update_data() {
 
 
+        function validate_new_username($new_username) {
 
+            $conn = getConnection();
+
+            $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
+            $statement->bind_param("s", $new_username);
+
+            $statement->execute();
+
+            if ($statement->get_result()["num_rows"] !== 0) {
+                mysqli_close($conn);
+                die("Name is already taken.");
+            }
+
+            $statement->close();
+            $statement = $conn->prepare("UPDATE users SET username = ? WHERE username = ?");
+            $statement->bind_param("ss", $new_usernamem, $this->username);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die("Cannot change name");
+            }
+
+            mysqli_close($conn);
+        }
+
+        function update_data() {
+
+            $conn = getConnection();
+
+            $statement = $conn->prepare("UPDATE users SET password = ?, email = ? WHERE username = ?");
+            $statement->bind_param("sss", $this->user_password, $this->user_email, $this->username);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die("Cannot update user information");
+            }
+
+            mysqli_close($conn);
+
+            ($this->user_type)->update_data();
+
+        }
     }
