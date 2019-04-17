@@ -57,7 +57,7 @@ class measurement_type {
         mysqli_close($conn);
     }
 
-    function send_data() {
+    function insert_data() {
 
         $conn = getConnection();
 
