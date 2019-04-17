@@ -59,7 +59,7 @@
             $statement->close();
 
             $statement = $conn->prepare("SELECT permission FROM ta_users_permissions WHERE user_type = ?");
-            $statement->bind_param("s", $this->getUserTypeName());
+            $statement->bind_param("s", $this->user_type_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -90,12 +90,13 @@
                 die("Cannot update user_type");
             }
 
+            mysqli_close($conn);
+
             for($i = 0; $i < count($this->user_permissions); $i++) {
 
                 ($this->user_permissions[$i])->update_data();
             }
 
-            mysqli_close($conn);
         }
 
     }
