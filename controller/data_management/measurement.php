@@ -56,7 +56,7 @@
             return $this->measurement_id;
         }
 
-        public function setMeasurementId($measurement_id) {
+        public function setMeasurementId($measurement_id) : void {
             if (!is_null($measurement_id))
                 $this->measurement_id = $measurement_id;
         }
@@ -65,7 +65,7 @@
             return $this->measurement_value;
         }
 
-        public function setMeasurementValue($measurement_value) {
+        public function setMeasurementValue($measurement_value) : void {
             if (!is_null($measurement_value))
             $this->measurement_value = $measurement_value;
         }
@@ -76,9 +76,32 @@
         }
 
 
-        public function setMeasurementDate($measurement_date) {
+        public function setMeasurementDate($measurement_date) : void {
             if (!is_null($measurement_date))
                 $this->measurement_date = $measurement_date;
+        }
+
+        function fetch_id($sensor_id, $date) : void {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("SELECT * FROM measures WHERE sensor_id = ? AND measure_timestamp = ?");
+
+            $statement->bind_param("is",  $sensor_id, $date);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die($statement->error."\n");
+            }
+
+            $result = $statement->get_result();
+
+            while($row = $result->fetch_assoc()) {
+
+                $this->measurement_id = $row["measure_id"];
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
         }
 
         function fetch_data() {
@@ -90,7 +113,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch measure data");
+                die($statement->error."\n");
             }
 
             $result = $statement->get_result();
@@ -109,7 +132,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch types...");
+                die($statement->error."\n");
             }
 
             $this->measurement_types = array();
@@ -139,14 +162,32 @@
             $statement = $conn->prepare("INSERT INTO measures(sensor_id, measure_timestamp) VALUES (?, ?) ");
 
             date_default_timezone_set('America/New_York');
-            $date = date("r");
+            $current_date = date("Y-m-d H:i:s", time());
 
-            $statement->bind_param("is", $this->sensor_id, $date);
+            echo $current_date."\n";
+
+            $statement->bind_param("is", $this->sensor_id, $current_date);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot insert data inside measures...");
+                die($statement->error."\n");
             }
+
+            $this->fetch_id($this->sensor_id, $current_date);
+            print_r($statement->get_result());
+
+            $statement->close();
+            $statement = $conn->prepare("INSERT INTO ta_measure_type(measure_id, measure_type_id, measure_value) VALUES (?, ?, ?)");
+
+            $statement->bind_param("iif", $this->measurement_id,
+                $this->measurement_types, $this->measurement_value);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                die($statement->error."\n");
+            }
+
+            mysqli_close($conn);
 
         }
 
