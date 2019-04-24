@@ -108,7 +108,6 @@
 
             $conn = getConnection();
             $statement = $conn->prepare("SELECT * FROM measures WHERE measure_id = ?");
-
             $statement->bind_param("i", $this->measurement_id);
 
             if (!$statement->execute()) {
@@ -125,7 +124,7 @@
             }
 
             mysqli_free_result($result);
-
+            $statement->close();
 
             $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE measure_id = ?");
             $statement->bind_param("i", $this->measurement_id);
@@ -145,6 +144,7 @@
                 array_push($this->measurement_types, $row["measure_type_id"]);
             }
 
+
             mysqli_free_result($result);
 
             foreach($this->measurement_types as $type_id) {
@@ -155,7 +155,7 @@
 
         }
 
-        //TODO : insert the new data in the database
+
         function insert_data() {
 
             $conn = getConnection();
@@ -174,12 +174,11 @@
             }
 
             $this->fetch_id($this->sensor_id, $current_date);
-            print_r($statement->get_result());
 
             $statement->close();
             $statement = $conn->prepare("INSERT INTO ta_measure_type(measure_id, measure_type_id, measure_value) VALUES (?, ?, ?)");
 
-            $statement->bind_param("iif", $this->measurement_id,
+            $statement->bind_param("iid", $this->measurement_id,
                 $this->measurement_types, $this->measurement_value);
 
             if (!$statement->execute()) {
@@ -193,5 +192,8 @@
 
     }
 
-    $tmp = measurement::newMeasurement(1, 10, 1);
-    $tmp->insert_data();
+//    $tmp = measurement::newMeasurement(1, 10, 1);
+//    $tmp->insert_data();
+
+//    $tmp = measurement::loadWithId(2);
+//    print_r($tmp->getMeasurementValue());

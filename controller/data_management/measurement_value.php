@@ -65,7 +65,7 @@
                 die("Cannot fetch data without a measurement_type_id and measurement_id");
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT measure_value FROM ta_measure_type WHERE measure_id = ? AND measure_type_id = ?");
+            $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE measure_id = ? AND measure_type_id = ?");
             $statement->bind_param("ii", $this->measurement_id, $this->measurement_type_id);
 
             if (!$statement->execute()) {
@@ -75,6 +75,7 @@
 
             $result = $statement->get_result();
 
+            print_r($result);
             while($row = $result->fetch_assoc()) {
 
                 $this->measurement_type = new measurement_type($row["measure_type_id"]);
