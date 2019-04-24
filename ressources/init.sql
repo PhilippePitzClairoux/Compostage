@@ -76,17 +76,17 @@ CREATE TABLE alert_configuration (
 );
 
 CREATE TABLE sensor_state (
-    sensor_state_id INT NOT NULL PRIMARY KEY,
+    sensor_state_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     sensor_state VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE sensor_type (
-  sensor_type_id INT NOT NULL PRIMARY KEY,
+  sensor_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   sensor_type_name VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE alert_type (
-  alert_type_id INT NOT NULL PRIMARY KEY,
+  alert_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   alert_type_name VARCHAR(255) NOT NULL
 );
 
@@ -168,7 +168,7 @@ INSERT INTO ta_users_permissions(permission, user_type) VALUES ("manage", "admin
 
 INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", "admin",
                                                                    "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia",
-                                                                   "test@gmail.com"); -- password is : test (sha256, passwd + salt)
+                                                                   "test@gmail.com"); -- password is : test (php algorithm)
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
 VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
@@ -178,3 +178,6 @@ VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
 VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", NULL, 0.40);
+
+INSERT INTO sensor_type(sensor_type_name) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
+INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");
