@@ -76,22 +76,22 @@ CREATE TABLE alert_configuration (
 );
 
 CREATE TABLE sensor_state (
-    sensor_state_id INT NOT NULL PRIMARY KEY,
+    sensor_state_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     sensor_state VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE sensor_type (
-  sensor_type_id INT NOT NULL PRIMARY KEY,
+  sensor_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   sensor_type_name VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE alert_type (
-  alert_type_id INT NOT NULL PRIMARY KEY,
+  alert_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   alert_type_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE measure_type (
-  measure_type_id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  measure_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   measure_type_name VARCHAR(255) NOT NULL
 );
 
@@ -166,9 +166,20 @@ INSERT INTO user_type(user_type_name, user_type_description) VALUES ("raspberry_
 
 INSERT INTO ta_users_permissions(permission, user_type) VALUES ("manage", "admin"), ("read", "visitor"), ("read", "normal"), ("write", "normal"), ("write", "raspberry_pi");
 
-INSERT INTO users(username, user_type_id, password, email) VALUES ("admin", "admin",
-                                                                   "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia",
-                                                                   "test@gmail.com"); -- password is : test (sha256, passwd + salt)
+INSERT INTO users(username, user_type_id, password, email)
+VALUES ("admin", "admin", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "test@gmail.com"), -- password is : test (blowfish + salt)
+       ("raspberry_pi", "raspberry_pi", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "raspberry@test.com");
+
+
+INSERT INTO bed(bed_name) VALUES ("ALPHA"), ("BRAVO"), ("BOB"), ("ANTOINE");
+INSERT INTO zone(bed_id, zone_name) VALUES (1, "UNO"), (1, "DOS"), (1, "TRES"), (2, "UNO"), (2, "DOS"), (3, "TRES");
+
+INSERT INTO raspberry_pi_type(raspberry_pi_type, raspberry_pi_type_description)
+VALUE ("MODEL_3", "This is the current last gen of raspberry pi's.");
+
+INSERT INTO raspberry_pi(zone_id, user_id, raspberry_pi_type, raspberry_pi_aquisition_date, raspberry_pi_capacity)
+VALUES (1, "raspberry_pi", "MODEL_3", "2019-04-24", 32);
+
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
 VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
@@ -178,3 +189,13 @@ VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
 VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", NULL, 0.40);
+
+INSERT INTO sensor_type(sensor_type_name) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
+INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");
+
+INSERT INTO measure_type(measure_type_name) VALUES ("PH"), ("HUMIDITY"), ("TEMPATURE");
+
+INSERT INTO sensor(sensor_type_id, sensor_state_id, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
+VALUES (1, 1, 1, "2019-04-24 11:06:23", "666-696969-666");
+
+SELECT * FROM measures;
