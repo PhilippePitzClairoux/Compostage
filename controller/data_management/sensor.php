@@ -27,7 +27,6 @@
             return $instance;
         }
 
-        //TODO
         public static function createNewSensor($sensor_state_id, $sensor_type_id, $raspberry_pi_id, $aquisition_date, $serial_number) {
 
             $instance = new self();
@@ -123,13 +122,13 @@
 
         public function fetch_data() {
 
-            $con = getConnection();
+            $conn = getConnection();
 
-            $statement = $con->prepare("SELECT * FROM sensor WHERE sensor_id = ?");
+            $statement = $conn->prepare("SELECT * FROM sensor WHERE sensor_id = ?");
             $statement->bind_param("i", $this->sensor_id);
 
             if (!$statement->execute()) {
-                mysqli_close($con);
+                mysqli_close($conn);
                 throw new Exception($statement->error);
             }
 
@@ -137,7 +136,7 @@
 
             if ($result->num_rows === 0) {
                 mysqli_free_result($result);
-                mysqli_close($con);
+                mysqli_close($conn);
                 throw new Exception("Sensor does not exist");
             }
 
@@ -151,14 +150,13 @@
                 $this->setSensorSerialNumber($row["sensor_serial_number"]);
                 $this->setSensorRaspberryPiId($row["raspberry_pi_id"]);
             }
-
         }
 
         public function insert_data() {
 
-            $con = getConnection();
+            $conn = getConnection();
 
-            $statement = $con->prepare("INSERT INTO sensor(sensor_state_id, sensor_type_id, raspberry_pi_id,
+            $statement = $conn->prepare("INSERT INTO sensor(sensor_state_id, sensor_type_id, raspberry_pi_id,
                                                 sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?, ?) ");
 
             $statement->bind_param("iiiss", ($this->sensor_state)->getSensorStateId(),
@@ -166,13 +164,12 @@
                 $this->sensor_aquisition_date, $this->sensor_serial_number);
 
             if (!$statement->execute()) {
-                mysqli_close($con);
+                mysqli_close($conn);
                 throw new Exception($statement->error);
             }
 
-            mysqli_close($con);
+            mysqli_close($conn);
         }
-
     }
 
 //    $tmp = sensor::createNewSensor(1, 1, 1, "2019-04-24", "666-696969-999");
