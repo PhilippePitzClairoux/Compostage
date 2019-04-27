@@ -44,7 +44,7 @@
             if (!$statement->execute()) {
                 $conn->close();
                 $statement->close();
-                die("Cannot fetch permission...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -67,7 +67,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot create new permission");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
@@ -81,7 +81,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot update user_type");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);

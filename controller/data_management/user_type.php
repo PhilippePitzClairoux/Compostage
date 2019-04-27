@@ -45,7 +45,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch user_type_description...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -63,7 +63,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch permissions for specefic user_type...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -87,7 +87,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot update user_type");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
