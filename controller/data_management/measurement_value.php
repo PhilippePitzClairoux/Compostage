@@ -70,7 +70,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch the data for value...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -103,7 +103,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot insert measure");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
