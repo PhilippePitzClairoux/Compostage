@@ -26,8 +26,18 @@
         }
 
         //TODO
-        public static function createNewSensor() {
+        public static function createNewSensor($sensor_state_id, $sensor_type_id, $aquisition_date, $serial_number) {
 
+            $instance = new self();
+
+            $instance->setSensorState(sensor_state::loadWithId($sensor_state_id));
+            $instance->setSensorType(sensor_type::loadWithId($sensor_type_id));
+            $instance->setSensorAquisitionDate($aquisition_date);
+            $instance->setSensorSerialNumber($serial_number);
+
+            $instance->insert_data();
+
+            return $instance;
         }
 
         public function getSensorId() {
@@ -105,7 +115,24 @@
 
         }
 
+        public function insert_data() {
+
+            $con = getConnection();
+
+            $statement = $con->prepare("INSERT INTO sensor(sensor_state_id, raspberry_pi_id,
+                                                sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?) ");
+
+            $statement->bind_param("iiss", ($this->sensor_state)->getSensorStateId(),
+                ($this->sensor_type)->getSensorTypeId(), $this->sensor_aquisition_date,
+                $this->sensor_serial_number);
+
+            if (!$statement->execute()) {
+                mysqli_close($con);
+                throw new Exception($statement->error);
+            }
+
+            mysqli_close($con);
+        }
+
     }
 
-    $tmp = sensor::loadWithId(1);
-    print_r($tmp);
