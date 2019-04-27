@@ -3,12 +3,14 @@
     include_once("../ConnectionManager.php");
     include_once("sensor_state.php");
     include_once("sensor_type.php");
+    include_once("measurement.php");
 
     class sensor {
 
         private $sensor_id;
         private $sensor_state;
         private $sensor_type;
+        private $sensor_raspberry_pi_id;
         private $sensor_aquisition_date;
         private $sensor_serial_number;
         private $measures;
@@ -26,18 +28,28 @@
         }
 
         //TODO
-        public static function createNewSensor($sensor_state_id, $sensor_type_id, $aquisition_date, $serial_number) {
+        public static function createNewSensor($sensor_state_id, $sensor_type_id, $raspberry_pi_id, $aquisition_date, $serial_number) {
 
             $instance = new self();
 
             $instance->setSensorState(sensor_state::loadWithId($sensor_state_id));
             $instance->setSensorType(sensor_type::loadWithId($sensor_type_id));
+            $instance->setSensorRaspberryPiId($raspberry_pi_id);
             $instance->setSensorAquisitionDate($aquisition_date);
             $instance->setSensorSerialNumber($serial_number);
+
 
             $instance->insert_data();
 
             return $instance;
+        }
+
+        public function getSensorRaspberryPiId() {
+            return $this->sensor_raspberry_pi_id;
+        }
+
+        public function setSensorRaspberryPiId($sensor_raspberry_pi_id): void {
+            $this->sensor_raspberry_pi_id = $sensor_raspberry_pi_id;
         }
 
         public function getSensorId() {
@@ -84,6 +96,31 @@
             return $this->measures;
         }
 
+        private function loadMeasurements() {
+
+            $conn = getConnection();
+
+            $statement = $conn->prepare("SELECT * FROM measures WHERE sensor_id = ?");
+            $statement->bind_param("i", $this->sensor_id);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+
+            $result = $statement->get_result();
+            $this->measures = array();
+
+            while ($row = $result->fetch_assoc()) {
+
+                array_push($this->measures, measurement::loadWithId($row["measure_id"]));
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
+        }
+
         public function fetch_data() {
 
             $con = getConnection();
@@ -108,9 +145,11 @@
 
                 $this->sensor_type = sensor_type::loadWithId($row["sensor_type_id"]);
                 $this->sensor_state = sensor_state::loadWithId($row["sensor_state_id"]);
+                $this->loadMeasurements();
 
                 $this->setSensorAquisitionDate($row["sensor_aquisition_date"]);
                 $this->setSensorSerialNumber($row["sensor_serial_number"]);
+                $this->setSensorRaspberryPiId($row["raspberry_pi_id"]);
             }
 
         }
@@ -119,12 +158,12 @@
 
             $con = getConnection();
 
-            $statement = $con->prepare("INSERT INTO sensor(sensor_state_id, raspberry_pi_id,
-                                                sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?) ");
+            $statement = $con->prepare("INSERT INTO sensor(sensor_state_id, sensor_type_id, raspberry_pi_id,
+                                                sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?, ?) ");
 
-            $statement->bind_param("iiss", ($this->sensor_state)->getSensorStateId(),
-                ($this->sensor_type)->getSensorTypeId(), $this->sensor_aquisition_date,
-                $this->sensor_serial_number);
+            $statement->bind_param("iiiss", ($this->sensor_state)->getSensorStateId(),
+                ($this->sensor_type)->getSensorTypeId(), $this->sensor_raspberry_pi_id,
+                $this->sensor_aquisition_date, $this->sensor_serial_number);
 
             if (!$statement->execute()) {
                 mysqli_close($con);
@@ -136,3 +175,8 @@
 
     }
 
+//    $tmp = sensor::createNewSensor(1, 1, 1, "2019-04-24", "666-696969-999");
+//    print_r($tmp);
+
+//    $tmp = sensor::loadWithId(1);
+//    print_r($tmp);
