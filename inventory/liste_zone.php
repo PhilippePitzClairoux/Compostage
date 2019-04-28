@@ -67,8 +67,8 @@
 
     </table>
 
-    <button class="left">Ajouter</button><br />
-    <button class="left">Modifier</button><br />
+    <button class="left" onclick="location.href='ajouter_zone.php'">Ajouter</button><br />
+    <button class="left" onclick="location.href='ajouter_zone.php'">Modifier</button><br />
     <button class="left">Supprimer</button><br />
     <button class="left">Ok</button><br />
 

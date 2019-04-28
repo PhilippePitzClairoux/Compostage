@@ -70,8 +70,8 @@
 
     </table>
 
-    <button class="left">Ajouter</button><br />
-    <button class="left">Modifier</button><br />
+    <button class="left" onclick="location.href='ajouter_ras_pi.php'">Ajouter</button><br />
+    <button class="left" onclick="location.href='ajouter_ras_pi.php'">Modifier</button><br />
     <button class="left">Supprimer</button><br />
     <button class="left">Ok</button><br />
 

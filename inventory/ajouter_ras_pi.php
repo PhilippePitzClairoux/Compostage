@@ -27,7 +27,7 @@
       <label for="bac">Bac: </label> <select name="bac" id="bac" required></select><br />
       <label for="zone">Zone: </label> <select name="zone" id="zone" required></select><br />
       <label for="modele">Modèle: </label> <select name="modele" id="modele" required></select><br />
-      <button type="button" onclick="location.href='liste_bac.php'">Cancel</button>
+      <button type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
       <button type="submit">Ajouter</button>
     </form>
 
