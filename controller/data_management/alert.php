@@ -98,5 +98,8 @@
                 $this->alert_type = alert_type::loadWithId($row["alert_type_id"]);
 
             }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
         }
     }
