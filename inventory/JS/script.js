@@ -17,7 +17,8 @@ let colors = [
 		'rgba(255, 206, 86)',
 		'rgba(75, 192, 192)',
 		'rgba(153, 102, 255)',
-		'rgba(255, 159, 64)'
+		'rgba(255, 159, 64)',
+		'rgba(100, 220, 25)'
 ];
 
 let phColor = [
@@ -64,8 +65,7 @@ function init() {
 	readXML();
 
 	loadChartTempBar();
-
-	loadChartHum();
+	loadChartHumBar();
 
 	loadPH();
 }
@@ -74,7 +74,7 @@ function init() {
 //	Chart builder
 //////////////////////////////////////////////////
 function loadChartTempBar(){
-	var ctx = $('#chartTemp');
+	var ctx = document.getElementById('chartTemp');
 	var ctx = document.getElementById('chartTemp').getContext('2d');
 	var chartTemp = new Chart(ctx, {
 	    type: "bar",
@@ -84,7 +84,6 @@ function loadChartTempBar(){
 	            label: "Temperature C",
 	            data: valTemp,
 	            backgroundColor: colors,
-	            borderWidth: 1
 	        }]
 	    },
 	    options: {
@@ -98,9 +97,36 @@ function loadChartTempBar(){
 	    }
 	});
 }
+/*
+pour avoir plusieurs ligne dans le meme graph
+je crois qui faut fair des objets JS des objet de type data (labels, datasets) et datasets (label, data)
+ */
+function loadChartTempLine() {
+	var ctx = document.getElementById('chartTemp');
+	var ctx = document.getElementById('chartTemp').getContext('2d');
+	var chartTemp = new Chart(ctx, {
+		type: "line",
+		data: {
+			labels: tempLabelName,
+			datasets: [{
+				label: "Temperature C",
+				data: valTemp,
+			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			}
+		}
+	});
+}
 
-function loadChartHum(){
-	var ctx = $('#chartHum');
+function loadChartHumBar(){
+	var ctx = document.getElementById('#chartHum');
 	var ctx = document.getElementById('chartHum').getContext('2d');
 	var chart2 = new Chart(ctx, {
 	    type: 'bar',
@@ -174,7 +200,7 @@ function readHumidity() {
 function readPH() {
 	let ph = xmlData.getElementsByTagName("ph");
 	if(phAverageDoor)
-		valph = average(ph);
+		valPH = average(ph);
 	else
 		valPH = ph[0].getElementsByTagName("value")[0].firstChild.data;
 }
@@ -229,6 +255,6 @@ function average(arr){
 }
 
 function loadPH(){
-	$("#ph").text(valPH);
-	$(".ph").css("background-color", phColor[Math.floor(valPH - 1)]);
+	document.getElementById("ph").innerHTML = valPH;
+	document.getElementsByClassName("ph")[0].style.backgroundColor = phColor[Math.floor(valPH - 1)];
 }

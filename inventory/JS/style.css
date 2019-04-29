@@ -1,9 +1,16 @@
+html{
+	text-align: center;
+}
+
+body{
+
+}
+
 canvas{
 
 }
 
 div{
-	float: left;
 	display: inline-block;
 }
 
