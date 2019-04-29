@@ -1,0 +1,234 @@
+/*
+* Auteur Jessy Nadeau
+* Scipt.js
+* Read xml files and process values to then display them in a chart
+*/
+
+//////////////////////////////////////////////////
+//	Global Values
+//////////////////////////////////////////////////
+let valTemp= [];
+let valHum = [];
+let valPH;
+
+let colors = [
+		'rgba(255, 99, 132)',
+		'rgba(54, 162, 235)',
+		'rgba(255, 206, 86)',
+		'rgba(75, 192, 192)',
+		'rgba(153, 102, 255)',
+		'rgba(255, 159, 64)'
+];
+
+let phColor = [
+	"#aa0000",
+	"#ff0000",
+	"#f96352",
+	"#c15613",
+	"#f99e3b",
+	"#ffe500",
+	"#3bb200",
+	"#5dccae",
+	"#227b9b",
+	"#a23bd6",
+	"#4a78db",
+	"#141fba",
+	"#701ca0",
+	"#63007a"
+
+];
+let zoneName = [];
+let tempLabelName = [];
+let humLabelName = [];
+
+let tempAverageDoor = false;
+let humAverageDoor = false;
+let phAverageDoor = false;
+
+let tempCompareDoor = true;
+let humCompareDoor = false;
+
+let xmlData;
+
+let name = [];
+
+//////////////////////////////////////////////////
+//	Script init
+//////////////////////////////////////////////////
+function init() {
+	area = "zones";
+	xmlData = openXML();
+
+	loadZone();
+
+	readXML();
+
+	loadChartTempBar();
+
+	loadChartHum();
+
+	loadPH();
+}
+
+//////////////////////////////////////////////////
+//	Chart builder
+//////////////////////////////////////////////////
+function loadChartTempBar(){
+	var ctx = $('#chartTemp');
+	var ctx = document.getElementById('chartTemp').getContext('2d');
+	var chartTemp = new Chart(ctx, {
+	    type: "bar",
+	    data: {
+	        labels: tempLabelName,
+	        datasets: [{
+	            label: "Temperature C",
+	            data: valTemp,
+	            backgroundColor: colors,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+function loadChartHum(){
+	var ctx = $('#chartHum');
+	var ctx = document.getElementById('chartHum').getContext('2d');
+	var chart2 = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: humLabelName,
+	        datasets: [{
+	            label: "Humidity %",
+	            data: valHum,
+	            backgroundColor: colors,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	suggestedMax : 100,
+	                    beginAtZero: true
+
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+//////////////////////////////////////////////////
+//	XML Processing
+//////////////////////////////////////////////////
+function readXML() {
+	readTemp();
+	readHumidity();
+	readPH();
+}
+
+function openXML() {
+	let xml=new XMLHttpRequest();
+	xml.open("GET", "mesures.xml",false);
+	xml.send();
+	return xml.responseXML;
+}
+
+//////////////////////////////////////////////////
+//	value processing
+//////////////////////////////////////////////////
+function readTemp() {
+	let temp = xmlData.getElementsByTagName("temp");
+	if(!tempAverageDoor){
+		if(tempCompareDoor)
+			valTemp = loadValueCompare(temp);
+		else{
+			valTemp = loadValueTime(temp, 0);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			tempLabelName = name;
+		}
+	}
+	else
+		valTemp = average(temp);
+}
+function readHumidity() {
+	let humidity = xmlData.getElementsByTagName("humidity");
+	if(!humAverageDoor)
+		if(humCompareDoor)
+			valHum = loadValueCompare(humidity)
+		else{
+			valHum = loadValueTime(humidity, 0)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			humLabelName = name;
+		}
+	else
+		valHum = average(humidity);
+}
+function readPH() {
+	let ph = xmlData.getElementsByTagName("ph");
+	if(phAverageDoor)
+		valph = average(ph);
+	else
+		valPH = ph[0].getElementsByTagName("value")[0].firstChild.data;
+}
+
+//////////////////////////////////////////////////
+//	Load Values with specific
+//////////////////////////////////////////////////
+function loadValueCompare(arr){
+	let val = [];
+	for (let i = 0; i < arr.length; i++){
+		val[i] = arr[i].getElementsByTagName("value")[0].firstChild.data;
+	}
+	return val;
+}
+//k is the position in xml
+function loadValueTime(arr, k){
+	let val = [];
+	for (let i = 0; i < arr[k].getElementsByTagName("value").length; i++){
+		val[i] = arr[k].getElementsByTagName("value")[i].firstChild.data;
+	}
+	loadTime(arr,k);
+	return val;
+}
+
+//////////////////////////////////////////////////
+//	Area Name
+//////////////////////////////////////////////////
+function loadZone(){
+
+	let zone = xmlData.getElementsByTagName("zone");
+	for (let i = 0; i < zone.length; i++){
+		zoneName[i] = zone[i].getElementsByTagName("name")[0].firstChild.data;
+	}
+	tempLabelName = humLabelName = zoneName;
+}
+
+function loadTime(arr, k){
+	name = [];
+		for (let i = 0; i < arr[k].getElementsByTagName("value").length; i++){
+		name[i] = arr[k].getElementsByTagName("time")[i].firstChild.data;
+	}
+}
+//////////////////////////////////////////////////
+//	Useful function
+//////////////////////////////////////////////////
+function average(arr){
+	let val = 0;
+	for (let i = 0; i < arr.length; i++) {
+		val += parseFloat(arr[i].getElementsByTagName("value")[0].firstChild.data);
+	}
+	return val / arr.length;
+}
+
+function loadPH(){
+	$("#ph").text(valPH);
+	$(".ph").css("background-color", phColor[Math.floor(valPH - 1)]);
+}
