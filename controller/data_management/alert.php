@@ -89,8 +89,11 @@
 
             $result = $statement->get_result();
 
-            if ($result->num_rows === 0)
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
                 throw new Exception("There is no alert.");
+            }
 
             while ($row = $result->fetch_assoc()) {
 
