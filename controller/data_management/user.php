@@ -10,9 +10,15 @@
         private $user_password;
         private $user_email;
 
-        function __construct($user) {
+        private function __construct() {}
 
-            $this->setUsername($user);
+        public static function loadWithId($username) {
+            $instance = new self();
+
+            $instance->setUsername($username);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
         public function getUsername() {
@@ -76,7 +82,7 @@
 
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
-                $this->setUserType(new user_type($row["user_type_id"]));
+                $this->setUserType(user_type::loadWithId($row["user_type_id"]));
 
                 ($this->user_type)->fetch_data();
             }
@@ -129,4 +135,9 @@
             ($this->user_type)->update_data();
 
         }
+
+        function insert_data() {
+
+        }
+
     }
