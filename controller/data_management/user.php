@@ -61,7 +61,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot get info from that user...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
