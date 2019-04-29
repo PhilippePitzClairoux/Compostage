@@ -17,7 +17,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="inventory_style.css" />
     <title>Ajouter/modifier Bac</title>
   </head>
   <body>
