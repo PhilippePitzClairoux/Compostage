@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="Base.css">
+    <link rel="stylesheet" href="form.css">
+    <title>Modification d'un employe</title>
+  </head>
+  <body>
+  <p class="title">Modification d'un utilisateur</p>
+    <div class="divform" >
+      <form class="form" action="index.html" method="get">
+      <label for="txtusername" id="username" class="label">Nom d'utilisateur</label>
+      <input type="text" id="txtusername" class="txtbox"><br>
+      <label for="txttype" id="type" class="label">Type</label>
+      <input type="text" id="txttype" class="txtbox"><br>
+      <label for="txtprenom" id="prenom" class="label">Prénom</label>
+      <input type="text" id="txtprenom" class="txtbox"><br>
+      <label for="txtnom" id="nom" class="label">Nom</label>
+      <input type="text" id="txtnom" class="txtbox"><br>
+      <label for="txttel" id="tel" class="label">Numéro de tel.</label>
+      <input type="text" id="txtel" class="txtbox"><br>
+      <label for="txtmail" id="mail" class="label">Courriel</label>
+      <input type="text" id="txtmail" class="txtbox"><br>
+      <label for="txtNAS" id="NAS" class="label">NAS</label>
+      <input type="text" id="txtNAS" class="txtbox"><br>
+      <label for="txtville" id="ville" class="label">Date de naissance</label>
+      <input type="text" id="txtville" class="txtbox"><br>
+      </form>
+    </div>
+  </body>
+</html>
