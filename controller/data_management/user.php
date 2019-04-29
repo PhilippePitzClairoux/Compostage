@@ -10,9 +10,15 @@
         private $user_password;
         private $user_email;
 
-        function __construct($user) {
+        private function __construct() {}
 
-            $this->setUsername($user);
+        public static function loadWithId($username) {
+            $instance = new self();
+
+            $instance->setUsername($username);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
         public function getUsername() {
@@ -129,4 +135,9 @@
             ($this->user_type)->update_data();
 
         }
+
+        function insert_data() {
+
+        }
+
     }

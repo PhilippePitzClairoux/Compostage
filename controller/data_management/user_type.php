@@ -9,9 +9,15 @@
         private $user_type_description;
         private $user_permissions;
 
-        function __construct($user_type) {
+        private function __construct() {}
 
-            $this->setUserTypeName($user_type);
+        public static function loadWithId($user_type_name) {
+            $instance = new self();
+
+            $instance->setUserTypeName($user_type_name);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
         public function getUserTypeName() {
@@ -77,7 +83,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $index = array_push($this->user_permissions, new user_permissions($row["permission"])) - 1;
+                $index = array_push($this->user_permissions, user_permissions::loadWithId($row["permission"])) - 1;
                 $this->user_permissions[$index]->fetch_data();
             }
 
