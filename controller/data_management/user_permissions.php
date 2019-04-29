@@ -1,6 +1,6 @@
 <?php
 
-    include("ConnectionManager.php");
+    include("../ConnectionManager.php");
 
     class user_permissions
     {
