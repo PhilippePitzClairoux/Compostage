@@ -95,7 +95,7 @@
             while ($row = $result->fetch_assoc()) {
 
                 $this->raspberry_pi_type = raspberry_pi_type::loadWithId($row["raspberry_pi_type"]);
-                $this->raspberry_pi_user = user::loadWithId(row["user_id"]);
+                $this->raspberry_pi_user = user::loadWithId($row["user_id"]);
                 $this->setRaspberryPiAquisitionDate($row["raspberry_pi_aquisition_date"]);
                 $this->setRaspberryPiCapacity($row["raspberry_pi_capacity"]);
                 $this->setZoneId($row["zone_id"]);
