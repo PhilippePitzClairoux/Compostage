@@ -16,11 +16,29 @@
         private function __construct() {}
 
         public static function loadWithId($raspberry_pi_id) {
-
             $instance = new self();
 
             $instance->setRaspberryPiId($raspberry_pi_id);
             $instance->fetch_data();
+
+            return $instance;
+        }
+
+        public static function createNewRaspberryPi($raspberry_pi_type_id,
+                                                    $raspberry_pi_user,
+                                                    $raspberry_pi_zone_id,
+                                                    $raspberry_pi_aquisition_date,
+                                                    $raspberry_pi_capcity) {
+
+            $instance = new self();
+
+            $instance->setRaspberryPiType(raspberry_pi_type::loadWithId($raspberry_pi_type_id));
+            $instance->setRaspberryPiUser(user::loadWithId($raspberry_pi_user));
+            $instance->setZoneId($raspberry_pi_zone_id);
+            $instance->setRaspberryPiAquisitionDate($raspberry_pi_aquisition_date);
+            $instance->setRaspberryPiCapacity($raspberry_pi_capcity);
+
+            $instance->insert_data();
 
             return $instance;
         }
@@ -106,4 +124,26 @@
             mysqli_close($conn);
         }
 
+        public function insert_data() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("INSERT INTO raspberry_pi(zone_id, user_id,
+                                                raspberry_pi_type, raspberry_pi_aquisition_date,
+                                                 raspberry_pi_capacity) VALUES (?, ?, ?, ?, ?) ");
+
+            $statement->bind_param("iiisi", $this->zone_id,
+                ($this->raspberry_pi_user)->getUsername(), ($this->raspberry_pi_type)->getRaspberryPiType(),
+                     $this->raspberry_pi_aquisition_date, $this->raspberry_pi_capacity);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $statement->close();
+            mysqli_close($conn);
+        }
+
     }
+
+    raspberry_pi::createNewRaspberryPi("MODEL_3", "raspberry_pi", "ALPHA", "2019-04-24", 16);
