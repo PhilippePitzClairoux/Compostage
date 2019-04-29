@@ -90,7 +90,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die($statement->error."\n");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -112,7 +112,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die($statement->error."\n");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -131,13 +131,19 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die($statement->error."\n");
+                throw new Exception($statement->error);
             }
 
             $this->measurement_types = array();
             $this->measurement_value = array();
 
             $result = $statement->get_result();
+
+            if($result->num_rows === 0 ) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("Measurement does not exist");
+            }
 
             while($row = $result->fetch_assoc()) {
 
@@ -170,7 +176,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die($statement->error."\n");
+                throw new Exception($statement->error);
             }
 
             $this->fetch_id($this->sensor_id, $current_date);
@@ -183,7 +189,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die($statement->error."\n");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);

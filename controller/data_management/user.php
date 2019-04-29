@@ -10,9 +10,15 @@
         private $user_password;
         private $user_email;
 
-        function __construct($user) {
+        private function __construct() {}
 
-            $this->setUsername($user);
+        public static function loadWithId($username) {
+            $instance = new self();
+
+            $instance->setUsername($username);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
         public function getUsername() {
@@ -61,16 +67,22 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot get info from that user...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("User does not exist");
+            }
 
             while ($row = $result->fetch_assoc()) {
 
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
-                $this->setUserType(new user_type($row["user_type_id"]));
+                $this->setUserType(user_type::loadWithId($row["user_type_id"]));
 
                 ($this->user_type)->fetch_data();
             }
@@ -100,7 +112,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot change name");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
@@ -115,7 +127,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot update user information");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
@@ -123,4 +135,9 @@
             ($this->user_type)->update_data();
 
         }
+
+        function insert_data() {
+
+        }
+
     }

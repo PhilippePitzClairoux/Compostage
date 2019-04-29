@@ -42,10 +42,16 @@ class measurement_type {
 
             $conn->close();
             $statement->close();
-            die("Error getting the measurement_type");
+            throw new Exception($statement->error);
         }
 
         $result = $statement->get_result();
+
+        if ($result->num_rows === 0) {
+            mysqli_free_result($result);
+            mysqli_close($conn);
+            throw new Exception("Measurement type does not exist");
+        }
 
         while( $row = $result->fetch_assoc()) {
 
@@ -66,7 +72,7 @@ class measurement_type {
 
         if (!$statement->execute()) {
             mysqli_close($conn);
-            die("Cannot insert new measure_type");
+            throw new Exception($statement->error);
         }
 
         mysqli_close($conn);
