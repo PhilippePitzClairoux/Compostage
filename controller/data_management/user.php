@@ -82,7 +82,7 @@
 
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
-                $this->setUserType(new user_type($row["user_type_id"]));
+                $this->setUserType(user_type::loadWithId($row["user_type_id"]));
 
                 ($this->user_type)->fetch_data();
             }
