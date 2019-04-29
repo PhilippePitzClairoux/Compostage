@@ -11,7 +11,7 @@
       <form class="form" action="index.html" method="get">
       <label class="title">Connexion</label><br><br>
       <input type="text" name="txtuser" class="txtBox" placeholder="Nom d'utilisateur"><br>
-      <input type="text" name="txtpass" class="txtBox" placeholder="Mot de passe" autocomplete="off"><br><br>
+      <input type="password" name="txtpass" class="txtBox" placeholder="Mot de passe" autocomplete="off"><br><br>
       <input type="submit" name="confirm" class="button red" value="Se connecter"><br>
       <a href="ForgotPass.html" title = "Naviguer vers la récupération de mot de passe" class="link info">Mot de passe oublié</a>
       </form>
