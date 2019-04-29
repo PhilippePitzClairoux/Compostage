@@ -9,9 +9,15 @@
         private $permission_name;
         private $permission_description;
 
-        function __construct($name) {
+        private function __construct(){}
 
-            $this->setPermissionName($name);
+        public static function loadWithId($permission_name) {
+            $instance = new self();
+
+            $instance->setPermissionName($permission_name);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
 
