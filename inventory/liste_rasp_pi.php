@@ -70,11 +70,18 @@
 
     </table>
 
-    <button class="left" onclick="location.href='ajouter_ras_pi.php'">Ajouter</button><br />
-    <button class="left" onclick="location.href='ajouter_ras_pi.php'">Modifier</button><br />
+    <button class="left" id="ajouter" onclick="checkAction('ajouter','ajouter_ras_pi.php')">Ajouter</button><br />
+    <button class="left" id="modifier" onclick="checkAction('modifier','ajouter_ras_pi.php')">Modifier</button><br />
     <button class="left">Supprimer</button><br />
     <button class="left">Ok</button><br />
 
+    <script>
+      function checkAction(action, url){
+        document.cookie ="action="+action;
+        window.location.href=url;
+
+      }
+    </script>
 
   </body>
 </html>
