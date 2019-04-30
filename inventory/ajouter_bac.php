@@ -23,6 +23,7 @@
   <body>
 
     <form method="post">
+      <h1>Ajouter un bac</h1>
       <label for="nom">Nom Bac: </label> <input type="text" name="nom" id="nom" required /><br />
       <button type="button" onclick="location.href='liste_bac.php'">Cancel</button>
       <button type="submit">Ajouter</button>

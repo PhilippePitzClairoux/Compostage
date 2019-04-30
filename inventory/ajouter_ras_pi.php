@@ -23,6 +23,7 @@
   <body>
 
     <form method="post">
+      <h1>Ajouter un rasberry pi</h1>
       <label for="id">ID Rasberry pi: </label> <input type="text" name="nom" id="nom" required /><br />
       <label for="bac">Bac: </label> <select name="bac" id="bac" required></select><br />
       <label for="zone">Zone: </label> <select name="zone" id="zone" required></select><br />
