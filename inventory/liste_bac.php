@@ -17,7 +17,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="inventory_style.css" />
     <title>Liste Bac</title>
   </head>
   <body>
@@ -67,10 +67,18 @@
 
     </table>
 
-    <button class="left" onclick="location.href='ajouter_bac.php'">Ajouter</button><br />
-    <button class="left" onclick="location.href='ajouter_bac.php'">Modifier</button><br />
+    <button class="left" id="ajouter" onclick="checkAction('ajouter','ajouter_bac.php')">Ajouter</button><br />
+    <button class="left" id="modifier" onclick="checkAction('modifier','ajouter_bac.php')">Modifier</button><br />
     <button class="left">Supprimer</button><br />
     <button class="left">Ok</button><br />
+
+    <script>
+      function checkAction(action, url){
+        document.cookie ="action="+action;
+        window.location.href=url;
+
+      }
+    </script>
 
 
   </body>
