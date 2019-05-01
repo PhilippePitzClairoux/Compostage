@@ -184,7 +184,7 @@ function readTemp() {
 	for(i = 0; i < temp.length; i++)
 	{
 		datasetsTemp.push({
-			label: "Temperature C",
+			label: zoneName[i],
         	data: 0,
         	borderColor: colors[i], 
         	fill: false,
