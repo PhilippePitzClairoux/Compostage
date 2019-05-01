@@ -46,12 +46,21 @@ let tempAverageDoor = false;
 let humAverageDoor = false;
 let phAverageDoor = false;
 
-let tempCompareDoor = true;
+//compare loads the last value in xml
+let tempCompareDoor = false;
+
 let humCompareDoor = false;
 
 let xmlData;
 
 let name = [];
+
+let datasetsTemp = [{
+        label: "Temperature C",
+        data: valTemp,
+        backgroundColor: colors,
+    }];
+
 
 //////////////////////////////////////////////////
 //	Script init
@@ -64,8 +73,12 @@ function init() {
 
 	readXML();
 
-	loadChartTempBar();
-	loadChartHumBar();
+	if(tempCompareDoor)
+		loadChartTempBar();
+	else
+		loadChartTempLine();
+
+		loadChartHumBar();
 
 	loadPH();
 }
@@ -108,10 +121,7 @@ function loadChartTempLine() {
 		type: "line",
 		data: {
 			labels: tempLabelName,
-			datasets: [{
-				label: "Temperature C",
-				data: valTemp,
-			}]
+			datasets: datasetsTemp
 		},
 		options: {
 			scales: {
@@ -174,16 +184,29 @@ function openXML() {
 //////////////////////////////////////////////////
 function readTemp() {
 	let temp = xmlData.getElementsByTagName("temp");
-	if(!tempAverageDoor){
-		if(tempCompareDoor)
-			valTemp = loadValueCompare(temp);
-		else{
-			valTemp = loadValueTime(temp, 0);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			tempLabelName = name;
-		}
+	datasetsTemp = [];
+	for(i = 0; i < temp.length; i++)
+	{
+		datasetsTemp.push({
+			label: "Temperature C",
+        	data: 0,
+        	borderColor: colors[i], 
+		})
+		if(!tempAverageDoor){
+			if(tempCompareDoor)
+			{
+				datasetsTemp[i].data = valTemp = loadValueCompare(temp);
+				break;
+			}
+			else{
+				datasetsTemp[i].data = valTemp = loadValueTime(temp, i);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				if(tempLabelName.length < name.length)
+					tempLabelName = name;
+			}
 	}
 	else
 		valTemp = average(temp);
+	}
 }
 function readHumidity() {
 	let humidity = xmlData.getElementsByTagName("humidity");
@@ -211,7 +234,7 @@ function readPH() {
 function loadValueCompare(arr){
 	let val = [];
 	for (let i = 0; i < arr.length; i++){
-		val[i] = arr[i].getElementsByTagName("value")[0].firstChild.data;
+		val[i] = arr[i].getElementsByTagName("value")[arr[i].getElementsByTagName("value").length-1].firstChild.data;
 	}
 	return val;
 }
