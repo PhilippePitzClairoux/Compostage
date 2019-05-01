@@ -55,11 +55,7 @@ let xmlData;
 
 let name = [];
 
-let datasetsTemp = [{
-        label: "Temperature C",
-        data: valTemp,
-        backgroundColor: colors,
-    }];
+let datasetsTemp = [{}];
 
 
 //////////////////////////////////////////////////
@@ -191,7 +187,8 @@ function readTemp() {
 			label: "Temperature C",
         	data: 0,
         	borderColor: colors[i], 
-		})
+        	fill: false,
+		});
 		if(!tempAverageDoor){
 			if(tempCompareDoor)
 			{
