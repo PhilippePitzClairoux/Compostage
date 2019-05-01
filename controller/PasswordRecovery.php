@@ -6,7 +6,6 @@
     if (!empty($_POST["username"]) AND !empty($_POST["answer"])) {
 
         $user = user::loadWithId($_POST["username"]);
-        print_r($user);
         if (password_verify($_POST["answer"], $user->getUserAuthAnswer())) {
 
             create_session();
