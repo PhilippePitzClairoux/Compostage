@@ -146,7 +146,7 @@
                 throw new Exception($statement->error);
             }
 
-            if ($statement->get_result()["num_rows"] !== 0) {
+            if (($statement->get_result())->num_rows !== 0) {
                 mysqli_close($conn);
                 return false;
             }
@@ -168,7 +168,7 @@
                 throw new Exception($statement->error);
             }
 
-            if ($statement->get_result()["num_rows"] !== 0) {
+            if (($statement->get_result())->num_rows !== 0) {
                 mysqli_close($conn);
                 die("Name is already taken.");
             }
@@ -203,7 +203,7 @@
 
         function insert_data() {
 
-            if (!$this->validate_new_username_and_update_it($this->getUsername()))
+            if (!$this->username_is_not_in_use($this->getUsername()))
                 throw new Exception("Username is already taken");
 
             $conn = getConnection();
@@ -212,8 +212,8 @@
                                                 password, email, auth_question, auth_answer)
                                                 VALUES (?, ?, ?, ?, ?, ?)");
 
-            $statement->bind_param("sissss", $this->username,
-                ($this->user_type)->getUserTypeId(), $this->user_password,
+            $statement->bind_param("ssssss", $this->username,
+                ($this->user_type)->getUserTypeName(), $this->user_password,
                       $this->user_email, $this->user_auth_question,
                       $this->user_auth_answer);
 
@@ -224,5 +224,4 @@
 
             mysqli_close($conn);
         }
-
     }
