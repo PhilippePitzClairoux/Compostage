@@ -168,8 +168,9 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("UPDATE users SET password = ?, email = ? WHERE username = ?");
-            $statement->bind_param("sss", $this->user_password, $this->user_email, $this->username);
+            $statement = $conn->prepare("UPDATE users SET password = ?, email = ?, auth_answer = ?, auth_question = ? WHERE username = ?");
+            $statement->bind_param("sssss", $this->user_password, $this->user_email,
+                $this->user_auth_answer, $this->user_auth_question, $this->username);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -177,9 +178,6 @@
             }
 
             mysqli_close($conn);
-
-            ($this->user_type)->update_data();
-
         }
 
         function insert_data() {

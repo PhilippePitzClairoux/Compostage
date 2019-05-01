@@ -6,10 +6,11 @@
     if (!empty($_POST["username"]) AND !empty($_POST["answer"])) {
 
         $user = user::loadWithId($_POST["username"]);
-
+        print_r($user);
         if (password_verify($_POST["answer"], $user->getUserAuthAnswer())) {
-            echo "They matched!";
+
             create_session();
+
             $_SESSION["user"] = $user;
 
             header("Location: " . "../inventory/change_password.php");

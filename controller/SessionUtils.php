@@ -27,5 +27,5 @@
 
     //return true if a valid session exists and returns false if the session doesnt exist.
     function check_if_valid_session_exists() {
-        return session_id() !== '' AND !empty($_SESSION["user"]);
+        return !empty(session_id()) AND !empty($_SESSION["user"]);
     }

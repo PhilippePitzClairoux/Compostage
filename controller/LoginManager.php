@@ -16,6 +16,7 @@
                 //store the user in the session (will be useful later)
                 $_SESSION["user"] = $user;
                 header("Location:../inventory/dashboard.php");
+                exit();
 
             } else {
                 throw new Exception("Invalid password >:[");

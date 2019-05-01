@@ -1,8 +1,10 @@
 <?php include_once("../controller/SessionUtils.php");
   create_session();
 
-  if (!check_if_valid_session_exists())
-      header("Location:login_page.html");
+  if (!check_if_valid_session_exists()) {
+      header("Location: login_page.html");
+      exit();
+  }
 
 ?>
 <!DOCTYPE html>
