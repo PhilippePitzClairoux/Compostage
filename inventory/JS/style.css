@@ -1,9 +1,16 @@
 html{
-	text-align: center;
+	background-color: #654321;
 }
 
 body{
+	background-color: white;
+	text-align: center;
+	margin: auto;
+}
 
+header{
+	background-color: gray;
+	border-top: 20px solid #4cbb17; 
 }
 
 canvas{
@@ -11,17 +18,59 @@ canvas{
 }
 
 div{
+	
+}
+
+nav{
+	text-align: center;
+}
+
+a{
+	color: white;
+}
+
+section{
+	text-align: center;
 	display: inline-block;
 }
 
-#ph{
+ul{
+	list-style: none;
+	display: block;
+	padding: 0;
+	margin: 0;
+	
+}
+
+a{
 
 }
 
-.ph{
-	margin: 10%;
-	padding: 10%;
+li{
+	float: left;
+	background-color: #4cbb17;
+	padding: 5px 0 5px 0;
+}
+
+li:hover{
+	background-color: darkgreen;
+}
+
+footer{
+	background-color: gray;
+	height: 50px;
+}
+#ph{
 	color: #FFF;
+}
+
+.ph{
+	margin: auto;
+}
+
+.chart{
+	float: fill;
+	display: inline-block;
 }
 
 .col-1 {width: 8.33%;}
