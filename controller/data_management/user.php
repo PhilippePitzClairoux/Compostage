@@ -9,6 +9,8 @@
         private $user_type;
         private $user_password;
         private $user_email;
+        private $user_auth_question;
+        private $user_auth_answer;
 
         private function __construct() {}
 
@@ -20,6 +22,45 @@
 
             return $instance;
         }
+
+        public static function createNewUser($username,
+                                             $user_type_id,
+                                             $encrypted_password,
+                                             $email,
+                                             $auth_question,
+                                             $auth_answer) {
+
+            $instance = new self();
+
+            $instance->setUsername($username);
+            $instance->setUserType(user_type::loadWithId($user_type_id));
+            $instance->setUserPassword($encrypted_password);
+            $instance->setUserEmail($email);
+            $instance->setUserAuthQuestion($auth_question);
+            $instance->setUserAuthAnswer($auth_answer);
+
+            $instance->insert_data();
+
+            return $instance;
+        }
+
+        public function getUserAuthQuestion() {
+            return $this->user_auth_question;
+        }
+
+        public function setUserAuthQuestion($user_auth_question): void {
+            $this->user_auth_question = $user_auth_question;
+        }
+
+        public function getUserAuthAnswer() {
+            return $this->user_auth_answer;
+        }
+
+        public function setUserAuthAnswer($user_auth_answer): void {
+            $this->user_auth_answer = $user_auth_answer;
+        }
+
+
 
         public function getUsername() {
             return $this->username;
@@ -83,6 +124,8 @@
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
                 $this->setUserType(user_type::loadWithId($row["user_type_id"]));
+                $this->setUserAuthQuestion($row["auth_question"]);
+                $this->setUserAuthAnswer($row["auth_answer"]);
 
                 ($this->user_type)->fetch_data();
             }
@@ -91,8 +134,11 @@
             mysqli_close($conn);
         }
 
+        function validate_new_username($username) {
 
-        function validate_new_username($new_username) {
+        }
+
+        function validate_new_username_and_update_it($new_username) {
 
             $conn = getConnection();
 
@@ -137,6 +183,9 @@
         }
 
         function insert_data() {
+
+            $this->validate_new_username_and_update_it($this->getUsername());
+
 
         }
 
