@@ -4,6 +4,9 @@
     function create_session() {
         if (empty(session_id()) AND empty($_SESSION)) {
 
+            //we include the user class here since we typically store
+            //the user object in the session. By doing this, we avoid
+            //deserialization errors.
             include_once("data_management/user.php");
 
             //session isnt started, so we start it
