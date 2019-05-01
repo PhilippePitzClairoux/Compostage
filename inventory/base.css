@@ -1,0 +1,50 @@
+*{
+  background-color: #EBEBEB;
+}
+
+.divform{
+  display: block;
+  text-align: center;
+  padding-top: 300px;
+}
+.form{
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+.title{
+  color:#EC0C30;
+  text-align: center;
+  font-size: 30px;
+  padding-right: 10px;
+  background-color: white;
+}
+.txtBox{
+  color: #7A7676;
+  background-color: white;
+  border: 1px solid black;
+  padding: 1px;
+  height: 20px;
+  width: 200px;
+  cursor: text;
+}
+.link{
+  font-size: 10px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  background-color: white;
+}
+.button{
+  border: 1px solid black;
+  cursor: pointer;
+  height: 30px;
+  width: 200px;
+  background-color: #D8C7C7;
+  font-size: 15px;
+  text-align: center;
+}
+.red{
+    color:#EC0C30;
+}

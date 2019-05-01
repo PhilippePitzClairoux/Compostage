@@ -9,9 +9,15 @@
         private $user_type_description;
         private $user_permissions;
 
-        function __construct($user_type) {
+        private function __construct() {}
 
-            $this->setUserTypeName($user_type);
+        public static function loadWithId($user_type_name) {
+            $instance = new self();
+
+            $instance->setUserTypeName($user_type_name);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
         public function getUserTypeName() {
@@ -45,10 +51,16 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch user_type_description...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("User type does not exist");
+            }
 
             while ($row = $result->fetch_assoc()) {
 
@@ -63,7 +75,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch permissions for specefic user_type...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
@@ -71,7 +83,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $index = array_push($this->user_permissions, new user_permissions($row["permission"])) - 1;
+                $index = array_push($this->user_permissions, user_permissions::loadWithId($row["permission"])) - 1;
                 $this->user_permissions[$index]->fetch_data();
             }
 
@@ -87,7 +99,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot update user_type");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);

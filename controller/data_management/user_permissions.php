@@ -1,6 +1,6 @@
 <?php
 
-    include("ConnectionManager.php");
+    include("../ConnectionManager.php");
 
     class user_permissions
     {
@@ -9,9 +9,15 @@
         private $permission_name;
         private $permission_description;
 
-        function __construct($name) {
+        private function __construct(){}
 
-            $this->setPermissionName($name);
+        public static function loadWithId($permission_name) {
+            $instance = new self();
+
+            $instance->setPermissionName($permission_name);
+            $instance->fetch_data();
+
+            return $instance;
         }
 
 
@@ -44,10 +50,16 @@
             if (!$statement->execute()) {
                 $conn->close();
                 $statement->close();
-                die("Cannot fetch permission...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("User permission does not exist");
+            }
 
             while ($row = $result->fetch_assoc()) {
 
@@ -67,7 +79,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot create new permission");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
@@ -81,7 +93,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot update user_type");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);

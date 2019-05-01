@@ -113,12 +113,13 @@ CREATE TABLE measures(
     measure_timestamp DATETIME NOT NULL,
     CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
 );
-CREATE TABLE alert_event (
-  alert_event_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+
+CREATE TABLE ta_alert_event (
   alert_type_id INT NOT NULL,
   measure_id INT NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id)
+  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
+  CONSTRAINT PRIMARY KEY(alert_type_id, measure_id)
 );
 
 CREATE TABLE ta_sensor_alerts(
@@ -198,4 +199,3 @@ INSERT INTO measure_type(measure_type_name) VALUES ("PH"), ("HUMIDITY"), ("TEMPA
 INSERT INTO sensor(sensor_type_id, sensor_state_id, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
 VALUES (1, 1, 1, "2019-04-24 11:06:23", "666-696969-666");
 
-SELECT * FROM measures;

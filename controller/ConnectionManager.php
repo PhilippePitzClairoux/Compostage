@@ -2,7 +2,7 @@
 
     include_once("config.php");
 
-
+    //https://www.php.net/manual/en/mysqli.quickstart.connections.php
     function getConnection() {
 
         $connection = mysqli_connect("localhost", username, password)

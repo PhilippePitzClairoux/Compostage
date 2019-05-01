@@ -70,12 +70,17 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot fetch the data for value...");
+                throw new Exception($statement->error);
             }
 
             $result = $statement->get_result();
 
-            print_r($result);
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("Measurement does not exist");
+            }
+
             while($row = $result->fetch_assoc()) {
 
                 $this->measurement_type = new measurement_type($row["measure_type_id"]);
@@ -103,7 +108,7 @@
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
-                die("Cannot insert measure");
+                throw new Exception($statement->error);
             }
 
             mysqli_close($conn);
