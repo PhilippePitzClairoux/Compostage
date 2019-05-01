@@ -134,7 +134,25 @@
             mysqli_close($conn);
         }
 
-        function validate_new_username($username) {
+        function username_is_not_in_use($username) {
+
+            $conn = getConnection();
+
+            $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
+            $statement->bind_param("s", $username);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            if ($statement->get_result()["num_rows"] !== 0) {
+                mysqli_close($conn);
+                return false;
+            }
+
+            mysqli_close($conn);
+            return true;
 
         }
 
@@ -145,7 +163,10 @@
             $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
             $statement->bind_param("s", $new_username);
 
-            $statement->execute();
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
 
             if ($statement->get_result()["num_rows"] !== 0) {
                 mysqli_close($conn);
@@ -182,9 +203,26 @@
 
         function insert_data() {
 
-            $this->validate_new_username_and_update_it($this->getUsername());
+            if (!$this->validate_new_username_and_update_it($this->getUsername()))
+                throw new Exception("Username is already taken");
 
+            $conn = getConnection();
 
+            $statement = $conn->prepare("INSERT INTO users(username, user_type_id,
+                                                password, email, auth_question, auth_answer)
+                                                VALUES (?, ?, ?, ?, ?, ?)");
+
+            $statement->bind_param("sissss", $this->username,
+                ($this->user_type)->getUserTypeId(), $this->user_password,
+                      $this->user_email, $this->user_auth_question,
+                      $this->user_auth_answer);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            mysqli_close($conn);
         }
 
     }
