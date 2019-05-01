@@ -1,8 +1,10 @@
 <?php include_once("../controller/SessionUtils.php");
   create_session();
 
-  if (!check_if_valid_session_exists())
-      header("Location:login_page.html");
+  if (!check_if_valid_session_exists()) {
+      header("Location: login_page.html");
+      exit();
+  }
 
 ?>
 <!DOCTYPE html>
@@ -14,7 +16,7 @@
 
         <h1>Welcome <?php echo $_SESSION["user"]->getUsername() ?>!</h1>
         <form target="_self" action="../controller/LogoutManager.php">
-            <button type="submit" value="Logout" title="Logout"></button>
+            <button title="Logout">Logout</button>
         </form>
 
 

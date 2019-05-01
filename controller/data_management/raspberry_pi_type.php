@@ -1,6 +1,6 @@
 <?php
 
-    include_once("../ConnectionManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
     class raspberry_pi_type {
 
