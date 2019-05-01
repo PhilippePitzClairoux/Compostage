@@ -1,81 +1,81 @@
 <?php
 
-include_once("../ConnectionManager.php");
+    include_once("ConnectionManager.php");
 
-class measurement_type {
+    class measurement_type {
 
-    private $measurement_type_id;
-    private $measurement_type_name;
+        private $measurement_type_id;
+        private $measurement_type_name;
 
-    function __construct($measurement_type_id) {
+        function __construct($measurement_type_id) {
 
-        $this->measurement_type_id = $measurement_type_id;
-    }
-
-
-    function setMeasurementTypeName($name) {
-        if (!is_null($name))
-            $this->measurement_type_name = $name;
-    }
-
-    function setMeasurementTypeId($id) {
-        if (!is_null($id))
-            $this->measurement_type_id = $id;
-    }
-
-    function getMeasurementTypeId() {
-        return $this->measurement_type_id;
-    }
-
-    function  getMeasurementTypeName() {
-        return $this->measurement_type_name;
-    }
-
-    function fetch_data() {
-
-        $conn = getConnection();
-
-        $statement = $conn->prepare("SELECT measure_type_name FROM measure_type WHERE measure_type_id = ?");
-        $statement->bind_param("i", $this->measurement_type_id);
-
-        if (!$statement->execute()) {
-
-            $conn->close();
-            $statement->close();
-            throw new Exception($statement->error);
+            $this->measurement_type_id = $measurement_type_id;
         }
 
-        $result = $statement->get_result();
 
-        if ($result->num_rows === 0) {
+        function setMeasurementTypeName($name) {
+            if (!is_null($name))
+                $this->measurement_type_name = $name;
+        }
+
+        function setMeasurementTypeId($id) {
+            if (!is_null($id))
+                $this->measurement_type_id = $id;
+        }
+
+        function getMeasurementTypeId() {
+            return $this->measurement_type_id;
+        }
+
+        function  getMeasurementTypeName() {
+            return $this->measurement_type_name;
+        }
+
+        function fetch_data() {
+
+            $conn = getConnection();
+
+            $statement = $conn->prepare("SELECT measure_type_name FROM measure_type WHERE measure_type_id = ?");
+            $statement->bind_param("i", $this->measurement_type_id);
+
+            if (!$statement->execute()) {
+
+                $conn->close();
+                $statement->close();
+                throw new Exception($statement->error);
+            }
+
+            $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("Measurement type does not exist");
+            }
+
+            while( $row = $result->fetch_assoc()) {
+
+                $this->measurement_type_name = $row["measure_type_name"];
+            }
+
+            $statement->close();
             mysqli_free_result($result);
             mysqli_close($conn);
-            throw new Exception("Measurement type does not exist");
         }
 
-        while( $row = $result->fetch_assoc()) {
+        function insert_data() {
 
-            $this->measurement_type_name = $row["measure_type_name"];
-        }
+            $conn = getConnection();
 
-        $statement->close();
-        mysqli_free_result($result);
-        mysqli_close($conn);
-    }
+            $statement = $conn->prepare("INSERT INTO measure_type(measure_type_name) VALUES (?)");
+            $statement->bind_param("s", $this->measurement_type_name);
 
-    function insert_data() {
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
 
-        $conn = getConnection();
-
-        $statement = $conn->prepare("INSERT INTO measure_type(measure_type_name) VALUES (?)");
-        $statement->bind_param("s", $this->measurement_type_name);
-
-        if (!$statement->execute()) {
             mysqli_close($conn);
-            throw new Exception($statement->error);
         }
 
-        mysqli_close($conn);
     }
-
-}
