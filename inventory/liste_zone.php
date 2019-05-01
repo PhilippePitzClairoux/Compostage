@@ -11,6 +11,8 @@
 
     Historique de modifications :
     Date                Nom                 Description
+    2019-04-30          Benoit              Javascript included
+    2019-05-01          Benoit              Javascript moved to JS file
     ======================================================
 
  ********************************/-->
@@ -72,12 +74,8 @@
     <button class="left">Supprimer</button><br />
     <button class="left">Ok</button><br />
 
-    <script>
-      function checkAction(action, url){
-        document.cookie ="action="+action;
-        window.location.href=url;
-
-      }
+    <script src="compostage.js">
+      
     </script>
 
 
