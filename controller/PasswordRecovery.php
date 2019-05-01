@@ -1,13 +1,14 @@
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/user.php");
 
     if (!empty($_POST["username"]) AND !empty($_POST["answer"])) {
 
         $user = user::loadWithId($_POST["username"]);
 
         if (password_verify($_POST["answer"], $user->getUserAuthAnswer())) {
-
+            echo "They matched!";
             create_session();
             $_SESSION["user"] = $user;
 

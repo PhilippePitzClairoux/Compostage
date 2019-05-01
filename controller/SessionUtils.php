@@ -7,7 +7,7 @@
             //we include the user class here since we typically store
             //the user object in the session. By doing this, we avoid
             //deserialization errors.
-            include_once($_SERVER["DOCUMENT_ROOT"] . "controller/data_management/user.php");
+            include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/user.php");
 
             //session isnt started, so we start it
             session_start();
