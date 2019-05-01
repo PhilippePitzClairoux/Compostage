@@ -11,7 +11,8 @@
             $_SESSION["user"]->setUserPassword(password_hash($_POST["pass1"], PASSWORD_DEFAULT));
             $_SESSION["user"]->update_data();
 
-            unset($_SESSION["error"]);
+            if (isset($_SESSION["error"]))
+                unset($_SESSION["error"]);
 
             header("Location: ../inventory/dashboard.php");
             exit();
