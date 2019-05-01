@@ -1,5 +1,5 @@
 html{
-	background-color: #654321;
+	background-color: #362d26 ;
 }
 
 body{
@@ -9,8 +9,8 @@ body{
 }
 
 header{
-	background-color: gray;
-	border-top: 20px solid #4cbb17; 
+	background-color: #15161b;
+	border-top: 20px solid #5f8d1c; 
 }
 
 canvas{
@@ -26,7 +26,7 @@ nav{
 }
 
 a{
-	color: white;
+	color: #fbfbfd;
 }
 
 section{
@@ -48,7 +48,7 @@ a{
 
 li{
 	float: left;
-	background-color: #4cbb17;
+	background-color: #5f8d1c;
 	padding: 5px 0 5px 0;
 }
 
@@ -57,7 +57,7 @@ li:hover{
 }
 
 footer{
-	background-color: gray;
+	background-color: #15161b;
 	height: 50px;
 }
 #ph{
