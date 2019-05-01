@@ -20,8 +20,8 @@
                     <div class='divform'>
                         <form class='form' action='../controller/ChangePassword.php' method='post'>
                             <label class='title'>Change password </label><br><br><br>
-                            <input type='text' name='pass1' class='txtBox' placeholder='New password' autocomplete='off'><br>
-                            <input type='text' name='pass2' class='txtBox' placeholder='Retype password' autocomplete='off'><br><br><br>
+                            <input type='password' name='pass1' class='txtBox' placeholder='New password' autocomplete='off'><br>
+                            <input type='password' name='pass2' class='txtBox' placeholder='Retype password' autocomplete='off'><br><br><br>
                             <label>$error</label><br>
                             <input type='submit' class='button red' value='Change password'>
                             <input type='button' onclick='location.href=\"login_page.html\"' class='button red' value='Cancel'>
