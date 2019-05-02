@@ -12,7 +12,7 @@
             $question = $user->getUserAuthQuestion();
             $username = $user->getUsername();
 
-            echo htmlentities("<!DOCTYPE html>
+            echo "<!DOCTYPE html>
                     <html lang='en' dir='ltr'>
                     <head>
                         <meta charset='utf-8'>
@@ -31,7 +31,7 @@
                         </form>
                     </div>
                     </body>
-                    </html>", ENT_HTML5, 'UTF-8', true);
+                    </html>";
 
         } catch (Exception $e) {
 
