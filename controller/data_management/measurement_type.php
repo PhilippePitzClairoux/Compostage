@@ -7,11 +7,25 @@ class measurement_type {
     private $measurement_type_id;
     private $measurement_type_name;
 
-    function __construct($measurement_type_id) {
+    private function __construct() {}
 
-        $this->measurement_type_id = $measurement_type_id;
+    public static function loadWithId($measurement_type_id) {
+        $instance = new self();
+
+        $instance->setMeasurementTypeId($measurement_type_id);
+        $instance->fetch_data();
+
+        return $instance;
     }
 
+//    public static function createNewMeasurementType($measurement_type_name) {
+//        $instance = new self();
+//
+//        $instance->setMeasurementTypeName($measurement_type_name);
+//        $instance->insert_data();
+//
+//        return $instance;
+//    }
 
     function setMeasurementTypeName($name) {
         if (!is_null($name))
@@ -63,19 +77,19 @@ class measurement_type {
         mysqli_close($conn);
     }
 
-    function insert_data() {
-
-        $conn = getConnection();
-
-        $statement = $conn->prepare("INSERT INTO measure_type(measure_type_name) VALUES (?)");
-        $statement->bind_param("s", $this->measurement_type_name);
-
-        if (!$statement->execute()) {
-            mysqli_close($conn);
-            throw new Exception($statement->error);
-        }
-
-        mysqli_close($conn);
-    }
+//    function insert_data() {
+//
+//        $conn = getConnection();
+//
+//        $statement = $conn->prepare("INSERT INTO measure_type(measure_type_name) VALUES (?)");
+//        $statement->bind_param("s", $this->measurement_type_name);
+//
+//        if (!$statement->execute()) {
+//            mysqli_close($conn);
+//            throw new Exception($statement->error);
+//        }
+//
+//        mysqli_close($conn);
+//    }
 
 }
