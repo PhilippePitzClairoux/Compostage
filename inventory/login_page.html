@@ -2,18 +2,18 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="logIn.css">
-    <link rel="stylesheet" href="Base.css">
-    <title>Connexion</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="base.css">
+    <title>Login</title>
   </head>
   <body>
     <div class="divform">
-      <form class="form" action="index.html" method="get">
-      <label class="title">Connexion</label><br><br>
-      <input type="text" name="txtuser" class="txtBox" placeholder="Nom d'utilisateur"><br>
-      <input type="password" name="txtpass" class="txtBox" placeholder="Mot de passe" autocomplete="off"><br><br>
-      <input type="submit" name="confirm" class="button red" value="Se connecter"><br>
-      <a href="ForgotPass.html" title = "Naviguer vers la récupération de mot de passe" class="link info">Mot de passe oublié</a>
+      <form class="form" action="../controller/LoginManager.php" method="post">
+      <label class="title">Login</label><br><br>
+      <input type="text" name="username" class="txtBox" placeholder="Username"><br>
+      <input type="password" name="password" class="txtBox" placeholder="Password" autocomplete="off"><br><br>
+      <input type="submit" name="confirm" class="button red" value="Connect"><br>
+      <a href="forgot_password.html" title = "Recover password" class="link info">Forgot your password?</a>
       </form>
     </div>
   </body>

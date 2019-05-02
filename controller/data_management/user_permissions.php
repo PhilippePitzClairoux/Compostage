@@ -1,6 +1,6 @@
 <?php
 
-    include("../ConnectionManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
     class user_permissions
     {
@@ -48,8 +48,7 @@
             $statement->bind_param("i", $this->permission_name);
 
             if (!$statement->execute()) {
-                $conn->close();
-                $statement->close();
+                mysqli_close($conn);
                 throw new Exception($statement->error);
             }
 

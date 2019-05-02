@@ -9,6 +9,8 @@
         private $user_type;
         private $user_password;
         private $user_email;
+        private $user_auth_question;
+        private $user_auth_answer;
 
         private function __construct() {}
 
@@ -20,6 +22,45 @@
 
             return $instance;
         }
+
+        public static function createNewUser($username,
+                                             $user_type_id,
+                                             $encrypted_password,
+                                             $email,
+                                             $auth_question,
+                                             $auth_answer) {
+
+            $instance = new self();
+
+            $instance->setUsername($username);
+            $instance->setUserType(user_type::loadWithId($user_type_id));
+            $instance->setUserPassword($encrypted_password);
+            $instance->setUserEmail($email);
+            $instance->setUserAuthQuestion($auth_question);
+            $instance->setUserAuthAnswer($auth_answer);
+
+            $instance->insert_data();
+
+            return $instance;
+        }
+
+        public function getUserAuthQuestion() {
+            return $this->user_auth_question;
+        }
+
+        public function setUserAuthQuestion($user_auth_question): void {
+            $this->user_auth_question = $user_auth_question;
+        }
+
+        public function getUserAuthAnswer() {
+            return $this->user_auth_answer;
+        }
+
+        public function setUserAuthAnswer($user_auth_answer): void {
+            $this->user_auth_answer = $user_auth_answer;
+        }
+
+
 
         public function getUsername() {
             return $this->username;
@@ -83,6 +124,8 @@
                 $this->setUserEmail($row["email"]);
                 $this->setUserPassword($row["password"]);
                 $this->setUserType(user_type::loadWithId($row["user_type_id"]));
+                $this->setUserAuthQuestion($row["auth_question"]);
+                $this->setUserAuthAnswer($row["auth_answer"]);
 
                 ($this->user_type)->fetch_data();
             }
@@ -91,17 +134,41 @@
             mysqli_close($conn);
         }
 
+        function username_is_not_in_use($username) {
 
-        function validate_new_username($new_username) {
+            $conn = getConnection();
+
+            $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
+            $statement->bind_param("s", $username);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            if (($statement->get_result())->num_rows !== 0) {
+                mysqli_close($conn);
+                return false;
+            }
+
+            mysqli_close($conn);
+            return true;
+
+        }
+
+        function validate_new_username_and_update_it($new_username) {
 
             $conn = getConnection();
 
             $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
             $statement->bind_param("s", $new_username);
 
-            $statement->execute();
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
 
-            if ($statement->get_result()["num_rows"] !== 0) {
+            if (($statement->get_result())->num_rows !== 0) {
                 mysqli_close($conn);
                 die("Name is already taken.");
             }
@@ -122,8 +189,9 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("UPDATE users SET password = ?, email = ? WHERE username = ?");
-            $statement->bind_param("sss", $this->user_password, $this->user_email, $this->username);
+            $statement = $conn->prepare("UPDATE users SET password = ?, email = ?, auth_answer = ?, auth_question = ? WHERE username = ?");
+            $statement->bind_param("sssss", $this->user_password, $this->user_email,
+                $this->user_auth_answer, $this->user_auth_question, $this->username);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -131,13 +199,29 @@
             }
 
             mysqli_close($conn);
-
-            ($this->user_type)->update_data();
-
         }
 
         function insert_data() {
 
-        }
+            if (!$this->username_is_not_in_use($this->getUsername()))
+                throw new Exception("Username is already taken");
 
+            $conn = getConnection();
+
+            $statement = $conn->prepare("INSERT INTO users(username, user_type_id,
+                                                password, email, auth_question, auth_answer)
+                                                VALUES (?, ?, ?, ?, ?, ?)");
+
+            $statement->bind_param("ssssss", $this->username,
+                ($this->user_type)->getUserTypeName(), $this->user_password,
+                      $this->user_email, $this->user_auth_question,
+                      $this->user_auth_answer);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            mysqli_close($conn);
+        }
     }

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local>
+  <bed>
+    <zone>
+      <id>1</id>
+      <name>zone A</name>
+      <raspberry>
+        <sensor>
+          <humidity>
+            <title>Humidity</title>
+            <value>40<time>22/22/22</time></value>
+          </humidity>
+          <temp>
+            <title>Temperature</title>
+            <value>20<time>22/22/22</time></value>
+            <value>25<time>22/22/23</time></value>
+            <value>23<time>22/22/24</time></value>
+            <value>32<time>22/22/25</time></value>
+            <value>35<time>22/22/26</time></value>
+            <value>25<time>22/22/27</time></value>
+          </temp>
+          <ph>
+            <title>ph</title>
+            <value>7</value>
+          </ph>
+        </sensor>
+      </raspberry>
+    </zone>
+    <zone>
+      <id>02</id>
+      <name>zone B</name>
+      <raspberry>
+        <sensor>
+          <humidity>
+            <title>Humidity</title>
+            <value>33</value>
+          </humidity>
+          <temp>
+            <title>Temperature</title>
+            <value>56</value>
+          </temp>
+          <ph>
+            <title>ph</title>
+            <value>3</value>
+          </ph>
+        </sensor>
+      </raspberry>
+    </zone>
+    <zone>
+      <id>03</id>
+      <name>zone C</name>
+      <raspberry>
+        <sensor>
+          <humidity>
+            <title>Humidity</title>
+            <value>45</value>
+          </humidity>
+          <temp>
+            <title>Temperature</title>
+            <value>22</value>
+          </temp>
+          <ph>
+            <title>ph</title>
+            <value>6</value>
+          </ph>
+        </sensor>
+      </raspberry>
+    </zone>
+  </bed>
+</local>
