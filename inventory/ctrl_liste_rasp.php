@@ -15,6 +15,16 @@
 
  ********************************/-->
  <?php
-  include_once("ctrl_list_rasp.php")
-  include_once("../controller/raspberry_pi.php")
+
+  include_once("../controller/data_management/raspberry_pi.php");
+
+  $ras= new raspberry_pi();
+
+  $ras->loadWithId(1);
+
+  $ras->fetch_data();
+
+  echo $ras->getRaspberryPiType();
+
+
  ?>
