@@ -20,6 +20,7 @@
                 exit();
 
             } else {
+
                 throw new Exception("Invalid password >:[");
             }
 
