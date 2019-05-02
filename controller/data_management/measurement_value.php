@@ -2,8 +2,6 @@
 
     include("measurement_type.php");
 
-    //TODO fix this shit bud
-
     class measurement_value {
 
         private $measurement_id;
@@ -23,8 +21,15 @@
             return $instance;
         }
 
-        static function createNewMeasurement() {
+        static function createNewMeasurement($measurement_value, $measurement_type_id) {
+            $instance = new self();
 
+            $instance->setMeasurementValue($measurement_value);
+            $instance->setMeasurementType(measurement_type::loadWithId($measurement_type_id));
+
+            $instance->insert_data();
+
+            return $instance;
         }
 
         public function getMeasurementId() {
@@ -63,7 +68,8 @@
 
             $conn = getConnection();
             $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE measure_id = ? AND measure_type_id = ?");
-            $statement->bind_param("ii", $this->measurement_id, ($this->measurement_type)->getMeasurementTypeId());
+            $statement->bind_param("ii", $this->measurement_id,
+                ($this->measurement_type)->getMeasurementTypeId());
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
