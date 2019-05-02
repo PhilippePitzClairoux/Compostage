@@ -16,6 +16,9 @@
     ======================================================
 
  ********************************/-->
+ <?php
+  include_once("ctrl_list_rasp.php")
+ ?>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -78,7 +81,7 @@
     <button class="left">Ok</button><br />
 
     <script src="compostage.js">
-      
+
     </script>
 
   </body>
