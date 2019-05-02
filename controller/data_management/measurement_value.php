@@ -2,33 +2,35 @@
 
     include("measurement_type.php");
 
-
     class measurement_value {
 
         private $measurement_id;
-        private $measurement_type_id;
         private $measurement_type;
         private $measurement_value;
 
-        function __construct($measurement_id, $measurement_type_id) {
+        private function __construct() {}
 
-            $this->measurement_id = $measurement_id;
-            $this->measurement_type_id = $measurement_type_id;
+        public static function loadWithId($measurement_id, $measurement_type_id) {
+            $instance = new self();
+
+            $instance->setMeasurementId($measurement_id);
+            $instance->setMeasurementType(measurement_type::loadWithId($measurement_type_id));
+
+            $instance->fetch_data();
+
+            return $instance;
         }
 
-        static function createNewMeasurement() {
+        static function createNewMeasurement($measurement_value, $measurement_type_id) {
+            $instance = new self();
 
+            $instance->setMeasurementValue($measurement_value);
+            $instance->setMeasurementType(measurement_type::loadWithId($measurement_type_id));
+
+            $instance->insert_data();
+
+            return $instance;
         }
-
-        public function getMeasurementTypeId() {
-            return $this->measurement_type_id;
-        }
-
-        public function setMeasurementTypeId($measurement_type_id): void {
-            if (!is_null($measurement_type_id))
-                $this->measurement_type_id = $measurement_type_id;
-        }
-
 
         public function getMeasurementId() {
             return $this->measurement_id;
@@ -61,12 +63,13 @@
 
         function fetch_data() {
 
-            if (is_null($this->measurement_type_id) AND is_null($this->measurement_id))
+            if (is_null($this->measurement_type) AND is_null($this->measurement_id))
                 die("Cannot fetch data without a measurement_type_id and measurement_id");
 
             $conn = getConnection();
             $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE measure_id = ? AND measure_type_id = ?");
-            $statement->bind_param("ii", $this->measurement_id, $this->measurement_type_id);
+            $statement->bind_param("ii", $this->measurement_id,
+                ($this->measurement_type)->getMeasurementTypeId());
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -83,9 +86,6 @@
 
             while($row = $result->fetch_assoc()) {
 
-                $this->measurement_type = new measurement_type($row["measure_type_id"]);
-                ($this->measurement_type)->fetch_data();
-
                 $this->measurement_value = $row["measure_value"];
             }
 
@@ -95,7 +95,7 @@
 
         function insert_data() {
 
-            if (is_null($this->measurement_type_id) AND is_null($this->measurement_id))
+            if (is_null($this->measurement_type) AND is_null($this->measurement_id))
                 die("Cannot insert data without a measurement_type_id and a measurement_id");
 
             if (empty($this->measurement_value))
@@ -104,7 +104,8 @@
             $conn = getConnection();
             $statement = $conn->prepare("INSERT INTO ta_measure_type(measure_id, measure_type_id, measure_value) VALUES (?, ?, ?)");
 
-            $statement->bind_param("iif", $this->measurement_id, $this->measurement_type_id, $this->measurement_value);
+            $statement->bind_param("iif", $this->measurement_id,
+                ($this->measurement_type)->getMeasurementTypeId(), $this->measurement_value);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -113,5 +114,4 @@
 
             mysqli_close($conn);
         }
-
     }

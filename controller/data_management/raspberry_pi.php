@@ -146,4 +146,3 @@
 
     }
 
-    raspberry_pi::createNewRaspberryPi("MODEL_3", "raspberry_pi", "ALPHA", "2019-04-24", 16);
