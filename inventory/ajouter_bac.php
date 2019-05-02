@@ -28,8 +28,8 @@
       <button type="button" onclick="location.href='liste_bac.php'">Cancel</button>
       <button type="submit">Ajouter</button>
     </form>
-    <script>
-      document.write(document.cookie);
+    <script src="compostage.js">
+
     </script>
 
   </body>
