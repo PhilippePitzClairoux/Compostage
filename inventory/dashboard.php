@@ -14,10 +14,8 @@
 
         <h1>Welcome <?php echo $_SESSION["user"]->getUsername() ?>!</h1>
         <form target="_self" action="../controller/LogoutManager.php">
-            <button type="submit" value="Logout" title="Logout"></button>
+            <button type="submit">Logout</button>
         </form>
-
-
 
     </body>
 </html>
