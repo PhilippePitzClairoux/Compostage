@@ -31,7 +31,9 @@
       <button type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
       <button type="submit">Ajouter</button>
     </form>
+    <script src="compostage.js">
 
+    </script>
 
   </body>
 </html>

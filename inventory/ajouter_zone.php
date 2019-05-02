@@ -30,6 +30,8 @@
       <button type="submit">Ajouter</button>
     </form>
 
+    <script src="compostage.js">
 
+    </script>
   </body>
 </html>
