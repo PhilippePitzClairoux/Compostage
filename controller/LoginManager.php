@@ -1,15 +1,16 @@
 <?php
 
-    include_once("data_management/user.php");
-    include_once("SessionUtils.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/user.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SecurityUtils.php");
 
     if (!empty($_POST["username"]) AND !empty($_POST["password"])) {
 
         try {
 
-            $user = user::loadWithId($_POST["username"]);
+            $user = user::loadWithId(sanitize_input($_POST["username"]));
 
-            if (password_verify($_POST["password"], $user->getUserPassword())) {
+            if (password_verify(sanitize_input($_POST["password"]), $user->getUserPassword())) {
 
                 create_session();
 

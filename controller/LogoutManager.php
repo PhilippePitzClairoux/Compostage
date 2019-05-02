@@ -1,6 +1,6 @@
 <?php
 
-    include_once("SessionUtils.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
 
     create_session();
 

@@ -1,12 +1,13 @@
 <?php
 
     include_once("../controller/data_management/user.php");
+    include_once("../controller/SecurityUtils.php");
 
     if (!empty($_POST["username"])) {
 
         try {
 
-            $user = user::loadWithId($_POST["username"]);
+            $user = user::loadWithId(sanitize_input($_POST["username"]));
 
             $question = $user->getUserAuthQuestion();
             $username = $user->getUsername();

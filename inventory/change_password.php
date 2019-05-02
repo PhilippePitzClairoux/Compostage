@@ -8,7 +8,7 @@
 
         $error = $_SESSION["error"];
 
-        echo "<!DOCTYPE html>
+        echo htmlentities("<!DOCTYPE html>
                     <html lang='en' dir='ltr'>
                     <head>
                         <meta charset='utf-8'>
@@ -28,7 +28,7 @@
                         </form>
                     </div>
                     </body>
-                    </html>";
+                    </html>", ENT_HTML5, 'UTF-8', true);
 
     } else {
 
