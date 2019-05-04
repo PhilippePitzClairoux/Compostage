@@ -19,7 +19,7 @@
                     </head>
                     <body>
                     <div class='divform'>
-                        <form class='form' action='../controller/ChangePassword.php' method='post'>
+                        <form class='form' action='../controller/ChangePassword.php' onsubmit='return validate()' method='post'>
                             <label class='title'>Change password </label><br><br><br>
                             <input type='password' name='pass1' id='password' class='txtBox' placeholder='New password' autocomplete='off'><br>
                             <input type='password' name='pass2' id='password' class='txtBox' placeholder='Retype password' autocomplete='off'><br><br><br>
