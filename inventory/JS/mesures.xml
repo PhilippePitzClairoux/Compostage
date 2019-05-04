@@ -22,7 +22,8 @@
           </temp>
           <ph>
             <title>ph</title>
-            <value>7</value>
+            <value>7<time>22/22/22</time></value>
+            <value>7<time>22/22/22</time></value>
           </ph>
         </sensor>
       </raspberry>
@@ -48,7 +49,8 @@
           </temp>
           <ph>
             <title>ph</title>
-            <value>3</value>
+            <value>3<time>22/22/22</time></value>
+            <value>3<time>22/22/22</time></value>
           </ph>
         </sensor>
       </raspberry>
@@ -74,7 +76,8 @@
           </temp>
           <ph>
             <title>ph</title>
-            <value>6</value>
+            <value>6<time>22/22/22</time></value>
+            <value>6<time>22/22/22</time></value>
           </ph>
         </sensor>
       </raspberry>

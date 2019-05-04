@@ -1,6 +1,6 @@
 html{
 	background-color: #362d26 ;
-
+	text-align: center;
 }
 
 body, h1, h2{
@@ -9,20 +9,11 @@ body, h1, h2{
 
 body{
 	background-color: white;
-	text-align: center;
 	margin: auto;
 }
 
 header{
 	background-color: #15161b;
-}
-
-canvas{
-
-}
-
-div{
-	
 }
 
 nav{
@@ -34,7 +25,6 @@ a{
 }
 
 section{
-	text-align: center;
 	display: inline-block;
 }
 
@@ -46,13 +36,13 @@ ul{
 	
 }
 
-a{
-
+li{
+	background-color: #5f8d1c;
+	font-weight: bold;
 }
 
-li{
+.elementNav{
 	float: left;
-	background-color: #5f8d1c;
 	padding: 5px 0 5px 0;
 }
 

@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////
 let valTemp= [];
 let valHum = [];
-let valPH;
+let valPH = [];
 
 let colors = [
 		'rgba(255, 99, 132)',
@@ -41,6 +41,7 @@ let phColor = [
 let zoneName = [];
 let tempLabelName = [];
 let humLabelName = [];
+let phLabelName = [];
 
 let tempAverageDoor = false;
 let humAverageDoor = false;
@@ -57,6 +58,7 @@ let name = [];
 
 let datasetsTemp = [{}];
 let datasetsHum = [{}];
+let datasetsPh = [{}]
 
 
 //////////////////////////////////////////////////
@@ -77,7 +79,9 @@ function init() {
 
 		loadChartHumLine();
 
-	loadPH();
+		loadChartPhBar();
+
+	//loadPH();
 }
 
 //////////////////////////////////////////////////
@@ -161,7 +165,7 @@ function loadChartHumBar(){
 }
 
 function loadChartHumLine(){
-	var ctx = document.getElementById('#chartHum');
+	var ctx = document.getElementById('#chartPh');
 	var ctx = document.getElementById('chartHum').getContext('2d');
 	var chart2 = new Chart(ctx, {
 	    type: 'line',
@@ -174,6 +178,34 @@ function loadChartHumLine(){
 	            yAxes: [{
 	                ticks: {
 	                	suggestedMax : 100,
+	                    beginAtZero: true
+
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+function loadChartPhBar(){
+	var ctx = document.getElementById('#chartPh');
+	var ctx = document.getElementById('chartPh').getContext('2d');
+	var chart2 = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: phLabelName,
+	        datasets: [{
+	            label: "Humidity %",
+	            data: valPH,
+	            backgroundColor: colors,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	suggestedMax : 14,
 	                    beginAtZero: true
 
 	                }
@@ -258,10 +290,14 @@ function readHumidity() {
 }
 function readPH() {
 	let ph = xmlData.getElementsByTagName("ph");
-	if(phAverageDoor)
-		valPH = average(ph);
-	else
-		valPH = ph[0].getElementsByTagName("value")[0].firstChild.data;
+	for (i = 0; i < ph.length; i++)
+	{
+		
+		if(phAverageDoor)
+			valPH = average(ph);
+		else
+			valPH[i] = ph[i].getElementsByTagName("value")[0].firstChild.data;
+	}
 }
 
 //////////////////////////////////////////////////
@@ -294,6 +330,7 @@ function loadZone(){
 		zoneName[i] = zone[i].getElementsByTagName("name")[0].firstChild.data;
 	}
 	//tempLabelName = humLabelName = zoneName;
+	phLabelName = zoneName;
 }
 
 function loadTime(arr, k){
@@ -312,8 +349,9 @@ function average(arr){
 	}
 	return val / arr.length;
 }
-
+/*
 function loadPH(){
 	document.getElementById("ph").innerHTML = valPH;
 	document.getElementById("ph").style.backgroundColor = phColor[Math.floor(valPH - 1)];
 }
+*/
