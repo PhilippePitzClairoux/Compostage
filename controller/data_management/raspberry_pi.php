@@ -129,9 +129,9 @@
             $conn = getConnection();
             $statement = $conn->prepare("INSERT INTO raspberry_pi(zone_id, user_id,
                                                 raspberry_pi_type, raspberry_pi_aquisition_date,
-                                                 raspberry_pi_capacity) VALUES (?, ?, ?, ?, ?) ");
+                                                raspberry_pi_capacity) VALUES (?, ?, ?, ?, ?) ");
 
-            $statement->bind_param("iiisi", $this->zone_id,
+            $statement->bind_param("isssi", $this->zone_id,
                 ($this->raspberry_pi_user)->getUsername(), ($this->raspberry_pi_type)->getRaspberryPiType(),
                      $this->raspberry_pi_aquisition_date, $this->raspberry_pi_capacity);
 
