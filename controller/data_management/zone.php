@@ -2,6 +2,7 @@
 
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/bed.php");
 
 
     class zone {
@@ -17,6 +18,16 @@
 
             $instance->setZoneId($zone_id);
             $instance->fetch_data();
+
+            return $instance;
+        }
+
+        public static function createNewZone($zone_name, $bed_id) {
+            $instance = new self();
+
+            $instance->setBed(bed::loadWithId($bed_id));
+            $instance->setZoneName($zone_name);
+            $instance->insert_data();
 
             return $instance;
         }
@@ -74,4 +85,18 @@
             mysqli_close($conn);
         }
 
+        public function insert_data() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("INSERT INTO zone(bed_id, zone_name) VALUES (?, ?)");
+            $statement->bind_param("is", ($this->getBed())->getBedId(), $this->zone_name);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $statement->close();
+            mysqli_close($conn);
+        }
     }
