@@ -14,15 +14,16 @@
                         <meta charset='utf-8'>
                         <link rel='stylesheet' href='forgot_password.css'>
                         <link rel='stylesheet' href='base.css'>
+                        <script type='text/javascript' src='login_validation.js'></script>
                         <title>Recover password</title>
                     </head>
                     <body>
                     <div class='divform'>
                         <form class='form' action='../controller/ChangePassword.php' method='post'>
                             <label class='title'>Change password </label><br><br><br>
-                            <input type='password' name='pass1' class='txtBox' placeholder='New password' autocomplete='off'><br>
-                            <input type='password' name='pass2' class='txtBox' placeholder='Retype password' autocomplete='off'><br><br><br>
-                            <label>$error</label><br>
+                            <input type='password' name='pass1' id='password' class='txtBox' placeholder='New password' autocomplete='off'><br>
+                            <input type='password' name='pass2' id='password' class='txtBox' placeholder='Retype password' autocomplete='off'><br><br><br>
+                            <label id='error'>$error</label><br>
                             <input type='submit' class='button red' value='Change password'>
                             <input type='button' onclick='location.href=\"login_page.html\"' class='button red' value='Cancel'>
                         </form>
