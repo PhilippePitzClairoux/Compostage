@@ -1,0 +1,19 @@
+/*mouse over menu*/
+nav li:hover{
+  transition:1s;
+  background-color: darkgreen;
+  color: #fbfbfd
+  font-weight: bold;
+}
+/*mouse over links*/
+a:hover{
+  transition: 1s;
+  color: blue;
+  text-decoration: none;
+}
+/*animate buttons*/
+.button:active {
+  background-color: ##7A7676;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
