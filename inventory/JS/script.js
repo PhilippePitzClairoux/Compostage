@@ -56,6 +56,7 @@ let xmlData;
 let name = [];
 
 let datasetsTemp = [{}];
+let datasetsHum = [{}];
 
 
 //////////////////////////////////////////////////
@@ -74,7 +75,7 @@ function init() {
 	else
 		loadChartTempLine();
 
-		loadChartHumBar();
+		loadChartHumLine();
 
 	loadPH();
 }
@@ -159,6 +160,29 @@ function loadChartHumBar(){
 	});
 }
 
+function loadChartHumLine(){
+	var ctx = document.getElementById('#chartHum');
+	var ctx = document.getElementById('chartHum').getContext('2d');
+	var chart2 = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: humLabelName,
+	        datasets: datasetsHum
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	suggestedMax : 100,
+	                    beginAtZero: true
+
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
 //////////////////////////////////////////////////
 //	XML Processing
 //////////////////////////////////////////////////
@@ -207,15 +231,30 @@ function readTemp() {
 }
 function readHumidity() {
 	let humidity = xmlData.getElementsByTagName("humidity");
-	if(!humAverageDoor)
-		if(humCompareDoor)
-			valHum = loadValueCompare(humidity)
-		else{
-			valHum = loadValueTime(humidity, 0)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			humLabelName = name;
-		}
+	datasetsHum = [];
+	for(i = 0; i < humidity.length; i++)
+	{
+		datasetsHum.push({
+			label: zoneName[i],
+        	data: 0,
+        	borderColor: colors[i], 
+        	fill: false,
+		});
+		if(!humAverageDoor){
+			if(humCompareDoor)
+			{
+				datasetsHum[i].data = valHum = loadValueCompare(humidity);
+				break;
+			}
+			else{
+				datasetsHum[i].data = valHum = loadValueTime(humidity, i);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				if(humLabelName.length < name.length)
+					humLabelName = name;
+			}
+	}
 	else
-		valHum = average(humidity);
+		valTemp = average(temp);
+	}
 }
 function readPH() {
 	let ph = xmlData.getElementsByTagName("ph");
@@ -254,7 +293,7 @@ function loadZone(){
 	for (let i = 0; i < zone.length; i++){
 		zoneName[i] = zone[i].getElementsByTagName("name")[0].firstChild.data;
 	}
-	tempLabelName = humLabelName = zoneName;
+	//tempLabelName = humLabelName = zoneName;
 }
 
 function loadTime(arr, k){
@@ -276,5 +315,5 @@ function average(arr){
 
 function loadPH(){
 	document.getElementById("ph").innerHTML = valPH;
-	document.getElementsByClassName("ph")[0].style.backgroundColor = phColor[Math.floor(valPH - 1)];
+	document.getElementById("ph").style.backgroundColor = phColor[Math.floor(valPH - 1)];
 }

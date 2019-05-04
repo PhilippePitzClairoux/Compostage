@@ -9,6 +9,8 @@
           <humidity>
             <title>Humidity</title>
             <value>40<time>22/22/22</time></value>
+            <value>40<time>22/22/22</time></value>
+            <value>40<time>22/22/22</time></value>
           </humidity>
           <temp>
             <title>Temperature</title>
@@ -17,10 +19,6 @@
             <value>23<time>22/22/24</time></value>
             <value>32<time>22/22/25</time></value>
             <value>35<time>22/22/26</time></value>
-            <value>25<time>22/22/27</time></value>
-            <value>25<time>22/22/27</time></value>
-            <value>25<time>22/22/27</time></value>
-            <value>25<time>22/22/27</time></value>
           </temp>
           <ph>
             <title>ph</title>
@@ -36,7 +34,9 @@
         <sensor>
           <humidity>
             <title>Humidity</title>
-            <value>33</value>
+            <value>33<time>22/22/22</time></value>
+            <value>33<time>22/22/22</time></value>
+            <value>33<time>22/22/22</time></value>
           </humidity>
           <temp>
             <title>Temperature</title>
@@ -60,7 +60,9 @@
         <sensor>
           <humidity>
             <title>Humidity</title>
-            <value>45</value>
+            <value>45<time>22/22/22</time></value>
+            <value>45<time>22/22/22</time></value>
+            <value>45<time>22/22/22</time></value>
           </humidity>
           <temp>
             <title>Temperature</title>
