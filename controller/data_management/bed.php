@@ -18,6 +18,16 @@
             return $instance;
         }
 
+        public static function createNewBed($bed_name) {
+            $instance = new self();
+
+            $instance->setBedName($bed_name);
+            $instance->insert_data();
+
+            return $instance;
+        }
+
+
         public function getBedId() {
             return $this->bed_id;
         }
@@ -59,6 +69,21 @@
             }
 
             mysqli_free_result($result);
+            mysqli_close($conn);
+        }
+
+        public function insert_data() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("INSERT INTO bed(bed_name) VALUES (?)");
+            $statement->bind_param("s", $this->bed_name);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $statement->close();
             mysqli_close($conn);
         }
 
