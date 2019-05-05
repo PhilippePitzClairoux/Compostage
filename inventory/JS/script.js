@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////
 let valTemp= [];
 let valHum = [];
-let valPH;
+let valPH = [];
 
 let colors = [
 		'rgba(255, 99, 132)',
@@ -41,17 +41,25 @@ let phColor = [
 let zoneName = [];
 let tempLabelName = [];
 let humLabelName = [];
+let phLabelName = [];
 
 let tempAverageDoor = false;
 let humAverageDoor = false;
 let phAverageDoor = false;
 
-let tempCompareDoor = true;
+//compare loads the last value in xml
+let tempCompareDoor = false;
+
 let humCompareDoor = false;
 
 let xmlData;
 
 let name = [];
+
+let datasetsTemp = [{}];
+let datasetsHum = [{}];
+let datasetsPh = [{}]
+
 
 //////////////////////////////////////////////////
 //	Script init
@@ -64,10 +72,16 @@ function init() {
 
 	readXML();
 
-	loadChartTempBar();
-	loadChartHumBar();
+	if(tempCompareDoor)
+		loadChartTempBar();
+	else
+		loadChartTempLine();
 
-	loadPH();
+		loadChartHumLine();
+
+		loadChartPhBar();
+
+	//loadPH();
 }
 
 //////////////////////////////////////////////////
@@ -108,10 +122,7 @@ function loadChartTempLine() {
 		type: "line",
 		data: {
 			labels: tempLabelName,
-			datasets: [{
-				label: "Temperature C",
-				data: valTemp,
-			}]
+			datasets: datasetsTemp
 		},
 		options: {
 			scales: {
@@ -153,6 +164,57 @@ function loadChartHumBar(){
 	});
 }
 
+function loadChartHumLine(){
+	var ctx = document.getElementById('#chartPh');
+	var ctx = document.getElementById('chartHum').getContext('2d');
+	var chart2 = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: humLabelName,
+	        datasets: datasetsHum
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	suggestedMax : 100,
+	                    beginAtZero: true
+
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+function loadChartPhBar(){
+	var ctx = document.getElementById('#chartPh');
+	var ctx = document.getElementById('chartPh').getContext('2d');
+	var chart2 = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: phLabelName,
+	        datasets: [{
+	            label: "Humidity %",
+	            data: valPH,
+	            backgroundColor: colors,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	suggestedMax : 14,
+	                    beginAtZero: true
+
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
 //////////////////////////////////////////////////
 //	XML Processing
 //////////////////////////////////////////////////
@@ -174,35 +236,68 @@ function openXML() {
 //////////////////////////////////////////////////
 function readTemp() {
 	let temp = xmlData.getElementsByTagName("temp");
-	if(!tempAverageDoor){
-		if(tempCompareDoor)
-			valTemp = loadValueCompare(temp);
-		else{
-			valTemp = loadValueTime(temp, 0);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			tempLabelName = name;
-		}
+	datasetsTemp = [];
+	for(i = 0; i < temp.length; i++)
+	{
+		datasetsTemp.push({
+			label: zoneName[i],
+        	data: 0,
+        	borderColor: colors[i], 
+        	fill: false,
+		});
+		if(!tempAverageDoor){
+			if(tempCompareDoor)
+			{
+				datasetsTemp[i].data = valTemp = loadValueCompare(temp);
+				break;
+			}
+			else{
+				datasetsTemp[i].data = valTemp = loadValueTime(temp, i);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				if(tempLabelName.length < name.length)
+					tempLabelName = name;
+			}
 	}
 	else
 		valTemp = average(temp);
+	}
 }
 function readHumidity() {
 	let humidity = xmlData.getElementsByTagName("humidity");
-	if(!humAverageDoor)
-		if(humCompareDoor)
-			valHum = loadValueCompare(humidity)
-		else{
-			valHum = loadValueTime(humidity, 0)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			humLabelName = name;
-		}
+	datasetsHum = [];
+	for(i = 0; i < humidity.length; i++)
+	{
+		datasetsHum.push({
+			label: zoneName[i],
+        	data: 0,
+        	borderColor: colors[i], 
+        	fill: false,
+		});
+		if(!humAverageDoor){
+			if(humCompareDoor)
+			{
+				datasetsHum[i].data = valHum = loadValueCompare(humidity);
+				break;
+			}
+			else{
+				datasetsHum[i].data = valHum = loadValueTime(humidity, i);// 0 is the position in xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				if(humLabelName.length < name.length)
+					humLabelName = name;
+			}
+	}
 	else
-		valHum = average(humidity);
+		valTemp = average(temp);
+	}
 }
 function readPH() {
 	let ph = xmlData.getElementsByTagName("ph");
-	if(phAverageDoor)
-		valPH = average(ph);
-	else
-		valPH = ph[0].getElementsByTagName("value")[0].firstChild.data;
+	for (i = 0; i < ph.length; i++)
+	{
+		
+		if(phAverageDoor)
+			valPH = average(ph);
+		else
+			valPH[i] = ph[i].getElementsByTagName("value")[0].firstChild.data;
+	}
 }
 
 //////////////////////////////////////////////////
@@ -211,7 +306,7 @@ function readPH() {
 function loadValueCompare(arr){
 	let val = [];
 	for (let i = 0; i < arr.length; i++){
-		val[i] = arr[i].getElementsByTagName("value")[0].firstChild.data;
+		val[i] = arr[i].getElementsByTagName("value")[arr[i].getElementsByTagName("value").length-1].firstChild.data;
 	}
 	return val;
 }
@@ -234,7 +329,8 @@ function loadZone(){
 	for (let i = 0; i < zone.length; i++){
 		zoneName[i] = zone[i].getElementsByTagName("name")[0].firstChild.data;
 	}
-	tempLabelName = humLabelName = zoneName;
+	//tempLabelName = humLabelName = zoneName;
+	phLabelName = zoneName;
 }
 
 function loadTime(arr, k){
@@ -253,8 +349,9 @@ function average(arr){
 	}
 	return val / arr.length;
 }
-
+/*
 function loadPH(){
 	document.getElementById("ph").innerHTML = valPH;
-	document.getElementsByClassName("ph")[0].style.backgroundColor = phColor[Math.floor(valPH - 1)];
+	document.getElementById("ph").style.backgroundColor = phColor[Math.floor(valPH - 1)];
 }
+*/
