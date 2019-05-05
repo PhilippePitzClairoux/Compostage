@@ -28,15 +28,15 @@ section{
 	display: inline-block;
 }
 
-ul{
+nav ul{
 	list-style: none;
 	display: block;
 	padding: 0;
 	margin: 0;
-	
+
 }
 
-li{
+nav li{
 	background-color: #5f8d1c;
 	font-weight: bold;
 }
@@ -46,7 +46,7 @@ li{
 	padding: 5px 0 5px 0;
 }
 
-li:hover{
+nav li:hover{
 	background-color: darkgreen;
 }
 
@@ -91,7 +91,7 @@ footer{
 @media only screen and (min-width: 900px) {
 
 	header{
-		border-top: 20px solid #5f8d1c; 
+		border-top: 20px solid #5f8d1c;
 	}
 
 	.col-t-1 {width: 8.33%;}
