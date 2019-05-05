@@ -226,7 +226,7 @@ function readXML() {
 
 function openXML() {
 	let xml=new XMLHttpRequest();
-	xml.open("GET", "mesures.xml",false);
+	xml.open("GET", "xml/mesures.xml",false);
 	xml.send();
 	return xml.responseXML;
 }

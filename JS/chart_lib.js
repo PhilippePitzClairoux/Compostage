@@ -1,7 +1,7 @@
 /*!
- * Chart.js v2.8.0
+ * chart_lib.js v2.8.0
  * https://www.chartjs.org
- * (c) 2019 Chart.js Contributors
+ * (c) 2019 chart_lib.js Contributors
  * Released under the MIT License
  */
 (function (global, factory) {
@@ -1522,7 +1522,7 @@ Color.prototype = {
 
 	clone: function () {
 		// NOTE(SB): using node-clone creates a dependency to Buffer when using browserify,
-		// making the final build way to big to embed in Chart.js. So let's do it manually,
+		// making the final build way to big to embed in chart_lib.js. So let's do it manually,
 		// assuming that values to clone are 1 dimension arrays containing only numbers,
 		// except 'alpha' which is a number.
 		var result = new Color();
@@ -6565,7 +6565,7 @@ var CSS_RENDER_ANIMATION = CSS_PREFIX + 'render-animation';
 var ANIMATION_START_EVENTS = ['animationstart', 'webkitAnimationStart'];
 
 /**
- * DOM event types -> Chart.js event types.
+ * DOM event types -> chart_lib.js event types.
  * Note: only events with different types are mapped.
  * @see https://developer.mozilla.org/en-US/docs/Web/Events
  */
@@ -6609,7 +6609,7 @@ function initCanvas(canvas, config) {
 	var renderHeight = canvas.getAttribute('height');
 	var renderWidth = canvas.getAttribute('width');
 
-	// Chart.js modifies some canvas values that we want to restore on destroy
+	// chart_lib.js modifies some canvas values that we want to restore on destroy
 	canvas[EXPANDO_KEY] = {
 		initial: {
 			height: renderHeight,
@@ -6849,7 +6849,7 @@ function injectCSS(platform, css) {
 	var style = platform._style || document.createElement('style');
 	if (!platform._style) {
 		platform._style = style;
-		css = '/* Chart.js */\n' + css;
+		css = '/* chart_lib.js */\n' + css;
 		style.setAttribute('type', 'text/css');
 		document.getElementsByTagName('head')[0].appendChild(style);
 	}
