@@ -14,6 +14,11 @@
     ======================================================
 
  ********************************/-->
+ <?php
+  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/RaspberryPiManager.php");
+  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiManager.php");
+  $url= "../controller/RaspberryPiManager.php";
+ ?>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -22,15 +27,51 @@
   </head>
   <body>
 
-    <form method="post">
+    <form method="post" action=<?php  echo $url?>>
       <h1>Ajouter un rasberry pi</h1>
-      <label for="id">ID Rasberry pi: </label> <input type="text" name="nom" id="nom" required /><br />
-      <label for="bac">Bac: </label> <select name="bac" id="bac" required></select><br />
-      <label for="zone">Zone: </label> <select name="zone" id="zone" required></select><br />
-      <label for="modele">Modèle: </label> <select name="modele" id="modele" required></select><br />
+      <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
+        <?php
+          $result=fetchAllIds();
+
+          while ($row=mysqli_fetch_row($result))
+          {
+              echo "<option value=".$row[0].">".$row[0]."</option>";
+          }
+        ?>
+      </select><br />
+      <label for="user">User: </label> <select name="user" id="user" required>
+        <?php
+          $result=fetchAllUsers();
+
+          while ($row=mysqli_fetch_row($result))
+          {
+              echo "<option value=".$row[0].">".$row[0]."</option>";
+          }
+        ?></select><br />
+      <label for="zone">Zone: </label> <select name="zone" id="zone" required>
+        <?php
+          $result=fetchAllZones();
+
+          while ($row=mysqli_fetch_row($result))
+          {
+              echo "<option value=".$row[0].">".$row[1]."</option>";
+          }
+        ?></select><br />
+      <label for="modele">Modèle: </label> <select name="modele" id="modele" required>
+        <?php
+          $result=fetchAllModels();
+
+          while ($row=mysqli_fetch_row($result))
+          {
+              echo "<option value=".$row[0].">".$row[0]."</option>";
+          }
+        ?></select><br />
+      <label for="date">Aquisition date: </label> <input type="date" name="date" id="date" required /><br />
+      <label for="capacity">Capacity: </label> <input type="text" name="capacity" id="capacity" required /><br />
       <button type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
-      <button type="submit">Ajouter</button>
+      <button type="submit" id="actionButton"></button>
     </form>
+
     <script src="compostage.js">
 
     </script>

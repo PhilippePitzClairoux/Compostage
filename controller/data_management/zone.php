@@ -3,6 +3,8 @@
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/bed.php");
+    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
+    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/data_management/bed.php");
 
 
     class zone {

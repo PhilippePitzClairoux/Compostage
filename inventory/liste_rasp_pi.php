@@ -17,7 +17,8 @@
 
  ********************************/-->
  <?php
-  include_once("ctrl_list_rasp.php")
+  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/RaspberryPiManager.php")
+  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiManager.php");
  ?>
 <html>
   <head>
@@ -47,27 +48,15 @@
         <tr>
           <td colspan="3">
             <ul class="left">
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
+
+                <?php
+                  $result=fetchAllRasPi();
+
+                  while ($row=mysqli_fetch_row($result))
+                  {
+                      echo "<li><ul><li>".$row[0]."</li><li>".$row[1]."</li><li>".$row[2]."</li></ul></li>";
+                  }
+                ?>
             </ul>
           </td>
         </tr>
@@ -75,10 +64,10 @@
 
     </table>
 
-    <button class="left" id="ajouter" onclick="checkAction('ajouter','ajouter_ras_pi.php')">Ajouter</button><br />
-    <button class="left" id="modifier" onclick="checkAction('modifier','ajouter_ras_pi.php')">Modifier</button><br />
-    <button class="left">Supprimer</button><br />
-    <button class="left">Ok</button><br />
+    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_ras_pi.php')">Ajouter</button><br />
+    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_ras_pi.php')">Modifier</button><br />
+    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_ras_pi.php')">Supprimer</button><br />
+    <button class="left" >Ok</button><br />
 
     <script src="compostage.js">
 
