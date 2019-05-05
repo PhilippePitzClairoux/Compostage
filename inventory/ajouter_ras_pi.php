@@ -37,6 +37,8 @@
           {
               echo "<option value=".$row[0].">".$row[0]."</option>";
           }
+
+          mysqli_free_result($result);
         ?>
       </select><br />
       <label for="user">User: </label> <select name="user" id="user" required>
@@ -47,6 +49,7 @@
           {
               echo "<option value=".$row[0].">".$row[0]."</option>";
           }
+            mysqli_free_result($result);
         ?></select><br />
       <label for="zone">Zone: </label> <select name="zone" id="zone" required>
         <?php
@@ -56,6 +59,8 @@
           {
               echo "<option value=".$row[0].">".$row[1]."</option>";
           }
+
+            mysqli_free_result($result);
         ?></select><br />
       <label for="modele">Modèle: </label> <select name="modele" id="modele" required>
         <?php
@@ -65,6 +70,7 @@
           {
               echo "<option value=".$row[0].">".$row[0]."</option>";
           }
+             mysqli_free_result($result);
         ?></select><br />
       <label for="date">Aquisition date: </label> <input type="date" name="date" id="date" required /><br />
       <label for="capacity">Capacity: </label> <input type="text" name="capacity" id="capacity" required /><br />

@@ -37,6 +37,8 @@
           {
               echo "<option value=".$row[0].">".$row[0]."</option>";
           }
+
+          mysqli_free_result($result);
         ?></select><br />
       <label for="nom">Nom Bac: </label> <input type="text" name="nom" id="nom" required /><br />
       <button type="button" onclick="location.href='liste_bac.php'">Cancel</button>

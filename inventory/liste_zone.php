@@ -52,6 +52,7 @@
                 {
                     echo "<li><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
                 }
+                  mysqli_free_result($result);
               ?>
             </ul>
           </td>
