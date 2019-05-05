@@ -1,5 +1,6 @@
 <?php
 
     define("username", "root");
-    define("password", "");
+    define("password", "!CMDsux#123");
+    //define("password", "");
     define("database_name", "Compostage");

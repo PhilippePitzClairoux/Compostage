@@ -1,6 +1,6 @@
 <?php
 
-    include_once("../ConnectionManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
     include_once("sensor_state.php");
     include_once("sensor_type.php");
     include_once("measurement.php");

@@ -155,8 +155,7 @@
 
             foreach($this->measurement_types as $type_id) {
 
-                $index = array_push($this->measurement_value,new measurement_value($this->measurement_id, $type_id)) -1;
-                ($this->measurement_value[$index])->fetch_data();
+                array_push($this->measurement_value,measurement_value::loadWithId($this->measurement_id, $type_id));
             }
 
         }

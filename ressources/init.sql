@@ -21,6 +21,8 @@ CREATE TABLE users (
     user_type_id VARCHAR(64) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(64) NOT NULL,
+    auth_question VARCHAR(1024) NOT NULL,
+    auth_answer VARCHAR(255) NOT NULL,
     CONSTRAINT FOREIGN KEY(user_type_id) REFERENCES user_type(user_type_name)
 );
 
@@ -113,12 +115,13 @@ CREATE TABLE measures(
     measure_timestamp DATETIME NOT NULL,
     CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
 );
-CREATE TABLE alert_event (
-  alert_event_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+
+CREATE TABLE ta_alert_event (
   alert_type_id INT NOT NULL,
   measure_id INT NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id)
+  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
+  CONSTRAINT PRIMARY KEY(alert_type_id, measure_id)
 );
 
 CREATE TABLE ta_sensor_alerts(
@@ -166,9 +169,9 @@ INSERT INTO user_type(user_type_name, user_type_description) VALUES ("raspberry_
 
 INSERT INTO ta_users_permissions(permission, user_type) VALUES ("manage", "admin"), ("read", "visitor"), ("read", "normal"), ("write", "normal"), ("write", "raspberry_pi");
 
-INSERT INTO users(username, user_type_id, password, email)
-VALUES ("admin", "admin", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "test@gmail.com"), -- password is : test (blowfish + salt)
-       ("raspberry_pi", "raspberry_pi", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "raspberry@test.com");
+INSERT INTO users(username, user_type_id, password, email, auth_question, auth_answer)
+VALUES ("admin", "admin", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "test@gmail.com", "hehe?", "$2y$10$Mrv.jrNC6NNNyFaa5OBwWeAuGmd7XLvNXWSxMs0k8CVQV5NLs1FEC"), -- password is : test (blowfish + salt)
+       ("raspberry_pi", "raspberry_pi", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "raspberry@test.com", "hehe?", "$2y$10$Mrv.jrNC6NNNyFaa5OBwWeAuGmd7XLvNXWSxMs0k8CVQV5NLs1FEC"); -- answer is : hehexd
 
 
 INSERT INTO bed(bed_name) VALUES ("ALPHA"), ("BRAVO"), ("BOB"), ("ANTOINE");

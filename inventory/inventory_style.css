@@ -7,10 +7,16 @@ body{
   background-color: #DDD;
 }
 
+form{
+  background-color: #FFF;
+  padding-bottom: 20px;
+}
+
 button{
-  height: 30px;
-  width: 100px;
+  height: 45px;
+  width: 150px;
   margin-bottom: 0;
+  margin-top: 10px;
 }
 
 table{
@@ -38,6 +44,20 @@ ul {
   font-size: 16px;
   font-family: Arial, sans-serif;
 
+}
+
+li ul{
+  overflow: hidden;
+  border: none;
+}
+
+li ul li{
+  text-align: center;
+  border-bottom: none;
+  padding: 0;
+  margin:0;
+  width: 33%;
+  display: inline-block;
 }
 
 th,td{
