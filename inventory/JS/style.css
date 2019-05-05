@@ -17,11 +17,17 @@ header{
 }
 
 nav{
-	text-align: center;
+	text-align: left;
+}
+
+.navigation{
+	float: left;
+	margin: 10px 0 10px 0;
 }
 
 a{
 	color: #fbfbfd;
+	text-decoration: none;
 }
 
 section{
@@ -38,12 +44,14 @@ ul{
 
 li{
 	background-color: #5f8d1c;
+	padding: 5px 0 5px 0;
 	font-weight: bold;
 }
 
 .elementNav{
 	float: left;
 	padding: 5px 0 5px 0;
+	text-align: center;
 }
 
 li:hover{

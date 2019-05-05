@@ -1,3 +1,12 @@
+<?php include_once("../controller/sessionUtils.php");
+	create_session();
+
+	if(!check_if_valid_session_exists()){
+		header("location: login_page.html");
+		exit();
+	}
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +25,10 @@
 
 		<nav class="col-12 col-m-12 col-t-12">
 			<ul class="col-12 col-m-12 col-t-12">
-				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">Accueil</li></a>
+				<a href="dashboard.html"><li class="col-3 col-m-12 col-t-3 elementNav">Main</li></a>
 				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
 				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
-				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
+				<a href="stats.html"><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
 			</ul>
 		</nav>
 	</header>
