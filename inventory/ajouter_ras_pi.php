@@ -18,11 +18,12 @@
   //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/RaspberryPiManager.php");
   include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiManager.php");
   $url= "../controller/RaspberryPiManager.php";
- ?>
+ ?> 
+ <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
+    <link rel="stylesheet" href="style.css" />
     <title>Ajouter/modifier Rasberry_pi</title>
   </head>
 <body onload="init()" class="col-10 col-m-12 col-t-12">
@@ -41,19 +42,19 @@
       </ul>
     </nav>
   </header>
-    <form method="post" action=<?php  echo $url?>>
+    <form class="col-12 col-m-12 col-t-12" method="post" action=<?php  echo $url?>>
       <h1>Ajouter un rasberry pi</h1>
-      <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
-        <?php
-          $result=fetchAllIds();
-
-          while ($row=mysqli_fetch_row($result))
-          {
-              echo "<option value=".$row[0].">".$row[0]."</option>";
-          }
-
-          mysqli_free_result($result);
-        ?>
+        <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
+          <?php
+            $result=fetchAllIds();
+  
+            while ($row=mysqli_fetch_row($result))
+            {
+                echo "<option value=".$row[0].">".$row[0]."</option>";
+            }
+  
+            mysqli_free_result($result);
+          ?>
       </select><br />
       <label for="user">User: </label> <select name="user" id="user" required>
         <?php
@@ -95,6 +96,12 @@
     <script src="compostage.js">
 
     </script>
+
+    <footer class="col-12 col-m-12 col-t-12" class="footer">
+      <div>
+        &copy; Copyright 2019 ANNELIDA
+      </div>
+    </footer>
 
   </body>
 </html>

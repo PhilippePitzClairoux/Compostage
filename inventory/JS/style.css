@@ -62,6 +62,7 @@ footer{
 	background-color: #15161b;
 	height: 50px;
 	color: silver;
+	float: left;
 }
 
 .footer{
@@ -81,6 +82,44 @@ footer{
 .chart{
 	float: fill;
 	display: inline-block;
+}
+
+form{
+  background-color: #FFF;
+  text-align: left;
+  float: left;
+  margin: 0;
+}
+
+.center{
+	text-align: center;
+}
+
+button{
+  height: 45px;
+  width: 150px;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+table{
+  border: 2px solid #000;
+  border-collapse: collapse;
+
+}
+
+th{
+  background-color: #AAA;
+  margin-bottom: 0;
+  padding: 20;
+}
+
+select{
+	margin: 5px 0 5px 0;
+}
+
+.brown{
+	background-color: #362d26;
 }
 
 .col-m-1 {width: 8.33%;}

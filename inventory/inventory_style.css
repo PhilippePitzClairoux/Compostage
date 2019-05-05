@@ -1,8 +1,4 @@
 
-*{
-  margin: 20px;
-}
-
 body{
   background-color: #DDD;
 }
@@ -10,6 +6,7 @@ body{
 form{
   background-color: #FFF;
   padding-bottom: 20px;
+  margin: 0;
 }
 
 button{
