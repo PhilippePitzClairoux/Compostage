@@ -10,12 +10,19 @@ if(page=="ajouter_bac.php"||page=="ajouter_zone.php"||page=="ajouter_ras_pi.php"
     document.getElementById("id").disabled=true;
     //document.getElementById("labelId").style.display="none";
   }
-  else if(getAction()=="Supprimer"){
+  else if(getAction()=="Supprimer"&&page=="ajouter_ras_pi.php"){
     document.getElementById("user").disabled=true;
     document.getElementById("zone").disabled=true;
     document.getElementById("modele").disabled=true;
     document.getElementById("date").disabled=true;
     document.getElementById("capacity").disabled=true;
+  }
+  else if(getAction()=="Supprimer"&&page=="ajouter_zone.php"){
+    document.getElementById("nom").disabled=true;
+    document.getElementById("bac").disabled=true;
+  }
+  else if(getAction()=="Supprimer"&&page=="ajouter_bac.php"){
+    document.getElementById("nom").disabled=true;
   }
 
 

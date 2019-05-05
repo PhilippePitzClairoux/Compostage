@@ -16,6 +16,10 @@
     ======================================================
 
  ********************************/-->
+ <?php
+  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/BedManager.php");
+  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/BedManager.php");
+ ?>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -41,27 +45,14 @@
         <tr>
           <td colspan="2">
             <ul class="left">
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
-              <li>
-                example
-              </li>
+              <?php
+                $result=fetchAllBeds();
+
+                while ($row=mysqli_fetch_row($result))
+                {
+                    echo "<li><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
+                }
+              ?>
             </ul>
           </td>
         </tr>
@@ -69,13 +60,13 @@
 
     </table>
 
-    <button class="left" id="ajouter" onclick="checkAction('ajouter','ajouter_bac.php')">Ajouter</button><br />
-    <button class="left" id="modifier" onclick="checkAction('modifier','ajouter_bac.php')">Modifier</button><br />
-    <button class="left">Supprimer</button><br />
+    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_bac.php')">Ajouter</button><br />
+    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_bac.php')">Modifier</button><br />
+    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_bac.php')">Supprimer</button><br />
     <button class="left">Ok</button><br />
 
     <script src="compostage.js">
-      
+
     </script>
 
 

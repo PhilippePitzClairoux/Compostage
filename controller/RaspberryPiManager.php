@@ -1,6 +1,6 @@
 
 <!--********************************
-    Fichier : ctrl_list_rasp.php
+    Fichier : RaspberryPiManager.php
     Auteur : Benoit Audettr-Chavigny
     Fonctionnalité : FR
     Date : 2019-05-01
