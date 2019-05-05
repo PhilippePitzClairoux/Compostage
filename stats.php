@@ -1,17 +1,27 @@
+<?php
+    //check if user is loged in
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+    create_session();
+
+    if (!check_if_valid_session_exists()) {
+        header("Location: index.html");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>page</title>
 	<meta charset="utf-8">
-	<script src="chart.js"></script>
-	<script src="script.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="JS/Chart.js"></script>
+	<script src="JS/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body onload="init()" class="col-10 col-m-12 col-t-12">
 
 	<header class="col-12 col-m-12 col-t-12">
 		<div>
-			<img src="logo.png">
+			<img src="img/logo.png">
 		</div>
 
 		<nav class="col-12 col-m-12 col-t-12">

@@ -16,7 +16,7 @@
 
                 //store the user in the session (will be useful later)
                 $_SESSION["user"] = $user;
-                header("Location:../inventory/dashboard.php");
+                header("Location:../dashboard.php");
                 exit();
 
             } else {

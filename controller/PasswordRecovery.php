@@ -13,7 +13,7 @@
 
             $_SESSION["user"] = $user;
 
-            header("Location: " . "../inventory/change_password.php");
+            header("Location: " . "../change_password.php");
             exit();
 
         } else {
@@ -23,6 +23,6 @@
 
     } else {
 
-        header("Location: " . "../inventory/forgot_password.html");
+        header("Location: " . "../forgot_password.html");
         exit();
     }

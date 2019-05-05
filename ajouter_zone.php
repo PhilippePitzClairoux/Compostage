@@ -15,21 +15,30 @@
 
  ********************************/-->
  <?php
-  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ZoneManager.php");
-  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ZoneManager.php");
-  $url= "../controller/ZoneManager.php";
+     //check if user is loged in
+     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+     create_session();
+
+     if (!check_if_valid_session_exists()) {
+         header("Location: index.html");
+         exit();
+     }
+
+     //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ZoneManager.php");
+      include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ZoneManager.php");
+      $url= "../controller/ZoneManager.php";
  ?>
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="JS/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <title>Add/alter Zone</title>
   </head>
   <body>
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>
-  			<img src="JS/logo.png">
+  			<img src="img/logo.png">
   		</div>
 
   		<nav class="col-12 col-m-12 col-t-12">
@@ -76,7 +85,7 @@
   		</div>
   	</footer>
 
-    <script src="compostage.js">
+    <script src="JS/compostage.js">
 
     </script>
   </body>
