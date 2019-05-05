@@ -1,8 +1,8 @@
 
 <!--********************************
-    Fichier : liste_rasp_pi.php
+    Fichier : liste_zone.php
     Auteur : Benoit Audettr-Chavigny
-    Fonctionnalité : FR
+    Fonctionnalité : FZ
     Date : 2019-04-25
 
     Vérification :
@@ -17,14 +17,14 @@
 
  ********************************/-->
  <?php
-  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/RaspberryPiManager.php")
+  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ZoneManager.php")
   include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiManager.php");
  ?>
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
-    <title>Liste Rasberry pi</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>Liste Zone</title>
   </head>
 <body onload="init()" class="col-10 col-m-12 col-t-12">
 
@@ -42,51 +42,53 @@
       </ul>
     </nav>
   </header>
+  <section class="col-12 col-m-12 col-t-12">
     <table class="col-m-6 left">
 
       <thead>
         <tr>
           <th>
+            Nom Zone
+          </th>
+          <th>
             ID
-          </th>
-          <th>
-            Bac
-          </th>
-          <th>
-            Zone
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="3">
+          <td colspan="2">
             <ul class="left">
+              <?php
+                $result=fetchAllZones();
 
-                <?php
-                  $result=fetchAllRasPi();
-
-                  while ($row=mysqli_fetch_row($result))
-                  {
-                      echo "<li><ul><li>".$row[0]."</li><li>".$row[1]."</li><li>".$row[2]."</li></ul></li>";
-                  }
-
-                    mysqli_free_result($result);
-                ?>
+                while ($row=mysqli_fetch_row($result))
+                {
+                    echo "<li><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
+                }
+                  mysqli_free_result($result);
+              ?>
             </ul>
           </td>
         </tr>
       </tbody>
 
     </table>
-
-    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_ras_pi.php')">Ajouter</button><br />
-    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_ras_pi.php')">Modifier</button><br />
-    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_ras_pi.php')">Supprimer</button><br />
-    <button class="left" >Ok</button><br />
-
+    <div class="col-6 col-m-12 col-t-6 button">
+      <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_zone.php')">Ajouter</button><br />
+      <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_zone.php')">Modifier</button><br />
+      <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_zone.php')">Supprimer</button><br />
+      <button class="left">Ok</button><br />
+    </div>
     <script src="compostage.js">
 
     </script>
+
+    <footer class="footer col-12 col-m-12 col-t-12">
+    <div>
+      &copy; Copyright 2019 ANNELIDA
+    </div>
+  </footer>
 
   </body>
 </html>

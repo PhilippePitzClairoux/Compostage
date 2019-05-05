@@ -2,13 +2,27 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
     <title>Login</title>
   </head>
-  <body>
+  <body class="col-10 col-m-12 col-t-12">
+
+  <header class="col-12 col-m-12 col-t-12">
+    <div>
+      <img src="logo.png">
+    </div>
+
+    <nav class="col-12 col-m-12 col-t-12">
+      <ul class="col-12 col-m-12 col-t-12">
+        <a href="dashboard.html"><li class="col-3 col-m-12 col-t-3 elementNav">Main</li></a>
+        <a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
+        <a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
+        <a href="stats.html"><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
+      </ul>
+    </nav>
+  </header>
     <div class="divform">
-      <form class="form" action="../controller/LoginManager.php" method="post">
+      <form class="form col-12 col-m-12 col-t-12" action="../controller/LoginManager.php" method="post">
       <label class="title">Login</label><br><br>
       <input type="text" name="username" class="txtBox" placeholder="Username"><br>
       <input type="password" name="password" class="txtBox" placeholder="Password" autocomplete="off"><br><br>
@@ -16,5 +30,10 @@
       <a href="forgot_password.html" title = "Recover password" class="link info">Forgot your password?</a>
       </form>
     </div>
+    <footer class="footer col-12 col-m-12 col-t-12">
+    <div>
+      &copy; Copyright 2019 ANNELIDA
+    </div>
+  </footer>
   </body>
 </html>

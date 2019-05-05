@@ -1,8 +1,8 @@
 
 <!--********************************
-    Fichier : liste_zone.php
+    Fichier : liste_bac.php
     Auteur : Benoit Audettr-Chavigny
-    Fonctionnalité : FZ
+    Fonctionnalité : FB
     Date : 2019-04-25
 
     Vérification :
@@ -17,14 +17,14 @@
 
  ********************************/-->
  <?php
-  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ZoneManager.php")
-  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiManager.php");
+  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/BedManager.php");
+  include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/BedManager.php");
  ?>
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
-    <title>Liste Zone</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>Liste Bac</title>
   </head>
 <body onload="init()" class="col-10 col-m-12 col-t-12">
 
@@ -42,13 +42,13 @@
       </ul>
     </nav>
   </header>
-
-    <table class="col-m-6 left">
+  <section class="col-12 col-m-12 col-t-12">
+    <table class="col-6 col-m-12 col-t-6">
 
       <thead>
         <tr>
           <th>
-            Nom Zone
+            Nom Bac
           </th>
           <th>
             ID
@@ -58,15 +58,16 @@
       <tbody>
         <tr>
           <td colspan="2">
-            <ul class="left">
+            <ul class="white">
               <?php
-                $result=fetchAllZones();
+                $result=fetchAllBeds();
 
                 while ($row=mysqli_fetch_row($result))
                 {
                     echo "<li><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
                 }
-                  mysqli_free_result($result);
+
+                mysqli_free_result($result);
               ?>
             </ul>
           </td>
@@ -74,16 +75,23 @@
       </tbody>
 
     </table>
-
-    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_zone.php')">Ajouter</button><br />
-    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_zone.php')">Modifier</button><br />
-    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_zone.php')">Supprimer</button><br />
-    <button class="left">Ok</button><br />
-
+    <div class="col-6 col-m-12 col-t-6 button">
+    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_bac.php')">Add</button><br />
+    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_bac.php')">Modify</button><br />
+    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_bac.php')">Delete</button><br />
+    <button class="left">OK</button><br />
+    </div>
     <script src="compostage.js">
 
     </script>
 
+    </section>
+
+    <footer class="footer col-12 col-m-12 col-t-12">
+    <div>
+      &copy; Copyright 2019 ANNELIDA
+    </div>
+  </footer>
 
   </body>
 </html>
