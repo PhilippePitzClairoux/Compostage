@@ -22,7 +22,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
     <link rel="stylesheet" href="JS/style.css" />
     <title>Ajouter/modifier Rasberry_pi</title>
   </head>
@@ -43,8 +42,8 @@
   		</nav>
   	</header>
 
-    <form method="post" action=<?php  echo $url?>>
-      <h1>Ajouter un rasberry pi</h1>
+    <form class="inventoryForm" method="post" action=<?php  echo $url?>>
+      <h1 id="title"> rasberry pi</h1>
       <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
         <?php
           $result=fetchAllIds();
@@ -84,8 +83,8 @@
         ?></select><br />
       <label for="date">Aquisition date: </label> <input type="date" name="date" id="date" required /><br />
       <label for="capacity">Capacity: </label> <input type="text" name="capacity" id="capacity" required /><br />
-      <button class="button" type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
-      <button class="button" type="submit" id="actionButton"></button>
+      <button class="button inButton" type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
+      <button class="button inButton" type="submit" id="actionButton"></button>
     </form>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">

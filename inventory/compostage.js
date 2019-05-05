@@ -5,23 +5,23 @@ var page = url.split('/').pop();
 
 if(page=="ajouter_bac.php"||page=="ajouter_zone.php"||page=="ajouter_ras_pi.php"){
 
-  if(getAction()=="Ajouter"){
+  if(getAction()=="Add"){
     document.getElementById("id").removeAttribute("required");
     document.getElementById("id").disabled=true;
     //document.getElementById("labelId").style.display="none";
   }
-  else if(getAction()=="Supprimer"&&page=="ajouter_ras_pi.php"){
+  else if(getAction()=="Delete"&&page=="ajouter_ras_pi.php"){
     document.getElementById("user").disabled=true;
     document.getElementById("zone").disabled=true;
     document.getElementById("modele").disabled=true;
     document.getElementById("date").disabled=true;
     document.getElementById("capacity").disabled=true;
   }
-  else if(getAction()=="Supprimer"&&page=="ajouter_zone.php"){
+  else if(getAction()=="Delete"&&page=="ajouter_zone.php"){
     document.getElementById("nom").disabled=true;
     document.getElementById("bac").disabled=true;
   }
-  else if(getAction()=="Supprimer"&&page=="ajouter_bac.php"){
+  else if(getAction()=="Delete"&&page=="ajouter_bac.php"){
     document.getElementById("nom").disabled=true;
   }
 
@@ -29,6 +29,7 @@ if(page=="ajouter_bac.php"||page=="ajouter_zone.php"||page=="ajouter_ras_pi.php"
   document.getElementById("actionButton").innerHTML=getAction();
   document.getElementById("actionButton").name=getAction();
   document.getElementById("actionButton").value=getAction();
+  document.getElementById("title").innerHTML=(getAction()+document.getElementById("title").innerHTML);
   //document.write.(document.getElementById("actionButton").name);
 
 }

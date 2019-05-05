@@ -23,7 +23,7 @@
 if($_POST){
 
 
-  if(isset($_POST['Ajouter'])){
+  if(isset($_POST['Add'])){
 
         $name = sanitize_input($_POST['nom']);
         bed::createNewBed($name);
@@ -32,7 +32,7 @@ if($_POST){
 
 
   }
-  else if(isset($_POST['Modifier'])){
+  else if(isset($_POST['Alter'])){
 
         $id=sanitize_input($_POST['id']);
         $name = sanitize_input($_POST['nom']);
@@ -40,7 +40,7 @@ if($_POST){
         modifyBed($id,$name);
 
   }
-  else if(isset($_POST['Supprimer'])){
+  else if(isset($_POST['Delete'])){
 
         $id=sanitize_input($_POST['id']);
 

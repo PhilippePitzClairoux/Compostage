@@ -22,9 +22,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
     <link rel="stylesheet" href="JS/style.css" />
-    <title>Ajouter/modifier Zone</title>
+    <title>Add/alter Zone</title>
   </head>
   <body>
 
@@ -43,8 +42,8 @@
   		</nav>
   	</header>
 
-    <form method="post" action=<?php  echo $url?>>
-      <h1>Ajouter une zone</h1>
+    <form class="inventoryForm" method="post" action=<?php  echo $url?>>
+      <h1 id="title"> zone</h1>
       <label for="id">Zone Id: </label><select name="id" id="id" required>
         <?php
           $result=fetchAllIds();
@@ -64,8 +63,8 @@
               echo "<option value=".$row[0].">".$row[1]."</option>";
           }
         ?></select><br />
-      <button class="button" type="button" onclick="location.href='liste_zone.php'">Cancel</button>
-      <button class="button" type="submit" id="actionButton"></button>
+      <button class="button inButton" type="button" onclick="location.href='liste_zone.php'">Cancel</button>
+      <button class="button inButton" type="submit" id="actionButton"></button>
     </form>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">

@@ -22,7 +22,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
     <link rel="stylesheet" href="JS/style.css" />
     <title>Ajouter/modifier Bac</title>
   </head>
@@ -43,8 +42,8 @@
   		</nav>
   	</header>
 
-    <form method="post" action=<?php  echo $url?>>
-      <h1>Ajouter un bac</h1>
+    <form class="inventoryForm" method="post" action=<?php  echo $url?>>
+      <h1 id="title"> bed</h1>
       <label for="id">Id du bac</label><select name="id" id="id" required>
         <?php
           $result=fetchAllIds();
@@ -55,8 +54,8 @@
           }
         ?></select><br />
       <label for="nom">Nom Bac: </label> <input type="text" name="nom" id="nom" required /><br />
-      <button class="button" type="button" onclick="location.href='liste_bac.php'">Cancel</button>
-      <button class="button" type="submit" id="actionButton"></button>
+      <button class="button inButton" type="button" onclick="location.href='liste_bac.php'">Cancel</button>
+      <button class="button inButton" type="submit" id="actionButton"></button>
     </form>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">

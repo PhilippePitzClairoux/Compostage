@@ -22,8 +22,7 @@
  ?>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="JS/style.css" />
     <title>Liste Rasberry pi</title>
   </head>
@@ -44,27 +43,28 @@
   		</nav>
   	</header>
 
-<main class="col-12 col-m-12 col-t-12 left">
+<main class="col-12 col-m-12 col-t-12 inMain left">
 
+  <h1>List of Raspberry pi</h1>
 
-    <table class="col-m-12 col-t-10 col-8 left">
+    <table class="col-m-12 col-t-10 col-8 inTable left">
 
       <thead>
         <tr>
-          <th>
+          <th class="inTableHead">
             ID
           </th>
-          <th>
-            Bac
+          <th class="inTableHead">
+            Bed
           </th>
-          <th>
+          <th class="inTableHead">
             Zone
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="3">
+          <td class="inTableElement" colspan="3">
             <ul class="left liste">
 
                 <?php
@@ -72,7 +72,7 @@
 
                   while ($row=mysqli_fetch_row($result))
                   {
-                      echo "<li class=\"listElement\"><ul><li>".$row[0]."</li><li>".$row[1]."</li><li>".$row[2]."</li></ul></li>";
+                      echo "<li class=\"listElement\"><ul><li>".$row[0]."</li><li>".$row[2]."</li><li>".$row[1]."</li></ul></li>";
                   }
                 ?>
             </ul>
@@ -82,10 +82,10 @@
 
     </table>
     <section class="buttonHolder">
-      <button class="left button" id="ajouter" onclick="checkAction('Ajouter','ajouter_ras_pi.php')">Ajouter</button><br />
-      <button class="left button" id="modifier" onclick="checkAction('Modifier','ajouter_ras_pi.php')">Modifier</button><br />
-      <button class="left button" id="supprimer" onclick="checkAction('Supprimer','ajouter_ras_pi.php')">Supprimer</button><br />
-      <button class="left button" >Ok</button><br />
+      <button class="left button inButton" id="ajouter" onclick="checkAction('Add','ajouter_ras_pi.php')">Add</button><br />
+      <button class="left button inButton" id="modifier" onclick="checkAction('Alter','ajouter_ras_pi.php')">Alter</button><br />
+      <button class="left button inButton" id="supprimer" onclick="checkAction('Delete','ajouter_ras_pi.php')">Delete</button><br />
+      <button class="left button inButton" >Ok</button><br />
     </section>
 
     </main>

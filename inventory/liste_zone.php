@@ -23,7 +23,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
     <link rel="stylesheet" href="JS/style.css" />
     <title>Liste Zone</title>
   </head>
@@ -44,23 +43,25 @@
   		</nav>
   	</header>
 
-<main class="col-12 col-m-12 col-t-12 left">
+<main class="col-12 col-m-12 col-t-12 inMain left">
 
-    <table class="col-m-6 left">
+  <h1>List of zones</h1>
+
+    <table class="col-m-12 col-t-10 col-8 inTable left">
 
       <thead>
         <tr>
-          <th>
-            Nom Zone
+          <th class="inTableHead">
+            Zone name
           </th>
-          <th>
-            ID
+          <th class="inTableHead">
+            Zone Id
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="2">
+          <td class="inTableElement" colspan="2">
             <ul class="left liste">
               <?php
                 $result=fetchAllZones();
@@ -78,10 +79,10 @@
     </table>
 
     <section class="buttonHolder">
-      <button class="left button" id="ajouter" onclick="checkAction('Ajouter','ajouter_zone.php')">Ajouter</button><br />
-      <button class="left button" id="modifier" onclick="checkAction('Modifier','ajouter_zone.php')">Modifier</button><br />
-      <button class="left button" id="supprimer" onclick="checkAction('Supprimer','ajouter_zone.php')">Supprimer</button><br />
-      <button class="left button">Ok</button><br />
+      <button class="left button inButton" id="ajouter" onclick="checkAction('Add','ajouter_zone.php')">Add</button><br />
+      <button class="left button inButton" id="modifier" onclick="checkAction('Alter','ajouter_zone.php')">Alter</button><br />
+      <button class="left button inButton" id="supprimer" onclick="checkAction('Delete','ajouter_zone.php')">Delete</button><br />
+      <button class="left button inButton">Ok</button><br />
     </section>
 
     </main>

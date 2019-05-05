@@ -23,7 +23,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
     <link rel="stylesheet" href="JS/style.css" />
     <title>Liste Bac</title>
   </head>
@@ -44,23 +43,25 @@
   		</nav>
   	</header>
 
-<main class="col-12 col-m-12 col-t-12 left">
+<main class="col-12 col-m-12 col-t-12 inMain left">
 
-    <table class="col-m-6 left">
+  <h1>List of beds</h1>
+
+    <table class="col-m-12 col-t-10 col-8 inTable left">
 
       <thead>
         <tr>
-          <th>
-            Nom Bac
+          <th class="inTableHead">
+            Bed name
           </th>
-          <th>
-            ID
+          <th class="inTableHead">
+            Bed Id
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="2">
+          <td class="inTableElement" colspan="2">
             <ul class="left liste">
               <?php
                 $result=fetchAllBeds();
@@ -78,10 +79,10 @@
     </table>
 
     <section class="buttonHolder">
-      <button class="left button" id="ajouter" onclick="checkAction('Ajouter','ajouter_bac.php')">Ajouter</button><br />
-      <button class="left button" id="modifier" onclick="checkAction('Modifier','ajouter_bac.php')">Modifier</button><br />
-      <button class="left button" id="supprimer" onclick="checkAction('Supprimer','ajouter_bac.php')">Supprimer</button><br />
-      <button class="left button">Ok</button><br />
+      <button class="left inButton button" id="ajouter" onclick="checkAction('Add','ajouter_bac.php')">Add</button><br />
+      <button class="left inButton button" id="modifier" onclick="checkAction('Alter','ajouter_bac.php')">Alter</button><br />
+      <button class="left inButton button" id="supprimer" onclick="checkAction('Delete','ajouter_bac.php')">Delete</button><br />
+      <button class="left inButton button">Ok</button><br />
 
     </section>
 
