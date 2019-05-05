@@ -5,7 +5,11 @@
     create_session();
 
     if (check_if_valid_session_exists()) {
+        echo "Session found";
         close_session();
         header("Location:../inventory/login_page.html");
         exit();
     }
+
+    header("Location:../invetory/login_page.html");
+    exit();
