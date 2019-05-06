@@ -32,7 +32,7 @@
     <section class="col-12 col-m-12 col-t-12">
         <nav class="col-2 col-m-12 col-t-2 navigation">
             <ul class="col-12 col-m-12 col-t-12">
-                <a href=""><li class="col-12 col-m-12 col-t-12 ">View completed updates</li></a>
+                <a href="updates.php"><li class="col-12 col-m-12 col-t-12 ">View completed updates</li></a>
                 <a href="liste_bac.php"><li class="col-12 col-m-12 col-t-12 ">List of Bed</li></a>
                 <a href="ajouter_bac.php"><li class="col-12 col-m-12 col-t-12 ">Add a Bed</li></a>
                 <a href="liste_zone.php"><li class="col-12 col-m-12 col-t-12 ">List of Zone</li></a>

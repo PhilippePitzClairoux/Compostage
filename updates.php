@@ -14,21 +14,25 @@
 
  ********************************/-->
 <?php
-//check if user is loged in
-include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
-create_session();
+    //check if user is loged in
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
 
-if (!check_if_valid_session_exists()) {
-    header("Location: index.html");
-    exit();
-}
+    create_session();
+
+    if (!check_if_valid_session_exists()) {
+        header("Location: index.html");
+        exit();
+    }
+
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/UpdateManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/zone.php");
 
 ?>
 <html>
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="css/style.css" />
-        <title>Create/Modify bed</title>
+        <title>Updates</title>
     </head>
     <body>
 
@@ -45,12 +49,37 @@ if (!check_if_valid_session_exists()) {
         </nav>
     </header>
 
-    <table>
-        <thead>
-            <tr>Update name</tr>
-            <tr>Raspberry that completed it</tr>
-            <tr>Date of the completion</tr>
-        </thead>
+    <table border="1">
+        <tr>
+            <td>Update name</td>
+            <td>Update state</td>
+            <td>Raspberry Pi id</td>
+            <td>Raspberry Pi zone</td>
+            <td>Raspberry Pi bed</td>
+            <td>Date of the completion</td>
+        </tr>
+
+            <?php
+
+                $data = getAllRaspberryThatCompletedUpdates();
+
+                foreach($data as $values) {
+
+                    $update = $values[0];
+                    $raspberry_pi = $values[1];
+                    $zone = zone::loadWithId($raspberry_pi->getZoneId());
+
+                    echo "<tr>";
+                    echo "<td>" . $update->getUpdateName() . "</td>";
+                    echo "<td>" . ($update->getUpdateState())->getUpdateState() . "</td>";
+                    echo "<td>" . $raspberry_pi->getRaspberryPiId() . "</td>";
+                    echo "<td>" . $zone->getZoneName() . "</td>";
+                    echo "<td>" . ($zone->getBed())->getBedName() . "</td>";
+                    echo "<td>" . $update->getUpdateDate() . "</td>";
+                    echo "</tr>";
+                }
+            ?>
+
     </table>
 
 

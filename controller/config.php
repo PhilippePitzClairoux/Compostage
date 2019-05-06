@@ -1,5 +1,5 @@
 <!--********************************
-    Fichier : ChangePassword.php
+    Fichier : config.php
     Auteur : Philippe Pitz Clairoux
     Fonctionnalité :
     Date : 2019-05-04

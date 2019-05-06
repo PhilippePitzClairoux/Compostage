@@ -72,7 +72,7 @@
         public function fetch_data() {
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT * FROM update WHERE update_id = ?");
+            $statement = $conn->prepare("SELECT * FROM `update` WHERE update_id = ?");
             $statement->bind_param("i", $this->update_id);
 
             if (!$statement->execute()) {

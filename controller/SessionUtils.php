@@ -1,5 +1,5 @@
 <!--********************************
-    Fichier : ChangePassword.php
+    Fichier : SessionUtils.php
     Auteur : Philippe Pitz Clairoux
     Fonctionnalité :
     Date : 2019-05-04
@@ -42,5 +42,5 @@
 
     //return true if a valid session exists and returns false if the session doesnt exist.
     function check_if_valid_session_exists() {
-        return !empty(session_id()) || !empty($_SESSION["user"]);
+        return !empty(session_id()) && !empty($_SESSION["user"]);
     }
