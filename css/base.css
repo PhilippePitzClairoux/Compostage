@@ -2,6 +2,10 @@
   background-color: #EBEBEB;
 }
 
+body {
+  margin: auto;
+}
+
 .divform{
   display: block;
   text-align: center;

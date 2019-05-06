@@ -48,34 +48,35 @@
             </ul>
   		</nav>
   	</header>
+    <section>
+        <form class="inventoryForm" method="post" action=<?php  echo $url?>>
+          <h1 id="title"> zone</h1>
+          <label for="id">Zone Id: </label><select name="id" id="id" required>
+            <?php
+              $result=fetchAllIds();
 
-    <form class="inventoryForm" method="post" action=<?php  echo $url?>>
-      <h1 id="title"> zone</h1>
-      <label for="id">Zone Id: </label><select name="id" id="id" required>
-        <?php
-          $result=fetchAllIds();
+              while ($row=mysqli_fetch_row($result))
+              {
+                  echo "<option value=".$row[0].">".$row[0]."</option>";
+              }
 
-          while ($row=mysqli_fetch_row($result))
-          {
-              echo "<option value=".$row[0].">".$row[0]."</option>";
-          }
+                 mysqli_free_result($result);
+            ?></select><br />
+          <label for="nom">Zone name: </label> <input type="text" name="nom" id="nom" required /><br />
+          <label for="bac">Bac: </label> <select name="bac" id="bac" required>
+            <?php
+              $result=fetchAllBeds();
 
-             mysqli_free_result($result);
-        ?></select><br />
-      <label for="nom">Zone name: </label> <input type="text" name="nom" id="nom" required /><br />
-      <label for="bac">Bac: </label> <select name="bac" id="bac" required>
-        <?php
-          $result=fetchAllBeds();
-
-          while ($row=mysqli_fetch_row($result))
-          {
-              echo "<option value=".$row[0].">".$row[1]."</option>";
-          }
-            mysqli_free_result($result);
-        ?></select><br />
-      <button class="button inButton" type="button" onclick="location.href='liste_zone.php'">Cancel</button>
-      <button class="button inButton" type="submit" id="actionButton"></button>
-    </form>
+              while ($row=mysqli_fetch_row($result))
+              {
+                  echo "<option value=".$row[0].">".$row[1]."</option>";
+              }
+                mysqli_free_result($result);
+            ?></select><br />
+          <button class="button inButton" type="button" onclick="location.href='liste_zone.php'">Cancel</button>
+          <button class="button inButton" type="submit" id="actionButton"></button>
+        </form>
+    </section>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">
   		<div>

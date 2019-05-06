@@ -4,12 +4,15 @@ function validate() {
     let pass1 = document.getElementsByName("pass1")[0];
     let pass2 = document.getElementsByName("pass2")[0];
 
-    if (!password_is_valid(pass1.value) || !password_is_valid(pass2.value)) {
+
+    if ((!password_is_valid(pass1.value) || !password_is_valid(pass2.value)) || document.getElementById("error").innerText !== "") {
+        console.log('invalid pass');
         document.getElementById("error").innerText = "Invalid password (needs to be 5 characters or more)";
         return false;
     }
 
     if (pass1.value !== pass2.value) {
+        console.log('dont match');
         document.getElementById("error").innerText = "Make sure you typed the new password twice.";
         return false;
     }
@@ -31,10 +34,13 @@ window.onload = function() {
         let pass = password[i];
 
         pass.addEventListener('blur', function () {
-            if (!password_is_valid(pass.value))
+            if (!password_is_valid(pass.value)) {
                 error.innerText = "Invalid password (needs to be 5 characters or more)";
-            else
+                return false;
+            } else {
                 error.innerText = "";
+                return true;
+            }
         });
     }
 };

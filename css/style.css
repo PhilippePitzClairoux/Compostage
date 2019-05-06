@@ -65,13 +65,13 @@ footer{
 	padding: 10px;
 }
 
-.ph{
+.ph {
 	margin: auto;
 	margin-bottom: 20px;
 }
 
 .chart{
-	float: fill;
+	float: unset;
 	display: inline-block;
 }
 
@@ -80,7 +80,7 @@ footer{
   cursor: pointer;
   height: 30px;
   width: 200px;
-  background-color: #D8C7C7;
+  background-color: #FF;
   font-size: 15px;
   text-align: center;
 }
@@ -154,7 +154,7 @@ th.inTableHead{
   border: 1px solid #000000;
   background-color: #AAA;
   margin-bottom: 0;
-  padding: 20;
+  padding: 20px;
 }
 
 td.inTableElement{

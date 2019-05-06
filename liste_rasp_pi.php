@@ -50,7 +50,7 @@
             </ul>
   		</nav>
   	</header>
-
+    <section>
 <main class="col-12 col-m-12 col-t-12 inMain left">
 
   <h1>List of Raspberry pi</h1>
@@ -99,6 +99,7 @@
     </section>
 
     </main>
+    </section>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">
   		<div>
