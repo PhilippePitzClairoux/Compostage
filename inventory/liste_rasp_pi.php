@@ -85,7 +85,7 @@
       <button class="left button inButton" id="ajouter" onclick="checkAction('Add','ajouter_ras_pi.php')">Add</button><br />
       <button class="left button inButton" id="modifier" onclick="checkAction('Alter','ajouter_ras_pi.php')">Alter</button><br />
       <button class="left button inButton" id="supprimer" onclick="checkAction('Delete','ajouter_ras_pi.php')">Delete</button><br />
-      <button class="left button inButton" >Ok</button><br />
+      <button class="left button inButton" onclick="window.location.href='dashboard.php'">Ok</button><br />
     </section>
 
     </main>

@@ -82,7 +82,7 @@
       <button class="left button inButton" id="ajouter" onclick="checkAction('Add','ajouter_zone.php')">Add</button><br />
       <button class="left button inButton" id="modifier" onclick="checkAction('Alter','ajouter_zone.php')">Alter</button><br />
       <button class="left button inButton" id="supprimer" onclick="checkAction('Delete','ajouter_zone.php')">Delete</button><br />
-      <button class="left button inButton">Ok</button><br />
+      <button class="left button inButton" onclick="window.location.href='dashboard.php'">Ok</button><br />
     </section>
 
     </main>
