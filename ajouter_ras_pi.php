@@ -51,7 +51,6 @@
   		</nav>
   	</header>
 
-    <section>
         <form class="inventoryForm" method="post" action=<?php  echo $url?>>
           <h1 id="title"> rasberry pi</h1>
           <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
@@ -102,7 +101,6 @@
           <button class="button inButton" type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
           <button class="button inButton" type="submit" id="actionButton"></button>
         </form>
-    </section>
     <footer class="footer col-12 col-m-12 col-t-12 left">
   		<div>
   			&copy; Copyright 2019 ANNELIDA

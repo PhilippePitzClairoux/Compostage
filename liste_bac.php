@@ -50,7 +50,6 @@
             </ul>
   		</nav>
   	</header>
-    <section>
 <main class="col-12 col-m-12 col-t-12 inMain left">
 
   <h1>List of beds</h1>
@@ -93,8 +92,6 @@
       <button class="left inButton button" id="modifier" onclick="checkAction('Alter','ajouter_bac.php')">Alter</button><br />
       <button class="left inButton button" id="supprimer" onclick="checkAction('Delete','ajouter_bac.php')">Delete</button><br />
       <button class="left inButton button" onclick="window.location.href='dashboard.php'">Ok</button><br />
-
-    </section>
 
     </main>
     </section>

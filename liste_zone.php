@@ -49,7 +49,6 @@
             </ul>
   		</nav>
   	</header>
-    <section>
 <main class="col-12 col-m-12 col-t-12 inMain left">
 
   <h1>List of zones</h1>
@@ -85,7 +84,6 @@
       </tbody>
 
     </table>
-    </section>
 
     <section class="buttonHolder">
       <button class="left button inButton" id="ajouter" onclick="checkAction('Add','ajouter_zone.php')">Add</button><br />
