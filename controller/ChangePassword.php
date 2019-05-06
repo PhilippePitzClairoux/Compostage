@@ -1,7 +1,7 @@
 <!--********************************
     Fichier : ChangePassword.php
     Auteur : Philippe Pitz Clairoux
-    Fonctionnalité : FMLog
+    Fonctionnalité :
     Date : 2019-05-04
 
     Vérification :

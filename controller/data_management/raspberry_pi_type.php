@@ -1,6 +1,21 @@
+<!--********************************
+    Fichier : raspberry_pi_type.php
+    Auteur : Philippe Pitz Clairoux
+    Fonctionnalité :
+    Date : 2019-05-04
+
+    Vérification :
+    Date                Nom                 Approuvé
+    ====================================================
+
+    Historique de modifications :
+    Date                Nom                 Description
+    ======================================================
+
+ ********************************/-->
 <?php
 
-    include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
     class raspberry_pi_type {
 
@@ -53,7 +68,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->setRaspberryPiDescription($row["raspberry_pi_description"]);
+                $this->setRaspberryPiDescription($row["raspberry_pi_type_description"]);
             }
 
             mysqli_free_result($result);

@@ -42,12 +42,10 @@
   		</div>
 
   		<nav class="col-12 col-m-12 col-t-12">
-  			<ul class="col-12 col-m-12 col-t-12">
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">Accueil</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
-  			</ul>
+            <ul class="col-12 col-m-12 col-t-12">
+                <a href="dashboard.php"><li class="col-6 col-m-12 col-t-6 elementNav">Dashboard</li></a>
+                <a href="controller/LogoutManager.php"><li class="col-6 col-m-12 col-t-6 elementNav">Logout</li></a>
+            </ul>
   		</nav>
   	</header>
 
@@ -55,11 +53,12 @@
       <h1 id="title"> bed</h1>
       <label for="id">Id du bac</label><select name="id" id="id" required>
         <?php
-          $result=fetchAllIds();
+          $result=fetchAllBeds();
 
-          while ($row=mysqli_fetch_row($result))
+          while ($row=$result->fetch_assoc())
           {
-              echo "<option value=".$row[0].">".$row[0]."</option>";
+              print_r($row);
+              echo "<option value=".$row["bed_id"].">". $row["bed_id"] . ". " . $row["bed_name"] ."</option>";
           }
 
           mysqli_free_result($result);
@@ -74,7 +73,7 @@
   			&copy; Copyright 2019 ANNELIDA
   		</div>
   	</footer>
-    <script src="JS/compostage.js">
+    <script src="JS/form_validation.js">
 
     </script>
 

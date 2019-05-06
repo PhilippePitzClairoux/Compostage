@@ -44,12 +44,10 @@
   		</div>
 
   		<nav class="col-12 col-m-12 col-t-12">
-  			<ul class="col-12 col-m-12 col-t-12">
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">Accueil</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
-  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
-  			</ul>
+            <ul class="col-12 col-m-12 col-t-12">
+                <a href="dashboard.php"><li class="col-6 col-m-12 col-t-6 elementNav">Dashboard</li></a>
+                <a href="controller/LogoutManager.php"><li class="col-6 col-m-12 col-t-6 elementNav">Logout</li></a>
+            </ul>
   		</nav>
   	</header>
 
@@ -110,7 +108,7 @@
   		</div>
   	</footer>
 
-    <script src="JS/compostage.js">
+    <script src="JS/form_validation.js">
 
     </script>
 

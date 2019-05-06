@@ -1,3 +1,18 @@
+<!--********************************
+    Fichier : update.php
+    Auteur : Philippe Pitz Clairoux
+    Fonctionnalité :
+    Date : 2019-05-04
+
+    Vérification :
+    Date                Nom                 Approuvé
+    ====================================================
+
+    Historique de modifications :
+    Date                Nom                 Description
+    ======================================================
+
+ ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
@@ -57,7 +72,7 @@
         public function fetch_data() {
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT * FROM update WHERE update_id = ?");
+            $statement = $conn->prepare("SELECT * FROM `update` WHERE update_id = ?");
             $statement->bind_param("i", $this->update_id);
 
             if (!$statement->execute()) {
