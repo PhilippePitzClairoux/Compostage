@@ -22,13 +22,28 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
+    <link rel="stylesheet" href="JS/style.css" />
     <title>Ajouter/modifier Rasberry_pi</title>
   </head>
   <body>
 
-    <form method="post" action=<?php  echo $url?>>
-      <h1>Ajouter un rasberry pi</h1>
+    <header class="col-12 col-m-12 col-t-12">
+  		<div>
+  			<img src="JS/logo.png">
+  		</div>
+
+  		<nav class="col-12 col-m-12 col-t-12">
+  			<ul class="col-12 col-m-12 col-t-12">
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">Accueil</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
+  			</ul>
+  		</nav>
+  	</header>
+
+    <form class="inventoryForm" method="post" action=<?php  echo $url?>>
+      <h1 id="title"> rasberry pi</h1>
       <label for="id" id="labelId">ID Rasberry pi: </label> <select name="id" id="id" required>
         <?php
           $result=fetchAllIds();
@@ -62,7 +77,7 @@
 
             mysqli_free_result($result);
         ?></select><br />
-      <label for="modele">Modèle: </label> <select name="modele" id="modele" required>
+      <label for="modele">Model: </label> <select name="modele" id="modele" required>
         <?php
           $result=fetchAllModels();
 
@@ -74,9 +89,15 @@
         ?></select><br />
       <label for="date">Aquisition date: </label> <input type="date" name="date" id="date" required /><br />
       <label for="capacity">Capacity: </label> <input type="text" name="capacity" id="capacity" required /><br />
-      <button type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
-      <button type="submit" id="actionButton"></button>
+      <button class="button inButton" type="button" onclick="location.href='liste_rasp_pi.php'">Cancel</button>
+      <button class="button inButton" type="submit" id="actionButton"></button>
     </form>
+
+    <footer class="footer col-12 col-m-12 col-t-12 left">
+  		<div>
+  			&copy; Copyright 2019 ANNELIDA
+  		</div>
+  	</footer>
 
     <script src="compostage.js">
 

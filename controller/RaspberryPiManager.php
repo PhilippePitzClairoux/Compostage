@@ -23,7 +23,7 @@
 if($_POST){
 
 
-  if(isset($_POST['Ajouter'])){
+  if(isset($_POST['Add'])){
 
         $modele = sanitize_input($_POST['modele']);
         $user = sanitize_input($_POST['user']);
@@ -36,7 +36,7 @@ if($_POST){
 
 
   }
-  else if(isset($_POST['Modifier'])){
+  else if(isset($_POST['Alter'])){
 
         $id=sanitize_input($_POST['id']);
         $modele = sanitize_input($_POST['modele']);
@@ -48,7 +48,7 @@ if($_POST){
         modifyRaspberryPi($modele,$user,$zone,$date,$capacity,$id);
 
   }
-  else if(isset($_POST['Supprimer'])){
+  else if(isset($_POST['Delete'])){
 
         $id=sanitize_input($_POST['id']);
 

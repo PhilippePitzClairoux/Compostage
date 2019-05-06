@@ -28,15 +28,15 @@ section{
 	display: inline-block;
 }
 
-ul{
+nav ul{
 	list-style: none;
 	display: block;
 	padding: 0;
 	margin: 0;
-	
+
 }
 
-li{
+nav li{
 	background-color: #5f8d1c;
 	font-weight: bold;
 }
@@ -46,7 +46,7 @@ li{
 	padding: 5px 0 5px 0;
 }
 
-li:hover{
+nav li:hover{
 	background-color: darkgreen;
 }
 
@@ -75,6 +75,104 @@ footer{
 	display: inline-block;
 }
 
+.button{
+  border: 1px solid black;
+  cursor: pointer;
+  height: 30px;
+  width: 200px;
+  background-color: #D8C7C7;
+  font-size: 15px;
+  text-align: center;
+}
+
+.buttonHolder{
+  float:left;
+  width:200px;
+}
+
+.right{
+	float:right;
+}
+
+.left{
+	float:left;
+}
+
+ul.liste {
+  /*position: absolute;*/
+  list-style: none;
+  overflow: scroll;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border: 2px solid #ccc;
+  background-color: #FFF;
+
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+
+}
+
+li.listElement {
+  padding: 10px 20px;
+
+  border-bottom: 1px solid #ccc;
+
+}
+
+form.inventoryForm{
+  background-color: #FFF;
+  padding-bottom: 20px;
+  margin: 0;
+}
+
+li ul{
+  overflow: hidden;
+  border: none;
+}
+
+li ul li{
+  text-align: center;
+  border-bottom: none;
+  padding: 0;
+  margin:0;
+  width: 33%;
+  display: inline-block;
+}
+
+table.inTable{
+  border: 2px solid #000;
+  border-collapse: collapse;
+  max-height: 60%;
+  margin-top: 10px;
+  margin-right:5px;
+
+
+}
+
+th.inTableHead{
+  border: 1px solid #000000;
+  background-color: #AAA;
+  margin-bottom: 0;
+  padding: 20;
+}
+
+td.inTableElement{
+  border: 1px solid #000000;
+
+}
+
+button.inButton{
+
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+main.inMain{
+
+  padding-bottom: 20px;
+}
+
 .col-m-1 {width: 8.33%;}
 .col-m-2 {width: 16.66%;}
 .col-m-3 {width: 25%;}
@@ -91,7 +189,7 @@ footer{
 @media only screen and (min-width: 900px) {
 
 	header{
-		border-top: 20px solid #5f8d1c; 
+		border-top: 20px solid #5f8d1c;
 	}
 
 	.col-t-1 {width: 8.33%;}

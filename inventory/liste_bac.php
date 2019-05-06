@@ -23,34 +23,52 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="inventory_style.css" />
+    <link rel="stylesheet" href="JS/style.css" />
     <title>Liste Bac</title>
   </head>
-  <body>
+  <body class="left col-10 col-m-12 col-t-12">
 
+    <header class="col-12 col-m-12 col-t-12">
+  		<div>
+  			<img src="JS/logo.png">
+  		</div>
 
-    <table class="col-m-6 left">
+  		<nav class="col-12 col-m-12 col-t-12">
+  			<ul class="col-12 col-m-12 col-t-12">
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">Accueil</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page2</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page3</li></a>
+  				<a href=""><li class="col-3 col-m-12 col-t-3 elementNav">page4</li></a>
+  			</ul>
+  		</nav>
+  	</header>
+
+<main class="col-12 col-m-12 col-t-12 inMain left">
+
+  <h1>List of beds</h1>
+
+    <table class="col-m-12 col-t-10 col-8 inTable left">
 
       <thead>
         <tr>
-          <th>
-            Nom Bac
+          <th class="inTableHead">
+            Bed name
           </th>
-          <th>
-            ID
+          <th class="inTableHead">
+            Bed Id
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="2">
-            <ul class="left">
+          <td class="inTableElement" colspan="2">
+            <ul class="left liste">
               <?php
                 $result=fetchAllBeds();
 
                 while ($row=mysqli_fetch_row($result))
                 {
-                    echo "<li><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
+                    echo "<li class=\"listElement\"><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
                 }
 
                 mysqli_free_result($result);
@@ -62,10 +80,21 @@
 
     </table>
 
-    <button class="left" id="ajouter" onclick="checkAction('Ajouter','ajouter_bac.php')">Ajouter</button><br />
-    <button class="left" id="modifier" onclick="checkAction('Modifier','ajouter_bac.php')">Modifier</button><br />
-    <button class="left" id="supprimer" onclick="checkAction('Supprimer','ajouter_bac.php')">Supprimer</button><br />
-    <button class="left">Ok</button><br />
+    <section class="buttonHolder">
+      <button class="left inButton button" id="ajouter" onclick="checkAction('Add','ajouter_bac.php')">Add</button><br />
+      <button class="left inButton button" id="modifier" onclick="checkAction('Alter','ajouter_bac.php')">Alter</button><br />
+      <button class="left inButton button" id="supprimer" onclick="checkAction('Delete','ajouter_bac.php')">Delete</button><br />
+      <button class="left inButton button" onclick="window.location.href='dashboard.php'">Ok</button><br />
+
+    </section>
+
+    </main>
+
+    <footer class="footer col-12 col-m-12 col-t-12 left">
+  		<div>
+  			&copy; Copyright 2019 ANNELIDA
+  		</div>
+  	</footer>
 
     <script src="compostage.js">
 
