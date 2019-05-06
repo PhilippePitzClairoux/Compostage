@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Ajouter/modifier Rasberry_pi</title>
   </head>
-  <body>
+  <body class="center col-10 col-m-12 col-t-12">
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>

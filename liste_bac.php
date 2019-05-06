@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Liste Bac</title>
   </head>
-  <body class="left col-10 col-m-12 col-t-12">
+  <body class="center col-10 col-m-12 col-t-12">
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>
@@ -50,50 +50,50 @@
             </ul>
   		</nav>
   	</header>
-<main class="col-12 col-m-12 col-t-12 inMain left">
+    <section class="col-12 col-m-12 col-t-12 right">
+        <main class="col-12 col-m-12 col-t-12 inMain left">
+        <h1>List of beds</h1>
 
-  <h1>List of beds</h1>
+        <table class="col-m-12 col-t-10 col-8 inTable left">
 
-    <table class="col-m-12 col-t-10 col-8 inTable left">
+          <thead>
+            <tr>
+              <th class="inTableHead">
+                Bed name
+              </th>
+              <th class="inTableHead">
+                Bed Id
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="inTableElement" colspan="2">
+                <ul class="left liste">
+                  <?php
+                    $result=fetchAllBeds();
 
-      <thead>
-        <tr>
-          <th class="inTableHead">
-            Bed name
-          </th>
-          <th class="inTableHead">
-            Bed Id
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="inTableElement" colspan="2">
-            <ul class="left liste">
-              <?php
-                $result=fetchAllBeds();
+                    while ($row=mysqli_fetch_row($result))
+                    {
+                        echo "<li class=\"listElement\"><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
+                    }
 
-                while ($row=mysqli_fetch_row($result))
-                {
-                    echo "<li class=\"listElement\"><ul><li class=\"col-m-6\">".$row[0]."</li><li class=\"col-m-6\">".$row[1]."</li></ul></li>";
-                }
+                    mysqli_free_result($result);
+                  ?>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
 
-                mysqli_free_result($result);
-              ?>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
+        </table>
 
-    </table>
-
-    <section class="buttonHolder">
-      <button class="left inButton button" id="ajouter" onclick="checkAction('Add','ajouter_bac.php')">Add</button><br />
-      <button class="left inButton button" id="modifier" onclick="checkAction('Alter','ajouter_bac.php')">Alter</button><br />
-      <button class="left inButton button" id="supprimer" onclick="checkAction('Delete','ajouter_bac.php')">Delete</button><br />
-      <button class="left inButton button" onclick="window.location.href='dashboard.php'">Ok</button><br />
-
-    </main>
+        <div class="buttonHolder">
+          <button class="left inButton button" id="ajouter" onclick="checkAction('Add','ajouter_bac.php')">Add</button><br />
+          <button class="left inButton button" id="modifier" onclick="checkAction('Alter','ajouter_bac.php')">Alter</button><br />
+          <button class="left inButton button" id="supprimer" onclick="checkAction('Delete','ajouter_bac.php')">Delete</button><br />
+          <button class="left inButton button" onclick="window.location.href='dashboard.php'">Ok</button><br />
+        </div>
+        </main>
     </section>
     <footer class="footer col-12 col-m-12 col-t-12 left">
   		<div>

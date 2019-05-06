@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Liste Zone</title>
   </head>
-  <body class="left col-10 col-m-12 col-t-12">
+  <body class="center col-10 col-m-12 col-t-12">
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>
@@ -49,6 +49,7 @@
             </ul>
   		</nav>
   	</header>
+    <section class="center col-12 col-m-12 col-t-12">
 <main class="col-12 col-m-12 col-t-12 inMain left">
 
   <h1>List of zones</h1>
@@ -93,6 +94,7 @@
     </section>
 
     </main>
+    </section>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">
   		<div>

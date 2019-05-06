@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="css/style.css" />
         <title>Updates</title>
     </head>
-    <body>
+    <body class="center col-10 col-m-12 col-t-12">
 
     <header class="col-12 col-m-12 col-t-12">
         <div>
@@ -48,8 +48,11 @@
             </ul>
         </nav>
     </header>
-
-    <table border="1">
+    <section class="col-12 col-m-12 col-t-12 center">
+        <br>
+        <br>
+        <br>
+    <table border="1" style="margin: auto">
         <tr>
             <td>Update name</td>
             <td>Update state</td>
@@ -79,9 +82,11 @@
                     echo "</tr>";
                 }
             ?>
-
     </table>
-
+        <br>
+        <br>
+        <br>
+    </section>
 
     <footer class="footer col-12 col-m-12 col-t-12 left">
         <div>

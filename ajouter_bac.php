@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Create/Modify bed</title>
   </head>
-  <body>
+  <body style="text-align: center;" class="col-10 col-m-12 col-t-12">
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>

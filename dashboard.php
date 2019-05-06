@@ -29,8 +29,8 @@
             </ul>
         </nav>
     </header>
-    <section class="col-12 col-m-12 col-t-12">
-        <nav class="col-2 col-m-12 col-t-2 navigation">
+    <section class="col-2 col-m-12 col-t-2 left">
+        <nav class="col-12 col-m-12 col-t-12 navigation left">
             <ul class="col-12 col-m-12 col-t-12">
                 <a href="updates.php"><li class="col-12 col-m-12 col-t-12 ">View completed updates</li></a>
                 <a href="liste_bac.php"><li class="col-12 col-m-12 col-t-12 ">List of Bed</li></a>
@@ -44,8 +44,10 @@
             </ul>
         </nav>
     </section>
-
-    <footer class="footer">
+    <section class="left col-10 col-m-12 col-t-10" style="height: 171px;">
+        <?php echo "<h1>Greetings " . $_SESSION["user"]->getUsername() . "!</h1>" ?>
+    </section>
+    <footer class="footer col-12 col-m-12 col-t-12 left">
         <div>
             &copy; Copyright 2019 ANNELIDA
         </div>
