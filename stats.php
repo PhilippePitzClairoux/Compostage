@@ -13,7 +13,7 @@
 <head>
 	<title>page</title>
 	<meta charset="utf-8">
-	<script src="JS/chart_lib.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 	<script src="JS/chart_manipulator.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
