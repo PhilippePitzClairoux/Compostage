@@ -15,6 +15,15 @@
 
  ********************************/-->
  <?php
+     //check if user is loged in
+     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+     create_session();
+
+     if (!check_if_valid_session_exists()) {
+         header("Location: index.html");
+         exit();
+     }
+
   //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/BedManager.php");
   include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/BedManager.php");
   $url= "../controller/BedManager.php";
@@ -22,14 +31,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="JS/style.css" />
-    <title>Ajouter/modifier Bac</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Create/Modify bed</title>
   </head>
   <body>
 
     <header class="col-12 col-m-12 col-t-12">
   		<div>
-  			<img src="JS/logo.png">
+  			<img src="img/logo.png">
   		</div>
 
   		<nav class="col-12 col-m-12 col-t-12">
@@ -65,7 +74,7 @@
   			&copy; Copyright 2019 ANNELIDA
   		</div>
   	</footer>
-    <script src="compostage.js">
+    <script src="JS/compostage.js">
 
     </script>
 

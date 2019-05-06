@@ -1,3 +1,18 @@
+<!--********************************
+    Fichier : ChangePassword.php
+    Auteur : Philippe Pitz Clairoux
+    Fonctionnalité : FMLog
+    Date : 2019-05-04
+
+    Vérification :
+    Date                Nom                 Approuvé
+    ====================================================
+
+    Historique de modifications :
+    Date                Nom                 Description
+    ======================================================
+
+ ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
@@ -15,13 +30,13 @@
             if (isset($_SESSION["error"]))
                 unset($_SESSION["error"]);
 
-            header("Location: ../inventory/dashboard.php");
+            header("Location: ../dashboard.php");
             exit();
 
         } else {
 
             $_SESSION["error"] = "passwords do not match.";
-            header("Location: ../inventory/change_password.php");
+            header("Location: ../change_password.php");
             exit();
 
         }

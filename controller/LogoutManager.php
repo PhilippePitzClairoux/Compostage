@@ -7,9 +7,9 @@
     if (check_if_valid_session_exists()) {
         echo "Session found";
         close_session();
-        header("Location:../inventory/login_page.html");
+        header("Location:../inventory/index.html");
         exit();
     }
 
-    header("Location:../invetory/login_page.html");
+    header("Location:../invetory/index.html");
     exit();
