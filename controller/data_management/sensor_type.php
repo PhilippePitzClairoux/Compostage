@@ -17,7 +17,7 @@
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
-    class sensor_type {
+    class sensor_type implements JsonSerializable {
 
         private $sensor_type_id;
         private $sensor_type_name;
@@ -79,4 +79,14 @@
             mysqli_close($conn);
         }
 
+        /**
+         * Specify data which should be serialized to JSON
+         * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * which is a value of any type other than a resource.
+         * @since 5.4.0
+         */
+        public function jsonSerialize() {
+            return get_object_vars($this);
+        }
     }

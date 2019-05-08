@@ -17,7 +17,7 @@
 
     include_once("measurement_value.php");
 
-    class measurement {
+    class measurement implements JsonSerializable {
 
         private $measurement_id;
         private $sensor_id;
@@ -210,6 +210,16 @@
 
         }
 
+        /**
+         * Specify data which should be serialized to JSON
+         * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * which is a value of any type other than a resource.
+         * @since 5.4.0
+         */
+        public function jsonSerialize() {
+            return get_object_vars($this);
+        }
     }
 
 //    $tmp = measurement::newMeasurement(1, 10, 1);

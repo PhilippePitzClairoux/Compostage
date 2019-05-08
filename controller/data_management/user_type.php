@@ -18,7 +18,7 @@
     include("user_permissions.php");
 
 
-    class user_type {
+    class user_type implements JsonSerializable {
 
         private $user_type_name;
         private $user_type_description;
@@ -98,8 +98,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $index = array_push($this->user_permissions, user_permissions::loadWithId($row["permission"])) - 1;
-                $this->user_permissions[$index]->fetch_data();
+                array_push($this->user_permissions, user_permissions::loadWithId($row["permission"]));
             }
 
             mysqli_free_result($result);
@@ -126,4 +125,14 @@
 
         }
 
+        /**
+         * Specify data which should be serialized to JSON
+         * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * which is a value of any type other than a resource.
+         * @since 5.4.0
+         */
+        public function jsonSerialize() {
+            return get_object_vars($this);
+        }
     }
