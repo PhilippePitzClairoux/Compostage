@@ -17,7 +17,7 @@
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
-    class alert_configuration {
+    class alert_configuration implements JsonSerializable {
 
         private $alert_configuration_id;
         private $alert_configuration_message;
@@ -137,5 +137,16 @@
 
             $statement->close();
             mysqli_close($conn);
+        }
+
+        /**
+         * Specify data which should be serialized to JSON
+         * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * which is a value of any type other than a resource.
+         * @since 5.4.0
+         */
+        public function jsonSerialize() {
+            return get_object_vars($this);
         }
     }

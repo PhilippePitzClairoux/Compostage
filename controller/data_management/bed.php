@@ -18,7 +18,7 @@
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
     //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
 
-    class bed {
+    class bed implements JsonSerializable {
 
         private $bed_id;
         private $bed_name;
@@ -104,4 +104,14 @@
         }
 
 
+        /**
+         * Specify data which should be serialized to JSON
+         * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * which is a value of any type other than a resource.
+         * @since 5.4.0
+         */
+        public function jsonSerialize() {
+            return get_object_vars($this);
+        }
     }
