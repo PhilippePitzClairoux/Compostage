@@ -20,7 +20,7 @@
     class measurement implements JsonSerializable {
 
         private $measurement_id;
-        private $sensor_id;
+        private $sensor;
         private $measurement_value;
         private $measurement_date;
         private $measurement_types;
@@ -37,24 +37,26 @@
             return $instance;
         }
 
-        static function newMeasurement($sensor_id, $value, $type_id) {
+        static function newMeasurement($sensor_id, $value, $type_id, $timestamp) {
 
             $instance = new self();
 
             $instance->setMeasurementValue($value);
-            $instance->setSensorId($sensor_id);
+            $instance->setSensor(sensor::loadWithId($sensor_id));
             $instance->setMeasurementTypes($type_id);
+            $instance->setMeasurementDate($timestamp);
+            $instance->insert_data();
 
             return $instance;
         }
 
-        public function getSensorId() {
-            return $this->sensor_id;
+        public function getSensor() {
+            return $this->sensor;
         }
 
-        public function setSensorId($sensor_id): void {
-            if (!is_null($sensor_id))
-                $this->sensor_id = $sensor_id;
+        public function setSensor($sensor): void {
+            if (!is_null($sensor))
+                $this->sensor = $sensor;
         }
 
 
@@ -135,7 +137,7 @@
             while($row = $result->fetch_assoc()) {
 
                 $this->measurement_date = $row["measure_timestamp"];
-                $this->sensor_id = $row["sensor_id"];
+                $this->sensor = sensor::loadWithId($row["sensor_id"]);
             }
 
             mysqli_free_result($result);
@@ -181,19 +183,19 @@
             $conn = getConnection();
             $statement = $conn->prepare("INSERT INTO measures(sensor_id, measure_timestamp) VALUES (?, ?) ");
 
-            date_default_timezone_set('America/New_York');
-            $current_date = date("Y-m-d H:i:s", time());
+            //date_default_timezone_set('America/New_York');
+            //$current_date = date("Y-m-d H:i:s", time());
 
-            echo $current_date."\n";
+            //echo $current_date."\n";
 
-            $statement->bind_param("is", $this->sensor_id, $current_date);
+            $statement->bind_param("is", ($this->sensor)->getSensorId(), $current_date);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
                 throw new Exception($statement->error);
             }
 
-            $this->fetch_id($this->sensor_id, $current_date);
+            $this->fetch_id(($this->sensor)->getSensorId(), $current_date);
 
             $statement->close();
             $statement = $conn->prepare("INSERT INTO ta_measure_type(measure_id, measure_type_id, measure_value) VALUES (?, ?, ?)");
