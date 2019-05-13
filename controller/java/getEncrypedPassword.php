@@ -3,7 +3,7 @@
 
     if (!empty($_GET["password"])) {
 
-        echo json_encode(array("password" => password_hash($_GET["password"], PASSWORD_DEFAULT)));
+        echo json_encode(array("password" => password_hash(sanitize_input($_GET["password"]), PASSWORD_DEFAULT)));
 
     } else {
 

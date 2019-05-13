@@ -9,37 +9,37 @@
 
         try {
 
-            $user = user::loadWithId($_GET["username"]);
+            $user = user::loadWithId(sanitize_input(["username"]));
 
         } catch (Exception $e) {
 
             $message = $e->getMessage();
-            echo "{ \"status\" : \"$message\" }";
+            echo "{ \"error\" : \"$message\" }";
 
         }
 
 
         if (!empty($_GET["user_password"])) {
 
-            $user->setUserPassword($_GET["user_password"]);
+            $user->setUserPassword(sanitize_input($_GET["user_password"]));
             array_push($status, "password");
         }
 
         if (!empty($_GET["user_email"])) {
 
-            $user->setUserPassword($_GET["user_email"]);
+            $user->setUserPassword(sanitize_input($_GET["user_email"]));
             array_push($status, "email");
         }
 
         if (!empty($_GET["user_auth_question"])) {
 
-            $user->setUserPassword($_GET["user_auth_question"]);
+            $user->setUserPassword(sanitize_input($_GET["user_auth_question"]));
             array_push($status, "auth_question");
         }
 
         if (!empty($_GET["user_auth_answer"])) {
 
-            $user->setUserPassword($_GET["user_auth_answer"]);
+            $user->setUserPassword(password_hash(sanitize_input($_GET["user_auth_answer"]), PASSWORD_DEFAULT));
             array_push($status, "auth_answer");
         }
 
@@ -55,11 +55,11 @@
             echo "{ \"status\" : \"Update completed on " . $status_message .  "\" }";
 
         } catch (Exception $e) {
-            echo "{ \"status\" : \"could not complete update\" }";
+            echo "{ \"error\" : \"could not complete update\" }";
         }
 
     } else {
 
-        echo "{ \"status\" : \"no fields sent as parameter\" }";
+        echo "{ \"error\" : \"no fields sent as parameter\" }";
 
     }

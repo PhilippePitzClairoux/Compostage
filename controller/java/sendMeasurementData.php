@@ -9,8 +9,8 @@
         AND !empty($_GET["timestamp"])) {
 
         try {
-            $measurement = measurement::newMeasurement($_GET["sensor_id"], $_GET["value"],
-                $_GET["type_id"], $_GET["timestamp"]);
+            $measurement = measurement::newMeasurement(sanitize_input($_GET["sensor_id"]), sanitize_input($_GET["value"]),
+                sanitize_input($_GET["type_id"]), sanitize_input($_GET["timestamp"]));
 
             echo "{ \"status\" : \"ok\" }";
 
