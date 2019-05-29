@@ -119,6 +119,7 @@ CREATE TABLE measures(
 CREATE TABLE ta_alert_event (
   alert_type_id INT NOT NULL,
   measure_id INT NOT NULL,
+  alert_timestamp TIMESTAMP NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
   CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
   CONSTRAINT PRIMARY KEY(alert_type_id, measure_id)
@@ -191,7 +192,7 @@ INSERT INTO alert_configuration(alert_configuration_message, alert_configuration
 VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
 
 INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is has a high amount of humidity!", NULL, 0.40);
+VALUES ("Oh noo! Looks like Bed#%i has a high amount of humidity!", NULL, 0.40);
 
 INSERT INTO sensor_type(sensor_type_name) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
 INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");

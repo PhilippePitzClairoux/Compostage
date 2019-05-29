@@ -1,19 +1,3 @@
-
-<!--********************************
-    Fichier : ZoneManager.php
-    Auteur : Benoit Audettr-Chavigny
-    Fonctionnalité : FZ
-    Date : 2019-05-04
-
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
  <?php
 
   //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/data_management/zone.php");

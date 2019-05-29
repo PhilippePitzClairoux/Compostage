@@ -1,23 +1,9 @@
-<!--********************************
-    Fichier : ChangePassword.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
-
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/user.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SecurityUtils.php");
+
 
     if (!empty($_POST["username"]) AND !empty($_POST["password"])) {
 
@@ -31,7 +17,7 @@
 
                 //store the user in the session (will be useful later)
                 $_SESSION["user"] = $user;
-                header("Location:../dashboard.php");
+                header("Location:../index.php");
                 exit();
 
             } else {
@@ -43,5 +29,14 @@
 
             echo "There was an error : <br>" . $e->getMessage() . "<br>";
             close_session();
+
+            header("Location:../login.html");
+            exit();
+
         }
+    } else {
+
+        echo "Not enough args!";
+        header("Location:../login.html");
+        exit();
     }
