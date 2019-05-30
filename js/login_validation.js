@@ -1,8 +1,8 @@
 
 function validate() {
 
-    let pass1 = document.getElementsByName("pass1")[0];
-    let pass2 = document.getElementsByName("pass2")[0];
+    let pass1 = document.getElementById("inputPasswordOne");
+    let pass2 = document.getElementById("inputPasswordTwo");
 
 
     if ((!password_is_valid(pass1.value) || !password_is_valid(pass2.value)) || document.getElementById("error").innerText !== "") {
@@ -24,23 +24,83 @@ function password_is_valid(value) {
     return /(\S){5,}/.test(value) && value.length !== 0;
 }
 
+function lock_form(toLock) {
+
+    for (let i = 0; i < toLock.length; i++)
+        toLock[i].style.disabled = true;
+}
+
+
+function unlock_form(toLock) {
+
+    for (let i = 0; i < toLock.length; i++)
+        toLock[i].style.disabled = false;
+}
+
 window.onload = function() {
 
-    let password = document.querySelectorAll("#password");
+    let password = [document.getElementById("inputPasswordOne"), document.getElementById("inputPasswordTwo")];
+    let form = document.getElementById("form_xd");
     let error = document.getElementById("error");
+    let question = document.getElementById('question');
+    let answer = document.getElementById("inputAnswer");
+    let user = Cookies.get('user');
 
-    for (let i = 0; i < password.length; i++) {
+    if (user) {
 
-        let pass = password[i];
+        console.log(user);
+        console.log(password);
 
-        pass.addEventListener('blur', function () {
-            if (!password_is_valid(pass.value)) {
-                error.innerText = "Invalid password (needs to be 5 characters or more)";
-                return false;
-            } else {
-                error.innerText = "";
-                return true;
-            }
+        question.innerText = Cookies.get('user')["user_auth_question"];
+
+
+        for (let i = 0; i < password.length; i++) {
+
+            let pass = password[i];
+
+            pass.addEventListener('blur', function () {
+                if (!password_is_valid(pass.value)) {
+                    error.innerText = "Invalid password (needs to be 5 characters or more)";
+                    return false;
+                } else {
+                    error.innerText = "";
+                    return true;
+                }
+            });
+        }
+
+        answer.addEventListener("keyup", function() {
+
+            let xhr = new XMLHttpRequest();
+            let query = "http://localhost:8080/api/testAuthQuestion.php?username=" + user["username"] + "&answer=" + answer.value;
+
+            console.log(query);
+
+            xhr.open('GET', query);
+            xhr.responseType = 'json';
+
+            xhr.send();
+
+            xhr.onload = function() {
+                if (xhr.status !== 200)
+                    console.log("This is not supposed to happen...");
+                else {
+
+                    if (xhr.response["error"]) {
+                        document.location.href = "http://localhost:8080/login.html";
+                    } else if (xhr.response["status"] !== "completed") {
+                        error.innerText = "Invalid answer";
+                    } else {
+
+                    }
+
+                }
+            };
+
         });
+
+    } else {
+
+        document.location.href = "http://localhost:8080/login.html";
     }
 };
