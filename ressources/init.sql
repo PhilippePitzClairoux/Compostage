@@ -70,12 +70,12 @@ CREATE TABLE raspberry_pi (
 );
 
 
-CREATE TABLE alert_configuration (
-    alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    alert_configuration_message VARCHAR(64) NOT NULL,
-    alert_configuration_min_value FLOAT,
-    alert_configuration_max_value FLOAT
-);
+# CREATE TABLE alert_configuration (
+#     alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+#     alert_configuration_message VARCHAR(64) NOT NULL,
+#     alert_configuration_min_value FLOAT,
+#     alert_configuration_max_value FLOAT
+# );
 
 CREATE TABLE sensor_state (
     sensor_state_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -109,37 +109,31 @@ CREATE TABLE sensor (
     CONSTRAINT FOREIGN KEY(raspberry_pi_id) REFERENCES raspberry_pi(raspberry_pi_id)
 );
 
-CREATE TABLE measures(
-    measure_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    sensor_id INT NOT NULL,
-    measure_timestamp DATETIME NOT NULL,
-    CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
-);
-
 CREATE TABLE ta_alert_event (
   alert_type_id INT NOT NULL,
-  measure_id INT NOT NULL,
+  sensor_id INT NOT NULL,
   alert_timestamp TIMESTAMP NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
-  CONSTRAINT PRIMARY KEY(alert_type_id, measure_id)
+  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+  CONSTRAINT PRIMARY KEY(alert_type_id, sensor_id)
 );
 
-CREATE TABLE ta_sensor_alerts(
-  alert_configuration_id INT NOT NULL,
-  sensor_id INT NOT NULL,
-  CONSTRAINT FOREIGN KEY(alert_configuration_id) REFERENCES alert_configuration(alert_configuration_id),
-  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
-  CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
-);
+# CREATE TABLE ta_sensor_alerts(
+#   alert_configuration_id INT NOT NULL,
+#   sensor_id INT NOT NULL,
+#   CONSTRAINT FOREIGN KEY(alert_configuration_id) REFERENCES alert_configuration(alert_configuration_id),
+#   CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+#   CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
+# );
 
 CREATE TABLE ta_measure_type (
-  measure_id INT NOT NULL,
+  sensor_id INT NOT NULL,
   measure_type_id INT NOT NULL,
   measure_value FLOAT NOT NULL,
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
+  measure_timestamp DATETIME NOT NULL,
+  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
   CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
-  CONSTRAINT PRIMARY KEY(measure_id, measure_type_id)
+  CONSTRAINT PRIMARY KEY(sensor_id, measure_type_id)
 
 );
 
@@ -185,14 +179,14 @@ INSERT INTO raspberry_pi(zone_id, user_id, raspberry_pi_type, raspberry_pi_aquis
 VALUES (1, "raspberry_pi", "MODEL_3", "2019-04-24", 32);
 
 
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
-
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
-
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i has a high amount of humidity!", NULL, 0.40);
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
+#
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
+#
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i has a high amount of humidity!", NULL, 0.40);
 
 INSERT INTO sensor_type(sensor_type_name) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
 INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");

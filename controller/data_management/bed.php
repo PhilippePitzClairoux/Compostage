@@ -2,7 +2,6 @@
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
-    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
 
     class bed implements JsonSerializable {
 
