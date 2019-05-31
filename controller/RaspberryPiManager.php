@@ -1,7 +1,6 @@
  <?php
 
-  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/data_management/raspberry_pi.php");
-  //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/SecurityUtils.php");
+
   include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/raspberry_pi.php");
   include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SecurityUtils.php");
 if($_POST){

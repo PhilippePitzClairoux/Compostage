@@ -1,8 +1,6 @@
 
 <?php
 
-    include("measurement_type.php");
-
     class measurement_value implements JsonSerializable {
 
         private $measurement_id;

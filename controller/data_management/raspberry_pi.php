@@ -1,14 +1,15 @@
 
 <?php
 
-    include_once("raspberry_pi_type.php");
-    include_once("user.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/zone.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/raspberry_pi_type.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/user.php");
 
 
     class raspberry_pi implements JsonSerializable {
 
         private $raspberry_pi_id;
-        private $zone_id;
+        private $zone;
         private $raspberry_pi_type;
         private $raspberry_pi_aquisition_date;
         private $raspberry_pi_capacity;
@@ -27,7 +28,8 @@
 
         public static function createNewRaspberryPi($raspberry_pi_type_id,
                                                     $raspberry_pi_user,
-                                                    $raspberry_pi_zone_id,
+                                                    $raspberry_pi_zone_name,
+                                                    $raspberry_pi_bed_name,
                                                     $raspberry_pi_aquisition_date,
                                                     $raspberry_pi_capcity) {
 
@@ -35,7 +37,7 @@
 
             $instance->setRaspberryPiType(raspberry_pi_type::loadWithId($raspberry_pi_type_id));
             $instance->setRaspberryPiUser(user::loadWithId($raspberry_pi_user));
-            $instance->setZoneId($raspberry_pi_zone_id);
+            $instance->setZone(zone::loadWithZoneAndBed($raspberry_pi_zone_name, $raspberry_pi_bed_name));
             $instance->setRaspberryPiAquisitionDate($raspberry_pi_aquisition_date);
             $instance->setRaspberryPiCapacity($raspberry_pi_capcity);
 
@@ -60,12 +62,12 @@
             $this->raspberry_pi_id = $raspberry_pi_id;
         }
 
-        public function getZoneId() {
-            return $this->zone_id;
+        public function getZone() {
+            return $this->zone;
         }
 
-        public function setZoneId($zone_id): void {
-            $this->zone_id = $zone_id;
+        public function setZone($zone): void {
+            $this->zone = $zone;
         }
 
         public function getRaspberryPiType() {
@@ -117,7 +119,7 @@
                 $this->raspberry_pi_user = user::loadWithId($row["user_id"]);
                 $this->setRaspberryPiAquisitionDate($row["raspberry_pi_aquisition_date"]);
                 $this->setRaspberryPiCapacity($row["raspberry_pi_capacity"]);
-                $this->setZoneId($row["zone_id"]);
+                $this->setZone(zone::loadWithId($row["zone_id"]));
 
             }
 
@@ -132,7 +134,7 @@
                                                 raspberry_pi_type, raspberry_pi_aquisition_date,
                                                 raspberry_pi_capacity) VALUES (?, ?, ?, ?, ?) ");
 
-            $statement->bind_param("isssi", $this->zone_id,
+            $statement->bind_param("isssi", ($this->zone)->getZoneId(),
                 ($this->raspberry_pi_user)->getUsername(), ($this->raspberry_pi_type)->getRaspberryPiType(),
                      $this->raspberry_pi_aquisition_date, $this->raspberry_pi_capacity);
 
@@ -140,6 +142,8 @@
                 mysqli_close($conn);
                 throw new Exception($statement->error);
             }
+
+            $this->setRaspberryPiId(mysqli_insert_id($conn));
 
             $statement->close();
             mysqli_close($conn);
