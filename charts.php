@@ -1,3 +1,12 @@
+<?php
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+    create_session();
+
+    if (!check_if_valid_session_exists()) {
+        header("Location: login.html");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +18,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin - Tables</title>
+  <title>Statistics</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,10 +41,10 @@
       <i class="fas fa-bars"></i>
     </button>
 
-    <img class="d-none d-md-inline-block mr-0 mr-md-3 my-2 my-md-0 ml-pourcentage-70" style="height: 2em;" src="img/name.png">
+    <img class="d-none d-md-inline-block text-white ml-auto mr-0 mr-md-3 my-2 my-md-0 ml-pourcentage-70" style="height: 2em;" src="img/name.png">
 
 
-    <ul class="navbar-nav">
+    <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
@@ -53,24 +62,24 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Stats</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Alerts</span></a>
-      </li>
-    </ul>
+      <ul class="sidebar navbar-nav">
+          <li class="nav-item active">
+              <a class="nav-link" href="index.php">
+                  <i class="fas fa-fw fa-tachometer-alt"></i>
+                  <span>Dashboard</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="charts.php">
+                  <i class="fas fa-fw fa-chart-area"></i>
+                  <span>Stats</span></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="tables.php">
+                  <i class="fas fa-fw fa-table"></i>
+                  <span>Alerts</span></a>
+          </li>
+      </ul>
 
     <div id="content-wrapper">
 
@@ -81,48 +90,39 @@
           <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Tables</li>
+          <li class="breadcrumb-item active">Charts</li>
         </ol>
 
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Table Example</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Alert id</th>
-                    <th>Datetime</th>
-                    <th>Affected Raspberry Pi</th>
-                    <th>Message</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Alert id</th>
-                    <th>Datetime</th>
-                    <th>Affected Raspberry Pi</th>
-                    <th>Message</th>
-                  </tr>
-                </tfoot>
-                <tbody>
+          <div id="data"></div>
 
-                </tbody>
-              </table>
-            </div>
+          <!-- template for graphs -->
+          <div class="card mb-3" id="raspberry">
+              <div class="card-header">
+                    <p id="title">Raspberry Pi #1</p>
+              </div>
+              <div class="row card-body">
+              </div>
           </div>
-        </div>
       </div>
+
+        <div class="col-lg-4" id="dataEntry">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-area"></i>
+                    <p id="t1"></p></div>
+                <div class="card-body">
+                    <canvas id="chart" width="100%" height="50"></canvas>
+                </div>
+            </div>
+        </div>
+
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Annelida 2019</span>
+            <span>Copyright © PhilippePitzClairoux 2019</span>
           </div>
         </div>
       </footer>
@@ -151,7 +151,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="controller/LogoutManager.php">Logout</a>
         </div>
       </div>
     </div>
@@ -165,14 +165,14 @@
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin.min.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/raspberry_pi_stats.js"></script>
+
 
 </body>
 

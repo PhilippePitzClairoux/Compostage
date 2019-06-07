@@ -85,7 +85,7 @@
             $con = getConnection();
 
             $statement = $con->prepare("INSERT INTO ta_measure_type(sensor_id, measure_value, measure_timestamp) VALUES (?, ?, ?)");
-            $statement->bind_param("iis", $this->getSensorId(),
+            $statement->bind_param("ids", $this->getSensorId(),
                 $this->getMeasurementValue(), $this->getMeasurementTimestamp());
 
             if (!$statement->execute()) {

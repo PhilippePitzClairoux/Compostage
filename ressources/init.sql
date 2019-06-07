@@ -126,7 +126,7 @@ CREATE TABLE ta_alert_event (
 CREATE TABLE ta_measure_type (
   sensor_id INT NOT NULL,
 #   measure_type_id INT NOT NULL,
-  measure_value FLOAT NOT NULL,
+  measure_value DOUBLE NOT NULL,
   measure_timestamp DATETIME NOT NULL,
   CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
 #   CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),

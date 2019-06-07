@@ -46,7 +46,7 @@
             }
 
             foreach ($dates as $date) {
-                measurements::createNewMeasurement($humidity->getSensorId(), $date, mt_rand() / mt_getrandmax());
+                measurements::createNewMeasurement($humidity->getSensorId(), $date, genPourcentage());
             }
 
             foreach ($dates as $date) {
