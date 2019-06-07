@@ -1,3 +1,12 @@
+<?php
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SessionUtils.php");
+    create_session();
+
+    if (!check_if_valid_session_exists()) {
+        header("Location: login.html");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +52,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           <a class="dropdown-item" href="#">Settings</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="controller/LogoutManager.php" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
     </ul>
@@ -100,12 +109,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="charts.php">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Stats</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="tables.php">
           <i class="fas fa-fw fa-table"></i>
           <span>Alerts</span></a>
       </li>
@@ -160,7 +169,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Annelida 2019</span>
+            <span>Copyright © PhilippePitzClairoux 2019</span>
           </div>
         </div>
       </footer>
@@ -189,7 +198,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="CHANGE_ME">Logout</a>
+          <a class="btn btn-primary" href="controller/LogoutManager.php">Logout</a>
         </div>
       </div>
     </div>

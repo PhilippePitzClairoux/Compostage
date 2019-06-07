@@ -1,18 +1,4 @@
-<!--********************************
-    Fichier : measurement.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once("measurement_value.php");
@@ -101,7 +87,7 @@
         function fetch_id($sensor_id, $date) : void {
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT * FROM measures WHERE sensor_id = ? AND measure_timestamp = ?");
+            $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE sensor_id = ? AND measure_timestamp = ?");
 
             $statement->bind_param("is",  $sensor_id, $date);
 
@@ -124,7 +110,7 @@
         function fetch_data() {
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT * FROM measures WHERE measure_id = ?");
+            $statement = $conn->prepare("SELECT * FROM ta_measure_type WHERE measure_id = ?");
             $statement->bind_param("i", $this->measurement_id);
 
             if (!$statement->execute()) {
@@ -224,8 +210,8 @@
         }
     }
 
-//    $tmp = measurement::newMeasurement(1, 10, 1);
+//    $tmp = measurements::newMeasurement(1, 10, 1);
 //    $tmp->insert_data();
 
-//    $tmp = measurement::loadWithId(2);
+//    $tmp = measurements::loadWithId(2);
 //    print_r($tmp->getMeasurementValue());

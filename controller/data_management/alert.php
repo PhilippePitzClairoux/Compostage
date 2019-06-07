@@ -1,23 +1,9 @@
-<!--********************************
-    Fichier : alert.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
 
     include_once("alert_type.php");
-    include_once("measurement.php");
+    include_once("measurements.php");
 
     class alert implements JsonSerializable {
 
@@ -40,7 +26,7 @@
 
             $instance = new self();
 
-            $instance->setMeasure(measurement::loadWithId($measure_id));
+            $instance->setMeasure(measurements::loadWithId($measure_id));
             $instance->fetch_data();
 
             return $instance;
@@ -50,7 +36,7 @@
 
             $instance = new self();
 
-            $instance->setMeasure(measurement::loadWithId($measure_id));
+            $instance->setMeasure(measurements::loadWithId($measure_id));
             $instance->setAlertType(alert_type::loadWithId($alert_type_id));
             $instance->fetch_data();
 
@@ -112,7 +98,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->measure = measurement::loadWithId($row["measure_id"]);
+                $this->measure = measurements::loadWithId($row["measure_id"]);
                 $this->alert_type = alert_type::loadWithId($row["alert_type_id"]);
 
             }

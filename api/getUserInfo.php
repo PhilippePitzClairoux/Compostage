@@ -9,7 +9,7 @@
         try {
 
             $user = user::loadWithId(sanitize_input($_GET["username"]));
-            echo json_encode($user);
+            echo "{ \"user\" : " . json_encode($user) . "}";
 
         } catch (Exception $e) {
 

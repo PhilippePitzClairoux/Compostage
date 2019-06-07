@@ -447,6 +447,16 @@ mark,
   background-color: #fcf8e3;
 }
 
+
+.login-bg {
+  background-image: url("../img/logo.png");
+  background-color: #343a40;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: auto;
+  background-size: auto;
+}
+
 .list-unstyled {
   padding-left: 0;
   list-style: none;

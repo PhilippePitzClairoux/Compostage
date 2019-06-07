@@ -1,24 +1,11 @@
-<!--********************************
-    Fichier : sensor.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
-    include_once("sensor_state.php");
-    include_once("sensor_type.php");
-    include_once("measurement.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/sensor_state.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/sensor_type.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/measurements.php");
+
 
     class sensor implements JsonSerializable {
 
@@ -51,7 +38,6 @@
             $instance->setSensorRaspberryPiId($raspberry_pi_id);
             $instance->setSensorAquisitionDate($aquisition_date);
             $instance->setSensorSerialNumber($serial_number);
-
 
             $instance->insert_data();
 
@@ -114,7 +100,7 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("SELECT * FROM measures WHERE sensor_id = ?");
+            $statement = $conn->prepare("SELECT sensor_id, measure_timestamp FROM ta_measure_type WHERE sensor_id = ?");
             $statement->bind_param("i", $this->sensor_id);
 
             if (!$statement->execute()) {
@@ -128,7 +114,7 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                array_push($this->measures, measurement::loadWithId($row["measure_id"]));
+                array_push($this->measures, measurements::loadWithId($row["sensor_id"], $row["measure_timestamp"]));
             }
 
             mysqli_free_result($result);
@@ -157,8 +143,8 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->sensor_type = sensor_type::loadWithId($row["sensor_type_id"]);
-                $this->sensor_state = sensor_state::loadWithId($row["sensor_state_id"]);
+                $this->sensor_type = $row["sensor_type"];
+                $this->sensor_state = $row["sensor_state"];
                 $this->loadMeasurements();
 
                 $this->setSensorAquisitionDate($row["sensor_aquisition_date"]);
@@ -171,17 +157,21 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("INSERT INTO sensor(sensor_state_id, sensor_type_id, raspberry_pi_id,
+            $statement = $conn->prepare("INSERT INTO sensor(sensor_state, sensor_type, raspberry_pi_id,
                                                 sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?, ?) ");
 
-            $statement->bind_param("iiiss", ($this->sensor_state)->getSensorStateId(),
-                ($this->sensor_type)->getSensorTypeId(), $this->sensor_raspberry_pi_id,
+            print_r($this);
+
+            $statement->bind_param("ssiss", ($this->sensor_state)->getSensorState(),
+                ($this->sensor_type)->getSensorType(), $this->sensor_raspberry_pi_id,
                 $this->sensor_aquisition_date, $this->sensor_serial_number);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
                 throw new Exception($statement->error);
             }
+
+            $this->setSensorId(mysqli_insert_id($conn));
 
             mysqli_close($conn);
         }
@@ -198,7 +188,7 @@
         }
     }
 
-//    $tmp = sensor::createNewSensor(1, 1, 1, "2019-04-24", "666-696969-999");
+//    $tmp = sensor::createNewSensor("WORKING", "PH_SENOSR", 1, "2019-04-24", "666-696969-999");
 //    print_r($tmp);
 
 //    $tmp = sensor::loadWithId(1);

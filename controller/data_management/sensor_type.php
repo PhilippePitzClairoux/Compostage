@@ -1,26 +1,11 @@
-<!--********************************
-    Fichier : sensor_type.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
 
     class sensor_type implements JsonSerializable {
 
-        private $sensor_type_id;
-        private $sensor_type_name;
+        private $sensor_type;
 
         private function __construct() {}
 
@@ -28,34 +13,26 @@
 
             $instance = new self();
 
-            $instance->setSensorTypeId($sensor_type);
+            $instance->setSensorType($sensor_type);
             $instance->fetch_data();
 
             return $instance;
         }
 
-        public function getSensorTypeId() {
-            return $this->sensor_type_id;
+        public function getSensorType() {
+            return $this->sensor_type;
         }
 
-        public function setSensorTypeId($sensor_type_id): void {
-            $this->sensor_type_id = $sensor_type_id;
-        }
-
-        public function getSensorTypeName() {
-            return $this->sensor_type_name;
-        }
-
-        public function setSensorTypeName($sensor_type_name): void {
-            $this->sensor_type_name = $sensor_type_name;
+        public function setSensorType($sensor_type_name): void {
+            $this->sensor_type = $sensor_type_name;
         }
 
         function fetch_data() {
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("SELECT * FROM sensor_type WHERE sensor_type_id = ?");
-            $statement->bind_param("i", $this->sensor_type_id);
+            $statement = $conn->prepare("SELECT * FROM sensor_type WHERE sensor_type=?");
+            $statement->bind_param("s", $this->sensor_type);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -71,7 +48,7 @@
             }
 
             while ($row = $result->fetch_assoc()) {
-                $this->setSensorTypeName($row["sensor_type_name"]);
+                $this->setSensorType($row["sensor_type"]);
             }
 
 

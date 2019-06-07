@@ -3168,7 +3168,7 @@
    * @memberof {modifiers~offset}
    * @private
    * @argument {String} str - Value + unit string
-   * @argument {String} measurement - `height` or `width`
+   * @argument {String} measurements - `height` or `width`
    * @argument {Object} popperOffsets
    * @argument {Object} referenceOffsets
    * @returns {Number|String}

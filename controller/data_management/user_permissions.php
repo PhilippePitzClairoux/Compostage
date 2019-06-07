@@ -1,22 +1,7 @@
-<!--********************************
-    Fichier : user_permissions.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
-    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
 
     class user_permissions implements JsonSerializable
     {

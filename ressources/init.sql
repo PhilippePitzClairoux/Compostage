@@ -13,7 +13,7 @@ CREATE TABLE permissions(
 
 CREATE TABLE user_type (
     user_type_name VARCHAR(64) NOT NULL PRIMARY KEY ,
-    user_type_description VARCHAR(256)
+    user_type_description VARCHAR(256) NOT NULL
 );
 
 CREATE TABLE users (
@@ -27,15 +27,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE bed(
-    bed_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    bed_name VARCHAR(64) NOT NULL
+    bed_name VARCHAR(64) NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE zone (
     zone_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    bed_id INT NOT NULL,
+    bed_id VARCHAR(64) NOT NULL,
     zone_name VARCHAR(64) NOT NULL,
-    CONSTRAINT FOREIGN KEY(bed_id) REFERENCES bed(bed_id)
+    CONSTRAINT FOREIGN KEY(bed_id) REFERENCES bed(bed_name)
 );
 
 CREATE TABLE update_state (
@@ -70,21 +69,19 @@ CREATE TABLE raspberry_pi (
 );
 
 
-CREATE TABLE alert_configuration (
-    alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    alert_configuration_message VARCHAR(64) NOT NULL,
-    alert_configuration_min_value FLOAT,
-    alert_configuration_max_value FLOAT
-);
+# CREATE TABLE alert_configuration (
+#     alert_configuration_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+#     alert_configuration_message VARCHAR(64) NOT NULL,
+#     alert_configuration_min_value FLOAT,
+#     alert_configuration_max_value FLOAT
+# );
 
 CREATE TABLE sensor_state (
-    sensor_state_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    sensor_state VARCHAR(64) NOT NULL
+    sensor_state VARCHAR(64) NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE sensor_type (
-  sensor_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  sensor_type_name VARCHAR(64) NOT NULL
+  sensor_type VARCHAR(64) NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE alert_type (
@@ -92,54 +89,48 @@ CREATE TABLE alert_type (
   alert_type_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE measure_type (
-  measure_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  measure_type_name VARCHAR(255) NOT NULL
-);
+# CREATE TABLE measure_type (
+#   measure_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+#   measure_type_name VARCHAR(255) NOT NULL
+# );
 
 CREATE TABLE sensor (
     sensor_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    sensor_type_id INT NOT NULL,
-    sensor_state_id INT NOT NULL,
+    sensor_type VARCHAR(64) NOT NULL,
+    sensor_state VARCHAR(64) NOT NULL,
     raspberry_pi_id INT NOT NULL,
     sensor_aquisition_date DATE NOT NULL,
     sensor_serial_number VARCHAR(64) NOT NULL,
-    CONSTRAINT FOREIGN KEY(sensor_type_id) REFERENCES sensor_type(sensor_type_id),
-    CONSTRAINT FOREIGN KEY(sensor_state_id) REFERENCES sensor_state(sensor_state_id),
+    CONSTRAINT FOREIGN KEY(sensor_type) REFERENCES sensor_type(sensor_type),
+    CONSTRAINT FOREIGN KEY(sensor_state) REFERENCES sensor_state(sensor_state),
     CONSTRAINT FOREIGN KEY(raspberry_pi_id) REFERENCES raspberry_pi(raspberry_pi_id)
-);
-
-CREATE TABLE measures(
-    measure_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    sensor_id INT NOT NULL,
-    measure_timestamp DATETIME NOT NULL,
-    CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
 );
 
 CREATE TABLE ta_alert_event (
   alert_type_id INT NOT NULL,
-  measure_id INT NOT NULL,
+  sensor_id INT NOT NULL,
   alert_timestamp TIMESTAMP NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
-  CONSTRAINT PRIMARY KEY(alert_type_id, measure_id)
+  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+  CONSTRAINT PRIMARY KEY(alert_type_id, sensor_id)
 );
 
-CREATE TABLE ta_sensor_alerts(
-  alert_configuration_id INT NOT NULL,
-  sensor_id INT NOT NULL,
-  CONSTRAINT FOREIGN KEY(alert_configuration_id) REFERENCES alert_configuration(alert_configuration_id),
-  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
-  CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
-);
+# CREATE TABLE ta_sensor_alerts(
+#   alert_configuration_id INT NOT NULL,
+#   sensor_id INT NOT NULL,
+#   CONSTRAINT FOREIGN KEY(alert_configuration_id) REFERENCES alert_configuration(alert_configuration_id),
+#   CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+#   CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
+# );
 
 CREATE TABLE ta_measure_type (
-  measure_id INT NOT NULL,
-  measure_type_id INT NOT NULL,
-  measure_value FLOAT NOT NULL,
-  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES measures(measure_id),
-  CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
-  CONSTRAINT PRIMARY KEY(measure_id, measure_type_id)
+  sensor_id INT NOT NULL,
+#   measure_type_id INT NOT NULL,
+  measure_value DOUBLE NOT NULL,
+  measure_timestamp DATETIME NOT NULL,
+  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
+#   CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
+  CONSTRAINT PRIMARY KEY(sensor_id, measure_timestamp)
 
 );
 
@@ -175,36 +166,43 @@ VALUES ("admin", "admin", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9
        ("raspberry_pi", "raspberry_pi", "$2y$10$ZIaeQm9egZQLh0h7u2WUpuMSbUZprck3/sWFkyuFLDfpc9OpTv.ia", "raspberry@test.com", "hehe?", "$2y$10$Mrv.jrNC6NNNyFaa5OBwWeAuGmd7XLvNXWSxMs0k8CVQV5NLs1FEC"); -- answer is : hehexd
 
 
-INSERT INTO bed(bed_name) VALUES ("ALPHA"), ("BRAVO"), ("BOB"), ("ANTOINE");
-INSERT INTO zone(bed_id, zone_name) VALUES (1, "UNO"), (1, "DOS"), (1, "TRES"), (2, "UNO"), (2, "DOS"), (3, "TRES");
+# INSERT INTO bed(bed_name) VALUES ("ALPHA"), ("BRAVO"), ("BOB"), ("ANTOINE");
+# INSERT INTO zone(bed_id, zone_name) VALUES (1, "UNO"), (1, "DOS"), (1, "TRES"), (2, "UNO"), (2, "DOS"), (3, "TRES");
 
 INSERT INTO raspberry_pi_type(raspberry_pi_type, raspberry_pi_type_description)
 VALUE ("MODEL_3", "This is the current last gen of raspberry pi's.");
 
-INSERT INTO raspberry_pi(zone_id, user_id, raspberry_pi_type, raspberry_pi_aquisition_date, raspberry_pi_capacity)
-VALUES (1, "raspberry_pi", "MODEL_3", "2019-04-24", 32);
+# INSERT INTO raspberry_pi(zone_id, user_id, raspberry_pi_type, raspberry_pi_aquisition_date, raspberry_pi_capacity)
+# VALUES (1, "raspberry_pi", "MODEL_3", "2019-04-24", 32);
 
 
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i is below the normal amount of ph!", 5.5, NULL);
+#
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
+#
+# INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
+# VALUES ("Oh noo! Looks like Bed#%i has a high amount of humidity!", NULL, 0.40);
 
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i is below the normal tempature!", 15, NULL);
-
-INSERT INTO alert_configuration(alert_configuration_message, alert_configuration_min_value, alert_configuration_max_value)
-VALUES ("Oh noo! Looks like Bed#%i has a high amount of humidity!", NULL, 0.40);
-
-INSERT INTO sensor_type(sensor_type_name) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
+INSERT INTO sensor_type(sensor_type) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
 INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");
 
-INSERT INTO measure_type(measure_type_name) VALUES ("PH"), ("HUMIDITY"), ("TEMPATURE");
+# INSERT INTO measure_type(measure_type_name) VALUES ("PH"), ("HUMIDITY"), ("TEMPATURE");
 
-INSERT INTO sensor(sensor_type_id, sensor_state_id, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
-VALUES (1, 1, 1, "2019-04-24 11:06:23", "666-696969-666");
+# INSERT INTO sensor(sensor_type, sensor_state, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
+# VALUES ("PH_SENOSR", "WORKING", 1, "2019-04-24 11:06:23", "xxx-xxx-xxx");
 
-INSERT INTO update_state(update_state, update_state_description) VALUES ("pending", "Not ready to be deployed"), ("done", "update is completely deployed");
-INSERT INTO `update`(update_state_id, update_name, update_date) VALUES (2, "LmaoXD", "2019-05-06");
-INSERT INTO `update`(update_state_id, update_name, update_date) VALUES (1, "OOF", "2019-02-22");
+# INSERT INTO sensor(sensor_type, sensor_state, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
+# VALUES ("HUMIDITY_SENSOR", "WORKING", 1, "2019-04-24 11:06:23", "xxx-xxx-xxx");
 
-INSERT INTO update_completed(update_id, raspberry_pi_id) VALUES (1, 1);
-INSERT INTO update_completed(update_id, raspberry_pi_id) VALUES (2, 1);
+# INSERT INTO sensor(sensor_type, sensor_state, raspberry_pi_id, sensor_aquisition_date, sensor_serial_number)
+# VALUES ("TEMPATURE_SENSOR", "WORKING", 1, "2019-04-24 11:06:23", "xxx-xxx-xxx");
+
+
+# INSERT INTO update_state(update_state, update_state_description) VALUES ("pending", "Not ready to be deployed"), ("done", "update is completely deployed");
+# INSERT INTO `update`(update_state_id, update_name, update_date) VALUES (2, "LmaoXD", "2019-05-06");
+# INSERT INTO `update`(update_state_id, update_name, update_date) VALUES (1, "OOF", "2019-02-22");
+
+# INSERT INTO update_completed(update_id, raspberry_pi_id) VALUES (1, 1);
+# INSERT INTO update_completed(update_id, raspberry_pi_id) VALUES (2, 1);

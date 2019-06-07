@@ -1,25 +1,10 @@
-<!--********************************
-    Fichier : zone.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/bed.php");
-    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
-    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/data_management/bed.php");
+
 
 
     class zone implements JsonSerializable {
@@ -29,6 +14,17 @@
         private $bed;
 
         private function __construct() {}
+
+
+        public static function loadWithZoneAndBed($zone_name, $bed_name) {
+            $instance = new self();
+
+            $instance->setZoneName($zone_name);
+            $instance->setBed(bed::loadWithId($bed_name));
+            $instance->fetch_data_with_bed();
+
+            return $instance;
+        }
 
         public static function loadWithId($zone_id) {
             $instance = new self();
@@ -49,6 +45,7 @@
             return $instance;
         }
 
+
         public function getZoneId() {
             return $this->zone_id;
         }
@@ -56,6 +53,7 @@
         public function setZoneId($zone_id): void {
             $this->zone_id = $zone_id;
         }
+
 
         public function getZoneName() {
             return $this->zone_name;
@@ -102,11 +100,39 @@
             mysqli_close($conn);
         }
 
+        public function fetch_data_with_bed() {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("SELECT zone_id FROM zone WHERE zone_name = ? AND bed_id =?");
+            $statement->bind_param("ss", $this->zone_name, ($this->bed)->getBedName());
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("Zone does not exist");
+            }
+
+            while ($row = $result->fetch_assoc()) {
+
+                $this->setZoneId($row["zone_id"]);
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
+        }
+
         public function insert_data() {
 
             $conn = getConnection();
             $statement = $conn->prepare("INSERT INTO zone(bed_id, zone_name) VALUES (?, ?)");
-            $statement->bind_param("is", ($this->getBed())->getBedId(), $this->zone_name);
+            $statement->bind_param("ss", ($this->getBed())->getBedName(), $this->zone_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);

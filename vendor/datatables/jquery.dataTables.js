@@ -11941,7 +11941,7 @@
 		 * can enable x-scrolling to show the table in a viewport, which can be
 		 * scrolled. This property can be `true` which will allow the table to
 		 * scroll horizontally when needed, or any CSS unit, or a number (in which
-		 * case it will be treated as a pixel measurement). Setting as simply `true`
+		 * case it will be treated as a pixel measurements). Setting as simply `true`
 		 * is recommended.
 		 *  @type boolean|string
 		 *  @default <i>blank string - i.e. disabled</i>
@@ -11966,7 +11966,7 @@
 		 * table which requires to be well spaced, this parameter is useful for
 		 * "over-sizing" the table, and thus forcing scrolling. This property can by
 		 * any CSS unit, or a number (in which case it will be treated as a pixel
-		 * measurement).
+		 * measurements).
 		 *  @type string
 		 *  @default <i>blank string - i.e. disabled</i>
 		 *
@@ -11990,7 +11990,7 @@
 		 * current viewport. This can be used as an alternative to paging to display
 		 * a lot of data in a small area (although paging and scrolling can both be
 		 * enabled at the same time). This property can be any CSS unit, or a number
-		 * (in which case it will be treated as a pixel measurement).
+		 * (in which case it will be treated as a pixel measurements).
 		 *  @type string
 		 *  @default <i>blank string - i.e. disabled</i>
 		 *

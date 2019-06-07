@@ -5,23 +5,28 @@
 
     create_session();
 
-    if (!empty($_SESSION["user"]) AND !empty($_POST["pass1"]) AND !empty($_POST["pass2"])) {
+    print_r($_POST);
 
-        if (strcmp(sanitize_input($_POST["pass1"]), sanitize_input($_POST["pass2"])) === 0) {
+    if (!empty($_SESSION["user"]) AND !empty($_POST["inputPasswordOne"]) AND !empty($_POST["inputPasswordTwo"])) {
 
-            $_SESSION["user"]->setUserPassword(password_hash(sanitize_input($_POST["pass1"]), PASSWORD_DEFAULT));
+        if (strcmp(sanitize_input($_POST["inputPasswordOne"]), sanitize_input($_POST["inputPasswordTwo"])) === 0) {
+
+            echo "we good!";
+
+            $_SESSION["user"]->setUserPassword(password_hash(sanitize_input($_POST["inputPasswordOne"]), PASSWORD_DEFAULT));
             $_SESSION["user"]->update_data();
 
             if (isset($_SESSION["error"]))
                 unset($_SESSION["error"]);
 
-            header("Location: ../dashboard.php");
+            header("Location: ../index.php");
             exit();
 
         } else {
 
-            $_SESSION["error"] = "passwords do not match.";
-            header("Location: ../change_password.php");
+            echo "oh ohhhh";
+
+            header("Location: ../index.html");
             exit();
 
         }

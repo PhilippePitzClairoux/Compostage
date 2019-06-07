@@ -1,17 +1,15 @@
 <?php
 
 
-    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/measurement.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/measurements.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/SecurityUtils.php");
 
 
-    if (!empty($_GET["sensor_id"]) AND !empty($_GET["value"]) AND !empty($_GET["type_id"])
-        AND !empty($_GET["timestamp"])) {
+    if (!empty($_GET["sensor_id"]) AND !empty($_GET["value"]) AND !empty($_GET["timestamp"])) {
 
         try {
-            $measurement = measurement::newMeasurement($_GET["sensor_id"], $_GET["value"],
-                $_GET["type_id"], $_GET["timestamp"]);
 
+            $measurement = measurements::createNewMeasurement($_GET["sensor_id"], $_GET["timestamp"], $_GET["value"]);
             echo "{ \"status\" : \"ok\" }";
 
         } catch (Exception $e) {

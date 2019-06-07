@@ -1,26 +1,11 @@
-<!--********************************
-    Fichier : bed.php
-    Auteur : Philippe Pitz Clairoux
-    Fonctionnalité :
-    Date : 2019-05-04
 
-    Vérification :
-    Date                Nom                 Approuvé
-    ====================================================
-
-    Historique de modifications :
-    Date                Nom                 Description
-    ======================================================
-
- ********************************/-->
 <?php
 
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/ConnectionManager.php");
-    //include_once($_SERVER["DOCUMENT_ROOT"] . "/Compostage/controller/ConnectionManager.php");
 
     class bed implements JsonSerializable {
 
-        private $bed_id;
+
         private $bed_name;
 
         private function __construct() {}
@@ -28,7 +13,7 @@
         public static function loadWithId($bed_id) {
             $instance = new self();
 
-            $instance->setBedId($bed_id);
+            $instance->setBedName($bed_id);
             $instance->fetch_data();
 
             return $instance;
@@ -43,15 +28,6 @@
             return $instance;
         }
 
-
-        public function getBedId() {
-            return $this->bed_id;
-        }
-
-        public function setBedId($bed_id): void {
-            $this->bed_id = $bed_id;
-        }
-
         public function getBedName() {
             return $this->bed_name;
         }
@@ -63,8 +39,8 @@
         public function fetch_data() {
 
             $conn = getConnection();
-            $statement = $conn->prepare("SELECT * FROM bed WHERE bed_id = ?");
-            $statement->bind_param("i", $this->bed_id);
+            $statement = $conn->prepare("SELECT * FROM bed WHERE bed_name = ?");
+            $statement->bind_param("i", $this->bed_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
