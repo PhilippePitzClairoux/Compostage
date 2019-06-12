@@ -140,9 +140,9 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                 </div>
-                <div class="mr-5">0 new alerts</div>
+                <div class="mr-5" id="num_alerts">0 new alerts</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
+              <a class="card-footer text-white clearfix small z-1" href="tables.php">
                 <span class="float-left">View report</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -215,6 +215,7 @@
 
   <!-- Demo scripts for this page-->
   <script src="js/chart_functions.js"></script>
+  <script src="js/sb-admin.js"></script>
   <script src="js/display_average.js"></script>
 
 </body>

@@ -97,24 +97,29 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Data Table Example</div>
+            View alerts</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
                     <th>Alert id</th>
-                    <th>Datetime</th>
-                    <th>Affected Raspberry Pi</th>
-                    <th>Message</th>
+                    <th>Timestamp</th>
+                    <th>Bed : Zone</th>
+                    <th>Value</th>
+                    <th>Reason</th>
                   </tr>
                 </thead>
+                <tbody id="add_alerts">
+
+                </tbody>
                 <tfoot>
                   <tr>
-                    <th>Alert id</th>
-                    <th>Datetime</th>
-                    <th>Affected Raspberry Pi</th>
-                    <th>Message</th>
+                   <th>Alert id</th>
+                   <th>Timestamp</th>
+                   <th>Bed : Zone</th>
+                   <th>Value</th>
+                   <th>Reason</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -177,11 +182,10 @@
   <script src="vendor/datatables/jquery.dataTables.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
+  <script src="js/sb-admin.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/alerts.js"></script>
 
 </body>
 

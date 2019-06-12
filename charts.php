@@ -111,7 +111,7 @@
 
   </div>
   <!-- /#wrapper -->
-  </div>
+
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -136,6 +136,8 @@
     </div>
   </div>
 
+
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -146,12 +148,10 @@
   <!-- Page level plugin JavaScript-->
   <script src="vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
   <!-- Demo scripts for this page-->
   <script src="js/raspberry_pi_stats.js"></script>
   <script src="js/chart_functions.js"></script>
+  <script src="js/sb-admin.js"></script>
 
 
 </body>

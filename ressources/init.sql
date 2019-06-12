@@ -120,6 +120,7 @@ CREATE TABLE ta_alert_event (
   alert_event_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   alert_type_id VARCHAR(255) NOT NULL,
   measure_id INT NOT NULL,
+  has_been_viewed BOOL NOT NULL,
   CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type),
   CONSTRAINT FOREIGN KEY(measure_id) REFERENCES ta_measure_type(ta_measure_type_id)
 );
@@ -185,6 +186,9 @@ VALUE ("MODEL_3", "This is the current last gen of raspberry pi's.");
 
 INSERT INTO sensor_type(sensor_type) VALUES ("PH_SENOSR"), ("HUMIDITY_SENSOR"), ("TEMPATURE_SENSOR");
 INSERT INTO sensor_state(sensor_state) VALUES ("WORKING"), ("BROKEN"), ("NEEDS_CHECKUP");
+
+
+INSERT INTO alert_type(alert_type) VALUES ("LOW"), ("HIGH")
 
 # INSERT INTO measure_type(measure_type_name) VALUES ("PH"), ("HUMIDITY"), ("TEMPATURE");
 

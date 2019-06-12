@@ -77,6 +77,37 @@
         return $ids;
     }
 
+function getRaspberryFromSensorId($sensor_id) {
+
+    $id = 0;
+    $conn = getConnection();
+    $statement = $conn->prepare("SELECT raspberry_pi_id FROM sensor WHERE sensor_id = ?");
+    $statement->bind_param("i", $sensor_id);
+
+    if (!$statement->execute()) {
+        mysqli_close($conn);
+        throw new Exception($statement->error);
+    }
+
+    $result = $statement->get_result();
+
+    if ($result->num_rows === 0) {
+        mysqli_free_result($result);
+        mysqli_close($conn);
+        throw new Exception("Raspberry pi does not exist.");
+    }
+
+    while ($row = $result->fetch_assoc()) {
+
+        $id = $row["raspberry_pi_id"];
+    }
+
+    mysqli_free_result($result);
+    mysqli_close($conn);
+
+    return $id;
+}
+
     //the argument must be an object
     function getAllSensors($raspberry_pi) {
 

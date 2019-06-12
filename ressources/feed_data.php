@@ -9,6 +9,7 @@
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/sensor.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiUtils.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/ressources/gen_utils.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/DataValidation.php");
 
 
     $dates = array("2019-04-24 00:06:23", "2019-04-24 1:06:23",
@@ -43,15 +44,15 @@
             $tempature = sensor::createNewSensor( "WORKING", "TEMPATURE_SENSOR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
 
             foreach ($dates as $date) {
-                measurements::createNewMeasurement($ph->getSensorId(), $date, mt_rand(0, 14));
+                validate_inserted_values(measurements::createNewMeasurement($ph->getSensorId(), $date, mt_rand(0, 14)));
             }
 
             foreach ($dates as $date) {
-                measurements::createNewMeasurement($humidity->getSensorId(), $date, genPourcentage());
+                validate_inserted_values(measurements::createNewMeasurement($humidity->getSensorId(), $date, genPourcentage()));
             }
 
             foreach ($dates as $date) {
-                measurements::createNewMeasurement($tempature->getSensorId(), $date, mt_rand(-50, 50));
+                validate_inserted_values(measurements::createNewMeasurement($tempature->getSensorId(), $date, mt_rand(-50, 50)));
             }
         }
 
@@ -67,6 +68,7 @@
     $tempature = sensor::createNewSensor( "WORKING", "TEMPATURE_SENSOR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
 
     foreach ($dates as $date) {
+
         measurements::createNewMeasurement($ph->getSensorId(), $date, getAverage($date, $ph->getSensorType()->getSensorType()));
     }
 

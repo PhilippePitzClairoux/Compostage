@@ -10,10 +10,9 @@
 
         try {
 
-            validate_inserted_values(sanitize_input($_GET["sensor_id"]), sanitize_input($_GET["value"]));
-
-
             $measurement = measurements::createNewMeasurement(sanitize_input($_GET["sensor_id"]), sanitize_input($_GET["timestamp"]), sanitize_input($_GET["value"]));
+            validate_inserted_values($measurement);
+
             echo "{ \"status\" : \"ok\" }";
 
         } catch (Exception $e) {

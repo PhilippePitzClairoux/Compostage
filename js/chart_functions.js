@@ -16,6 +16,22 @@ function getData(id) {
             });
 }
 
+function createBigCardNoBorder(title) {
+
+    let new_entry = "<div class=\"card-header\">\n" +
+        "                    <p id=\"title\">" + title + "</p>" +
+        "              </div>" +
+        "              <div class=\"row card-body\">" +
+        "              </div>" +
+        "             </div>";
+
+    let htmlObject = document.createElement('div');
+    htmlObject.className = "card mb-12";
+    htmlObject.innerHTML = new_entry;
+
+    return htmlObject;
+}
+
 function createBigCard(title) {
 
     let new_entry = "<div class=\"card-header\">\n" +

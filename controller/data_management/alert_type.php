@@ -14,7 +14,7 @@
 
             $instance = new self();
 
-            $instance->setAlertTypeId($alert_type_id);
+            $instance->setAlertTypeName($alert_type_id);
             $instance->fetch_data();
 
             return $instance;
@@ -33,7 +33,7 @@
             $conn = getConnection();
 
             $statement = $conn->prepare("SELECT * FROM alert_type WHERE alert_type = ?");
-            $statement->bind_param("s", $this->alert_type_id);
+            $statement->bind_param("s", $this->alert_type_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);

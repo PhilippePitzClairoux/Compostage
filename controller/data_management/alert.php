@@ -10,6 +10,7 @@
         private $alert_id;
         private $alert_type;
         private $measure;
+        private $has_been_viewed;
 
         private function __construct() {}
 
@@ -18,6 +19,7 @@
 
             $instance->setAlertType(alert_type::loadWithId($alert_type_id));
             $instance->setMeasure(measurements::loadWithId($measure_id));
+            $instance->setHasBeenViewed(false);
             $instance->insert_data();
 
             return $instance;
@@ -32,6 +34,14 @@
             $instance->fetch_data();
 
             return $instance;
+        }
+
+        public function getHasBeenViewed() {
+            return $this->has_been_viewed;
+        }
+
+        public function setHasBeenViewed($has_been_viewed): void {
+            $this->has_been_viewed = $has_been_viewed;
         }
 
         public function getAlertId() {
@@ -64,9 +74,9 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("INSERT INTO ta_alert_event(alert_type_id, measure_id) VALUES (?, ?)");
-            $statement->bind_param("si", $this->alert_type->getAlertTypeName(),
-                $this->measure->getMeasurementId());
+            $statement = $conn->prepare("INSERT INTO ta_alert_event(alert_type_id, measure_id, has_been_viewed) VALUES (?, ?, ?)");
+            $statement->bind_param("sii", $this->alert_type->getAlertTypeName(),
+                $this->measure->getMeasurementId(), boolval($this->getHasBeenViewed()));
 
             if (!$statement->execute()) {
                 $conn->close();
@@ -101,8 +111,9 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->measure = measurements::loadWithId($row["measure_id"], $row["measure_timestamp"]);
+                $this->measure = measurements::loadWithId($row["measure_id"]);
                 $this->alert_type = alert_type::loadWithId($row["alert_type_id"]);
+                $this->setHasBeenViewed($row["has_been_viewed"]);
 
             }
 
