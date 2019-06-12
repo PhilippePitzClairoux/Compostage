@@ -16,6 +16,15 @@
         private function __construct() {}
 
 
+        public static function loadWithRaspberryPiId($raspberry_pi_id) {
+
+            $instance = new self();
+
+            $instance->fetch_data_with_raspberry($raspberry_pi_id);
+
+            return $instance;
+        }
+
         public static function loadWithZoneAndBed($zone_name, $bed_name) {
             $instance = new self();
 
@@ -69,6 +78,35 @@
 
         public function setBed($bed): void {
             $this->bed = $bed;
+        }
+
+        private function fetch_data_with_raspberry($raspberry_pi_id) {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("SELECT zone_id FROM raspberry_pi WHERE raspberry_pi_id = ?");
+            $statement->bind_param("i", $raspberry_pi_id);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("There's no zone for this raspberry pi id");
+            }
+
+            while ($row = $result->fetch_assoc()) {
+
+                $this->setZoneId($row["zone_id"]);
+                $this->fetch_data();
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
         }
 
         public function fetch_data() {
@@ -138,6 +176,11 @@
                 mysqli_close($conn);
                 throw new Exception($statement->error);
             }
+
+            print_r(mysqli_insert_id($conn));
+            echo "<br>";
+
+            $this->setZoneId(mysqli_insert_id($conn));
 
             $statement->close();
             mysqli_close($conn);

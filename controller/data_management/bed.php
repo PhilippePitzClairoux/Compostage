@@ -40,7 +40,7 @@
 
             $conn = getConnection();
             $statement = $conn->prepare("SELECT * FROM bed WHERE bed_name = ?");
-            $statement->bind_param("i", $this->bed_name);
+            $statement->bind_param("s", $this->bed_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);

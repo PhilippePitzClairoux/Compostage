@@ -28,8 +28,7 @@
 
         public static function createNewRaspberryPi($raspberry_pi_type_id,
                                                     $raspberry_pi_user,
-                                                    $raspberry_pi_zone_name,
-                                                    $raspberry_pi_bed_name,
+                                                    $raspberry_pi_zone_id,
                                                     $raspberry_pi_aquisition_date,
                                                     $raspberry_pi_capcity) {
 
@@ -37,7 +36,7 @@
 
             $instance->setRaspberryPiType(raspberry_pi_type::loadWithId($raspberry_pi_type_id));
             $instance->setRaspberryPiUser(user::loadWithId($raspberry_pi_user));
-            $instance->setZone(zone::loadWithZoneAndBed($raspberry_pi_zone_name, $raspberry_pi_bed_name));
+            $instance->setZone(zone::loadWithId($raspberry_pi_zone_id));
             $instance->setRaspberryPiAquisitionDate($raspberry_pi_aquisition_date);
             $instance->setRaspberryPiCapacity($raspberry_pi_capcity);
 

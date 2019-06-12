@@ -6,7 +6,7 @@
 
     try {
 
-        $raspberry_ids = getAllRaspberryPiIds();
+        $raspberry_ids = getAllBedIds();
 
         echo "{ \"data\" : " . json_encode($raspberry_ids) . " }";
 

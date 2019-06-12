@@ -85,8 +85,7 @@ CREATE TABLE sensor_type (
 );
 
 CREATE TABLE alert_type (
-  alert_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  alert_type_name VARCHAR(255) NOT NULL
+  alert_type VARCHAR(255) NOT NULL PRIMARY KEY
 );
 
 # CREATE TABLE measure_type (
@@ -106,13 +105,23 @@ CREATE TABLE sensor (
     CONSTRAINT FOREIGN KEY(raspberry_pi_id) REFERENCES raspberry_pi(raspberry_pi_id)
 );
 
+CREATE TABLE ta_measure_type (
+     ta_measure_type_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+     sensor_id INT NOT NULL,
+    #   measure_type_id INT NOT NULL,
+     measure_value DOUBLE NOT NULL,
+     measure_timestamp DATETIME NOT NULL,
+     CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id)
+    #   CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
+);
+
+
 CREATE TABLE ta_alert_event (
-  alert_type_id INT NOT NULL,
-  sensor_id INT NOT NULL,
-  alert_timestamp TIMESTAMP NOT NULL,
-  CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type_id),
-  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
-  CONSTRAINT PRIMARY KEY(alert_type_id, sensor_id)
+  alert_event_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  alert_type_id VARCHAR(255) NOT NULL,
+  measure_id INT NOT NULL,
+  CONSTRAINT FOREIGN KEY(alert_type_id) REFERENCES alert_type(alert_type),
+  CONSTRAINT FOREIGN KEY(measure_id) REFERENCES ta_measure_type(ta_measure_type_id)
 );
 
 # CREATE TABLE ta_sensor_alerts(
@@ -122,17 +131,6 @@ CREATE TABLE ta_alert_event (
 #   CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
 #   CONSTRAINT PRIMARY KEY(alert_configuration_id, sensor_id)
 # );
-
-CREATE TABLE ta_measure_type (
-  sensor_id INT NOT NULL,
-#   measure_type_id INT NOT NULL,
-  measure_value DOUBLE NOT NULL,
-  measure_timestamp DATETIME NOT NULL,
-  CONSTRAINT FOREIGN KEY(sensor_id) REFERENCES sensor(sensor_id),
-#   CONSTRAINT FOREIGN KEY(measure_type_id) REFERENCES measure_type(measure_type_id),
-  CONSTRAINT PRIMARY KEY(sensor_id, measure_timestamp)
-
-);
 
 CREATE TABLE update_completed (
     update_id INT NOT NULL,

@@ -62,7 +62,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
+      <ul class="sidebar navbar-nav position-sticky">
           <li class="nav-item active">
               <a class="nav-link" href="index.php">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -95,27 +95,6 @@
 
           <div id="data"></div>
 
-          <!-- template for graphs -->
-          <div class="card mb-3" id="raspberry">
-              <div class="card-header">
-                    <p id="title">Raspberry Pi #1</p>
-              </div>
-              <div class="row card-body">
-              </div>
-          </div>
-      </div>
-
-        <div class="col-lg-4" id="dataEntry">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-chart-area"></i>
-                    <p id="t1"></p></div>
-                <div class="card-body">
-                    <canvas id="chart" width="100%" height="50"></canvas>
-                </div>
-            </div>
-        </div>
-
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
@@ -132,7 +111,7 @@
 
   </div>
   <!-- /#wrapper -->
-
+  </div>
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -172,6 +151,7 @@
 
   <!-- Demo scripts for this page-->
   <script src="js/raspberry_pi_stats.js"></script>
+  <script src="js/chart_functions.js"></script>
 
 
 </body>

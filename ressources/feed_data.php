@@ -7,6 +7,7 @@
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/zone.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/bed.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/data_management/sensor.php");
+    include_once($_SERVER["DOCUMENT_ROOT"] . "/controller/RaspberryPiUtils.php");
     include_once($_SERVER["DOCUMENT_ROOT"] . "/ressources/gen_utils.php");
 
 
@@ -24,18 +25,18 @@
                     "2019-04-24 22:06:23","2019-04-24 23:06:23");
 
 
-    for ($i = 0; $i < 20; $i++) {
+    for ($i = 0; $i < 30; $i++) {
 
         $bed = bed::createNewBed("B" . $i);
 
         for ($j = 0; $j < 3; $j++) {
 
+
             $zone = zone::createNewZone("Z" . $j, $bed->getBedName());
 
             $rasp = raspberry_pi::createNewRaspberryPi("MODEL_3", "raspberry_pi",
-                $zone->getZoneName(), ($zone->getBed())->getBedName() , "2019-04-24", 32);
+                $zone->getZoneId() , "2019-04-24", 32);
 
-            $sensors = array();
 
             $ph = sensor::createNewSensor( "WORKING", "PH_SENOSR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
             $humidity = sensor::createNewSensor( "WORKING", "HUMIDITY_SENSOR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
@@ -54,5 +55,25 @@
             }
         }
 
-        echo $bed->getBedName() . " is done!<br>";
+    }
+
+    $bed = bed::createNewBed("AVG_Bed");
+    $zone = zone::createNewZone("AVG_Zone", $bed->getBedName());
+    $rasp = raspberry_pi::createNewRaspberryPi("MODEL_3", "raspberry_pi",
+    $zone->getZoneId() , "2019-04-24", 32);
+
+    $ph = sensor::createNewSensor( "WORKING", "PH_SENOSR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
+    $humidity = sensor::createNewSensor( "WORKING", "HUMIDITY_SENSOR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
+    $tempature = sensor::createNewSensor( "WORKING", "TEMPATURE_SENSOR", $rasp->getRaspberryPiId(), "2019-04-24", genSerialNumber());
+
+    foreach ($dates as $date) {
+        measurements::createNewMeasurement($ph->getSensorId(), $date, getAverage($date, $ph->getSensorType()->getSensorType()));
+    }
+
+    foreach ($dates as $date) {
+        measurements::createNewMeasurement($humidity->getSensorId(), $date, getAverage($date, $humidity->getSensorType()->getSensorType()));
+    }
+
+    foreach ($dates as $date) {
+        measurements::createNewMeasurement($tempature->getSensorId(), $date, getAverage($date, $tempature->getSensorType()->getSensorType()));
     }

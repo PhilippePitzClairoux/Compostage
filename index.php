@@ -152,14 +152,8 @@
           </div>
         </div>
 
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            Area Chart Example</div>
-          <div class="card-body">
-            <canvas id="myAreaChart" width="100%" height="30"></canvas>
-          </div>
+        <div id="data">
+
         </div>
 
       </div>
@@ -220,8 +214,8 @@
   <script src="js/sb-admin.min.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/chart_functions.js"></script>
+  <script src="js/display_average.js"></script>
 
 </body>
 
