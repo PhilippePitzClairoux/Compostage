@@ -62,7 +62,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
+      <ul class="sidebar navbar-nav position-sticky">
           <li class="nav-item active">
               <a class="nav-link" href="index.php">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -94,27 +94,6 @@
         </ol>
 
           <div id="data"></div>
-
-          <!-- template for graphs -->
-          <div class="card mb-3" id="raspberry">
-              <div class="card-header">
-                    <p id="title">Raspberry Pi #1</p>
-              </div>
-              <div class="row card-body">
-              </div>
-          </div>
-      </div>
-
-        <div class="col-lg-4" id="dataEntry">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-chart-area"></i>
-                    <p id="t1"></p></div>
-                <div class="card-body">
-                    <canvas id="chart" width="100%" height="50"></canvas>
-                </div>
-            </div>
-        </div>
 
       <!-- /.container-fluid -->
 
@@ -157,6 +136,8 @@
     </div>
   </div>
 
+
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -167,11 +148,10 @@
   <!-- Page level plugin JavaScript-->
   <script src="vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
   <!-- Demo scripts for this page-->
   <script src="js/raspberry_pi_stats.js"></script>
+  <script src="js/chart_functions.js"></script>
+  <script src="js/sb-admin.js"></script>
 
 
 </body>

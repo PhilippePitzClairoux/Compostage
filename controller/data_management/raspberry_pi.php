@@ -26,10 +26,17 @@
             return $instance;
         }
 
+        public static function loadWithSensorId($sensor_id) {
+            $instance = new self();
+
+            $instance->fetch_data_with_sensor($sensor_id);
+
+            return $instance;
+        }
+
         public static function createNewRaspberryPi($raspberry_pi_type_id,
                                                     $raspberry_pi_user,
-                                                    $raspberry_pi_zone_name,
-                                                    $raspberry_pi_bed_name,
+                                                    $raspberry_pi_zone_id,
                                                     $raspberry_pi_aquisition_date,
                                                     $raspberry_pi_capcity) {
 
@@ -37,7 +44,7 @@
 
             $instance->setRaspberryPiType(raspberry_pi_type::loadWithId($raspberry_pi_type_id));
             $instance->setRaspberryPiUser(user::loadWithId($raspberry_pi_user));
-            $instance->setZone(zone::loadWithZoneAndBed($raspberry_pi_zone_name, $raspberry_pi_bed_name));
+            $instance->setZone(zone::loadWithId($raspberry_pi_zone_id));
             $instance->setRaspberryPiAquisitionDate($raspberry_pi_aquisition_date);
             $instance->setRaspberryPiCapacity($raspberry_pi_capcity);
 
@@ -92,6 +99,37 @@
 
         public function setRaspberryPiCapacity($raspberry_pi_capacity): void {
             $this->raspberry_pi_capacity = $raspberry_pi_capacity;
+        }
+
+
+        public function fetch_data_with_sensor($sensor_id) {
+
+            $conn = getConnection();
+            $statement = $conn->prepare("SELECT raspberry_pi_id FROM sensor WHERE sensor_id = ?");
+            $statement->bind_param("i", $sensor_id);
+
+            if (!$statement->execute()) {
+                mysqli_close($conn);
+                throw new Exception($statement->error);
+            }
+
+            $result = $statement->get_result();
+
+            if ($result->num_rows === 0) {
+                mysqli_free_result($result);
+                mysqli_close($conn);
+                throw new Exception("Raspberry pi does not exist.");
+            }
+
+            while ($row = $result->fetch_assoc()) {
+
+                $this->setRaspberryPiId($row["raspberry_pi_id"]);
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
+
+            $this->fetch_data();
         }
 
         public function fetch_data() {

@@ -140,9 +140,9 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                 </div>
-                <div class="mr-5">0 new alerts</div>
+                <div class="mr-5" id="num_alerts">0 new alerts</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
+              <a class="card-footer text-white clearfix small z-1" href="tables.php">
                 <span class="float-left">View report</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -152,14 +152,8 @@
           </div>
         </div>
 
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            Area Chart Example</div>
-          <div class="card-body">
-            <canvas id="myAreaChart" width="100%" height="30"></canvas>
-          </div>
+        <div id="data">
+
         </div>
 
       </div>
@@ -220,8 +214,9 @@
   <script src="js/sb-admin.min.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/chart_functions.js"></script>
+  <script src="js/sb-admin.js"></script>
+  <script src="js/display_average.js"></script>
 
 </body>
 

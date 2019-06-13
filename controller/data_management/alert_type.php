@@ -5,7 +5,7 @@
 
     class alert_type implements JsonSerializable {
 
-        private $alert_type_id;
+
         private $alert_type_name;
 
         private function __construct(){}
@@ -14,18 +14,10 @@
 
             $instance = new self();
 
-            $instance->setAlertTypeId($alert_type_id);
+            $instance->setAlertTypeName($alert_type_id);
             $instance->fetch_data();
 
             return $instance;
-        }
-
-        public function getAlertTypeId() {
-            return $this->alert_type_id;
-        }
-
-        public function setAlertTypeId($alert_type_id): void {
-            $this->alert_type_id = $alert_type_id;
         }
 
         public function getAlertTypeName() {
@@ -40,8 +32,8 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("SELECT * FROM alert_type WHERE alert_type_id = ?");
-            $statement->bind_param("i", $this->alert_type_id);
+            $statement = $conn->prepare("SELECT * FROM alert_type WHERE alert_type = ?");
+            $statement->bind_param("s", $this->alert_type_name);
 
             if (!$statement->execute()) {
                 mysqli_close($conn);
@@ -57,7 +49,7 @@
             }
             while ($row = $result->fetch_assoc()) {
 
-                $this->setAlertTypeName($row["alert_type_name"]);
+                $this->setAlertTypeName($row["alert_type"]);
             }
 
             mysqli_free_result($result);

@@ -100,7 +100,7 @@
 
             $conn = getConnection();
 
-            $statement = $conn->prepare("SELECT sensor_id, measure_timestamp FROM ta_measure_type WHERE sensor_id = ?");
+            $statement = $conn->prepare("SELECT ta_measure_type_id FROM ta_measure_type WHERE sensor_id = ?");
             $statement->bind_param("i", $this->sensor_id);
 
             if (!$statement->execute()) {
@@ -108,13 +108,12 @@
                 throw new Exception($statement->error);
             }
 
-
             $result = $statement->get_result();
             $this->measures = array();
 
             while ($row = $result->fetch_assoc()) {
 
-                array_push($this->measures, measurements::loadWithId($row["sensor_id"], $row["measure_timestamp"]));
+                array_push($this->measures, measurements::loadWithId($row["ta_measure_type_id"]));
             }
 
             mysqli_free_result($result);
@@ -143,14 +142,18 @@
 
             while ($row = $result->fetch_assoc()) {
 
-                $this->sensor_type = $row["sensor_type"];
-                $this->sensor_state = $row["sensor_state"];
-                $this->loadMeasurements();
+                $this->sensor_type = sensor_type::loadWithId($row["sensor_type"]);
+                $this->sensor_state = sensor_state::loadWithId($row["sensor_state"]);
 
                 $this->setSensorAquisitionDate($row["sensor_aquisition_date"]);
                 $this->setSensorSerialNumber($row["sensor_serial_number"]);
                 $this->setSensorRaspberryPiId($row["raspberry_pi_id"]);
             }
+
+            $this->loadMeasurements();
+
+            mysqli_free_result($result);
+            mysqli_close($conn);
         }
 
         public function insert_data() {
@@ -159,8 +162,6 @@
 
             $statement = $conn->prepare("INSERT INTO sensor(sensor_state, sensor_type, raspberry_pi_id,
                                                 sensor_aquisition_date, sensor_serial_number) VALUES (?, ?, ?, ?, ?) ");
-
-            print_r($this);
 
             $statement->bind_param("ssiss", ($this->sensor_state)->getSensorState(),
                 ($this->sensor_type)->getSensorType(), $this->sensor_raspberry_pi_id,
